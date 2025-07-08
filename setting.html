@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="assets/setting.css">
+</head>
+<body>
+      <div class="settings-container">
+        <div class="header">
+            <button class="back-button" onclick="goBack()">←</button>
+            <h1 class="header-title">Settings</h1>
+        </div>
+
+        <div class="settings-list">
+            <a href="#" class="settings-item" onclick="openSection('price-alerts')">
+                <div class="icon icon-dollar"></div>
+                <span class="settings-text">Price Alerts</span>
+            </a>
+
+            <a href="#" class="settings-item" onclick="openSection('manage-crypto')">
+            <div class="icon icon-crypto"></div>
+                <span class="settings-text">Manage Crypto</span>
+            </a>
+
+            <a href="#" class="settings-item" onclick="openSection('trust-handles')">
+                <div class="icon icon-trust"><ion-icon name="git-network"></ion-icon></div>
+                <span class="settings-text">Trust Handles</span>
+            </a>
+
+            <a href="QR_scan.html" class="settings-item">
+                <div class="icon icon-qr"><i><ion-icon name="qr-code-outline"></ion-icon></i></div>
+                <span class="settings-text">Scan QR Code</span>
+            </a>
+
+            <a href="#" class="settings-item" onclick="openSection('wallet-connect')">
+                <div class="icon icon-wallet"><i><ion-icon name="wallet"></ion-icon></i></div>
+                <span class="settings-text">WalletConnect</span>
+            </a>
+
+            <a href="#" class="settings-item" onclick="openSection('upload-kyc')">
+                <div class="icon icon-upload"><i><ion-icon name="settings-outline"></ion-icon></i></div>
+                <span class="settings-text">Upload Kyc</span>
+            </a>
+
+            <a href="#" class="settings-item" onclick="openSection('security-pin')">
+                <div class="icon icon-security"><i><ion-icon name="shield-checkmark"></ion-icon></i></div>
+                <span class="settings-text">Security / Pin</span>
+            </a>
+
+            <a href="#" class="settings-item" onclick="openSection('notifications')">
+                <div class="icon icon-notification"><i><ion-icon name="notifications"></ion-icon></i></div>
+                <span class="settings-text">Notifications</span>
+            </a>
+
+            <a href="#" class="settings-item" onclick="openSection('help-center')">
+                <div class="icon icon-help"><i><ion-icon name="information-circle"></ion-icon></i></div>
+                <span class="settings-text">Help Center</span>
+            </a>
+        </div>
+    </div>
+    <script src="assets/scripts/settings.js"></script>
+    <script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
+<script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>
+</body>
+</html>
