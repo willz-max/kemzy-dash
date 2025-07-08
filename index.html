@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
     <link rel="stylesheet" href="assets/style.css">
+     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 </head>
 <body>
     <!-- trade invest..copy trading,stacking  -->
@@ -24,7 +25,7 @@
                     <circle cx="12" cy="12" r="3"/>
                 </svg>
             </div>
-            <div class="balance-amount">$12,849.42</div>
+            <div class="balance-amount">$<span class="grandTotal">0.0000000</span></div>
             <div class="balance-change">▲$428.56 (3.45%) today</div>
         </div>
 
@@ -84,10 +85,10 @@
                 <div class="asset-icon bitcoin-icon">₿</div>
                 <div class="asset-info">
                     <div class="asset-name">Bitcoin <span class="asset-symbol">BTC</span></div>
-                    <div class="asset-amount">0.2546 BTC</div>
+                    <div class="asset-amount"><span class="btc">0.2546</span> BTC</div>
                 </div>
                 <div class="asset-value">
-                    <div class="asset-price">$9,842.56</div>
+                    <div class="asset-price btc-price">$<span class="your_total_btc">0.0000</span></div>
                     <div class="asset-change positive">▲5.2%</div>
                 </div>
             </div>
@@ -96,10 +97,10 @@
                 <div class="asset-icon ethereum-icon">Ξ</div>
                 <div class="asset-info">
                     <div class="asset-name">Ethereum <span class="asset-symbol">ETH</span></div>
-                    <div class="asset-amount">3.42 ETH</div>
+                    <div class="asset-amount"><span class="eth">3.42</span> ETH</div>
                 </div>
                 <div class="asset-value">
-                    <div class="asset-price">$6,128.74</div>
+                    <div class="asset-price">$<span class="your_total_eth">0.0000</span></div>
                     <div class="asset-change positive">▲2.8%</div>
                 </div>
             </div>
@@ -108,10 +109,10 @@
                 <div class="asset-icon binance-icon">⦣</div>
                 <div class="asset-info">
                     <div class="asset-name">Binance Coin <span class="asset-symbol">BNB</span></div>
-                    <div class="asset-amount">12.5 BNB</div>
+                    <div class="asset-amount"><span class="bnb">12.5</span> BNB</div>
                 </div>
                 <div class="asset-value">
-                    <div class="asset-price">$3,875.20</div>
+                    <div class="asset-price">$<span class="your_total_bnb">0.0000</span></div>
                     <div class="asset-change negative">▼1.2%</div>
                 </div>
             </div>
@@ -120,10 +121,10 @@
                 <div class="asset-icon binance-icon">⦣</div>
                 <div class="asset-info">
                     <div class="asset-name">Tether <span class="asset-symbol">USDT</span></div>
-                    <div class="asset-amount">1,250 USDT</div>
+                    <div class="asset-amount"><span class="usdt">1250</span> USDT</div>
                 </div>
                 <div class="asset-value">
-                    <div class="asset-price">$1,250.20</div>
+                    <div class="asset-price">$<span class="your_total_usdt">0.0000</span></div>
                     <div class="asset-change no-change">▼0.0%</div>
                 </div>
             </div>
@@ -202,5 +203,6 @@
     </div>
     <script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
 <script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>
+<script src="assets/scripts/script.js"></script>
 </body>
 </html>
