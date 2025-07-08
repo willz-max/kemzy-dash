@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>KYC</title>
+    <link rel="stylesheet" href="assets/kyc.css">
+</head>
+<body>
+   <div class="container">
+        <div class="header">
+            <button class="back-button" onclick="goBack()">←</button>
+            <span class="back-text">Back</span>
+        </div>
+
+        <div class="main-content">
+            <h1 class="title">KYC Verification</h1>
+            <p class="subtitle">Upload your ID and selfie to verify your account.</p>
+            <form action="">
+                <div class="form-section">
+                <label class="form-label">Select ID Type</label>
+                <div class="dropdown-container">
+                    <div class="dropdown-select">
+                        <span id="selectedOption">-- Choose ID Type --</span>
+                        <span class="dropdown-arrow">▼</span>
+                    </div>
+                    <div class="dropdown-options" id="dropdownOptions">
+                        <div class="dropdown-option" onclick="selectOption('-- Choose ID Type --')">-- Choose ID Type --</div>
+                        <div class="dropdown-option" onclick="selectOption('Passport')">Passport</div>
+                        <div class="dropdown-option" onclick="selectOption('National ID')">National ID</div>
+                        <div class="dropdown-option" onclick="selectOption('Driver\'s License')">Driver's License</div>
+                        <div class="dropdown-option" onclick="selectOption('Voter\'s Card')">Voter's Card</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="form-section">
+                <label class="form-label">Upload Front of ID</label>
+                <div class="upload-zone" onclick="document.getElementById('frontIdFile').click()" 
+                     ondragover="handleDragOver(event)" 
+                     ondrop="handleDrop(event, 'front')"
+                     ondragenter="handleDragEnter(event)"
+                     ondragleave="handleDragLeave(event)"
+                     id="frontUploadZone">
+                    <div class="upload-text">Drop front image or click to upload</div>
+                    <input type="file" id="frontIdFile" accept="image/*" onchange="handleFileSelect(event, 'front')">
+                </div>
+            </div>
+
+            <div class="form-section">
+                <label class="form-label">Upload Selfie with ID</label>
+                <div class="upload-zone" onclick="document.getElementById('selfieFile').click()" 
+                     ondragover="handleDragOver(event)" 
+                     ondrop="handleDrop(event, 'selfie')"
+                     ondragenter="handleDragEnter(event)"
+                     ondragleave="handleDragLeave(event)"
+                     id="selfieUploadZone">
+                    <div class="upload-text">Drop selfie image or click to upload</div>
+                    <input type="file" id="selfieFile" accept="image/*" onchange="handleFileSelect(event, 'selfie')">
+                </div>
+            </div>
+
+            <button class="submit-button" onclick="submitVerification()">Submit for Verification</button>
+            </form>
+            
+        </div>
+    </div>
+ <script src="assets/scripts/kyc.js"></script>
+</body>
+</html>

@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Settings</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+            background-color: #0a0a0a;
+            color: #ffffff;
+            min-height: 100vh;
+        }
+
+        .settings-container {
+            /* max-width: 400px; */
+            margin: 0 auto;
+            background-color: #0B0E11;
+            min-height: 100vh;
+        }
+
+        .header {
+            display: flex;
+            align-items: center;
+            padding: 20px;
+            border-bottom: 1px solid #1a1a1a;
+        }
+
+        .back-button {
+            background: none;
+            border: none;
+            color: #ffffff;
+            font-size: 18px;
+            cursor: pointer;
+            margin-right: 15px;
+            padding: 5px;
+        }
+
+        .back-button:hover {
+            color: #cccccc;
+        }
+
+        .header-title {
+            font-size: 20px;
+            font-weight: 600;
+        }
+
+        .settings-list {
+            padding: 0;
+        }
+
+        .settings-item {
+            display: flex;
+            align-items: center;
+            padding: 18px 20px;
+            border-bottom: 1px solid #1a1a1a;
+            cursor: pointer;
+            transition: background-color 0.2s ease;
+            text-decoration: none;
+            color: #cccccc;
+        }
+
+        .settings-item:hover {
+            background-color: #1a1a1a;
+        }
+
+        .settings-item:last-child {
+            border-bottom: none;
+        }
+
+        .icon {
+            width: 20px;
+            height: 20px;
+            margin-right: 15px;
+            opacity: 0.8;
+        }
+
+        .settings-text {
+            font-size: 16px;
+            font-weight: 500;
+        }
+
+        .icon-dollar::before {
+            content: "$";
+            display: block;
+            font-size: 18px;
+            font-weight: bold;
+        }
+
+        .icon-crypto::before {
+            content: "₿";
+            display: block;
+            font-size: 18px;
+            font-weight: bold;
+        }
+
+      
+       
+
+       
+      
+
+       
+
+       
+
+       
+
+        @media (max-width: 480px) {
+            .settings-container {
+                max-width: 100%;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="settings-container">
+        <div class="header">
+            <button class="back-button" onclick="goBack()">←</button>
+            <h1 class="header-title">Settings</h1>
+        </div>
+
+        <div class="settings-list">
+            <a href="#" class="settings-item" onclick="openSection('price-alerts')">
+                <div class="icon icon-dollar"></div>
+                <span class="settings-text">Price Alerts</span>
+            </a>
+
+            <a href="#" class="settings-item" onclick="openSection('manage-crypto')">
+            <div class="icon icon-crypto"></div>
+                <span class="settings-text">Manage Crypto</span>
+            </a>
+
+            <a href="#" class="settings-item" onclick="openSection('trust-handles')">
+                <div class="icon icon-trust"><ion-icon name="git-network"></ion-icon></div>
+                <span class="settings-text">Trust Handles</span>
+            </a>
+
+            <a href="QR_scan.html" class="settings-item">
+                <div class="icon icon-qr"><i><ion-icon name="qr-code-outline"></ion-icon></i></div>
+                <span class="settings-text">Scan QR Code</span>
+            </a>
+
+            <a href="#" class="settings-item" onclick="openSection('wallet-connect')">
+                <div class="icon icon-wallet"><i><ion-icon name="wallet"></ion-icon></i></div>
+                <span class="settings-text">WalletConnect</span>
+            </a>
+
+            <a href="#" class="settings-item" onclick="openSection('upload-kyc')">
+                <div class="icon icon-upload"><i><ion-icon name="settings-outline"></ion-icon></i></div>
+                <span class="settings-text">Upload Kyc</span>
+            </a>
+
+            <a href="#" class="settings-item" onclick="openSection('security-pin')">
+                <div class="icon icon-security"><i><ion-icon name="shield-checkmark"></ion-icon></i></div>
+                <span class="settings-text">Security / Pin</span>
+            </a>
+
+            <a href="#" class="settings-item" onclick="openSection('notifications')">
+                <div class="icon icon-notification"><i><ion-icon name="notifications"></ion-icon></i></div>
+                <span class="settings-text">Notifications</span>
+            </a>
+
+            <a href="#" class="settings-item" onclick="openSection('help-center')">
+                <div class="icon icon-help"><i><ion-icon name="information-circle"></ion-icon></i></div>
+                <span class="settings-text">Help Center</span>
+            </a>
+        </div>
+    </div>
+
+    <script>
+        function goBack() {
+            // Navigate back or close the settings
+            if (window.history.length > 1) {
+                window.history.back();
+            } else {
+                console.log('Navigate to main screen');
+            }
+        }
+    </script>
+      <script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
+<script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>
+</body>
+</html>

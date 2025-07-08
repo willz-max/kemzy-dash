@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="assets/profile.css">
+</head>
+<body>
+     <div class="container">
+        
+        <div class="header">
+            
+            <a class="back-button" href="">←</a>
+            <h1 class="header-title">My Profile</h1>
+        </div>
+
+        <!-- Profile Section -->
+        <div class="profile-section">
+            <div class="profile-card">
+                <div class="profile-avatar">
+                    <img src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=150&h=150&fit=crop&crop=face">
+                </div>
+                <h2 class="profile-name">John Crypto</h2>
+                <p class="profile-email">john.crypto@email.com</p>
+                
+                <div class="wallet-address">
+                    <span class="wallet-address-text">0x7F5D2F7f99177f4a9D2f7f99177f</span>
+                    <button class="copy-button" ><i><ion-icon name="clipboard-outline"></ion-icon></i></button>
+                </div>
+                
+                <button class="edit-profile-btn" >Edit Profile</button>
+            </div>
+        </div>
+
+        
+        <div class="menu-section">
+            <div class="menu-item" >
+                <div class="menu-icon"><i><ion-icon name="shield-half"></ion-icon></i></div>
+                <div class="menu-content">
+                    <div class="menu-title">Security</div>
+                    <div class="menu-subtitle">2FA, Password, Recovery</div>
+                </div>
+                <div class="menu-arrow">›</div>
+            </div>
+
+            <div class="menu-item">
+                <div class="menu-icon"><i><ion-icon name="notifications"></ion-icon></i></div>
+                <div class="menu-content">
+                    <div class="menu-title">Notifications</div>
+                    <div class="menu-subtitle">Alerts and reminders</div>
+                </div>
+                <div class="menu-arrow">›</div>
+            </div>
+
+            <div class="menu-item">
+                <div class="menu-icon"><i><ion-icon name="card"></ion-icon></i></div>
+                <div class="menu-content">
+                    <div class="menu-title">Payment Methods</div>
+                    <div class="menu-subtitle">Crypto</div>
+                </div>
+                <div class="menu-arrow">›</div>
+            </div>
+
+            <div class="menu-item">
+                <div class="menu-icon"><i><ion-icon name="settings"></ion-icon></i></div>
+                <div class="menu-content">
+                    <div class="menu-title">Preferences</div>
+                    <div class="menu-subtitle">Theme, currency, language</div>
+                </div>
+                <div class="menu-arrow">›</div>
+            </div>
+
+            <div class="menu-item" >
+                <div class="menu-icon"><i><ion-icon name="help"></ion-icon></i></div>
+                <div class="menu-content">
+                    <div class="menu-title">Help & Support</div>
+                    <div class="menu-subtitle">FAQ, contact us</div>
+                </div>
+                <div class="menu-arrow">›</div>
+            </div>
+
+            <div class="menu-item">
+                <div class="menu-icon logout"><i><ion-icon name="log-out"></ion-icon></i></div>
+                <div class="menu-content">
+                    <div class="menu-title logout">Logout</div>
+                    <div class="menu-subtitle">Sign out of your account</div>
+                </div>
+                <div class="menu-arrow">›</div>
+            </div>
+        </div>
+    </div>
+
+   
+    <div class="copy-notification" id="copyNotification">
+        Address copied to clipboard!
+    </div>
+    <script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
+<script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>
+<script src="assets/scripts/profile.js"></script>
+</body>
+</html>

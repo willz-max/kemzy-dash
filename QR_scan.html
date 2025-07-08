@@ -1,0 +1,610 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>QR Code Scanner</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: #000;
+            color: white;
+            overflow: hidden;
+        }
+
+        .scanner-container {
+            position: relative;
+            width: 100vw;
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+            background: #000;
+        }
+
+        .header {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 10;
+            padding: 20px;
+            background: linear-gradient(to bottom, rgba(0,0,0,0.8), transparent);
+        }
+
+        .back-button {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            color: white;
+            font-size: 18px;
+            background: none;
+            border: none;
+            cursor: pointer;
+            padding: 10px;
+            border-radius: 8px;
+            transition: background 0.3s ease;
+        }
+
+        .back-button:hover {
+            background: rgba(255, 255, 255, 0.1);
+        }
+
+        .back-icon {
+            font-size: 24px;
+        }
+
+        .camera-container {
+            position: relative;
+            width: 100%;
+            height: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: #000;
+        }
+
+        #camera {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .scan-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0, 0, 0, 0.5);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 5;
+        }
+
+        .scan-frame {
+            position: relative;
+            width: 280px;
+            height: 280px;
+            border: 2px solid #00ff88;
+            border-radius: 20px;
+            background: transparent;
+            box-shadow: 0 0 20px rgba(0, 255, 136, 0.5);
+        }
+
+        /* .scan-frame::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            right: -50%;
+            bottom: -50%;
+            background: radial-gradient(circle, transparent 140px, rgba(0, 0, 0, 0.8) 141px);
+            pointer-events: none;
+        } */
+
+        .corner {
+            position: absolute;
+            width: 30px;
+            height: 30px;
+            border: 3px solid #00ff88;
+        }
+
+        .corner.top-left {
+            top: -3px;
+            left: -3px;
+            border-right: none;
+            border-bottom: none;
+            border-radius: 20px 0 0 0;
+        }
+
+        .corner.top-right {
+            top: -3px;
+            right: -3px;
+            border-left: none;
+            border-bottom: none;
+            border-radius: 0 20px 0 0;
+        }
+
+        .corner.bottom-left {
+            bottom: -3px;
+            left: -3px;
+            border-right: none;
+            border-top: none;
+            border-radius: 0 0 0 20px;
+        }
+
+        .corner.bottom-right {
+            bottom: -3px;
+            right: -3px;
+            border-left: none;
+            border-top: none;
+            border-radius: 0 0 20px 0;
+        }
+
+        .scan-line {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 2px;
+            background: linear-gradient(90deg, transparent, #00ff88, transparent);
+            animation: scan 2s linear infinite;
+        }
+
+        @keyframes scan {
+            0% { transform: translateY(0); }
+            100% { transform: translateY(276px); }
+        }
+
+        .instructions {
+            position: absolute;
+            bottom: 120px;
+            left: 50%;
+            transform: translateX(-50%);
+            text-align: center;
+            color: white;
+            z-index: 10;
+        }
+
+        .instructions h2 {
+            font-size: 24px;
+            margin-bottom: 10px;
+            font-weight: 600;
+        }
+
+        .instructions p {
+            font-size: 16px;
+            opacity: 0.8;
+            max-width: 300px;
+        }
+
+        .controls {
+            position: absolute;
+            bottom: 40px;
+            left: 50%;
+            transform: translateX(-50%);
+            display: flex;
+            gap: 20px;
+            z-index: 10;
+        }
+
+        .control-btn {
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.2);
+            border: 2px solid rgba(255, 255, 255, 0.3);
+            color: white;
+            font-size: 24px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .control-btn:hover {
+            background: rgba(255, 255, 255, 0.3);
+            transform: scale(1.1);
+        }
+
+        .control-btn.active {
+            background: #00ff88;
+            color: #000;
+        }
+
+        .start-button {
+            background: #00ff88;
+            color: #000;
+            border: none;
+            padding: 15px 30px;
+            border-radius: 12px;
+            font-size: 18px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            margin: 20px;
+        }
+
+        .start-button:hover {
+            background: #00cc6a;
+            transform: translateY(-2px);
+        }
+
+        .permission-message {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            text-align: center;
+            z-index: 10;
+            background: rgba(0, 0, 0, 0.8);
+            padding: 40px;
+            border-radius: 20px;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+
+        .permission-message h2 {
+            margin-bottom: 20px;
+            color: #00ff88;
+        }
+
+        .permission-message p {
+            margin-bottom: 30px;
+            opacity: 0.8;
+        }
+
+        .result-popup {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background: rgba(0, 0, 0, 0.9);
+            padding: 30px;
+            border-radius: 20px;
+            border: 2px solid #00ff88;
+            text-align: center;
+            z-index: 20;
+            max-width: 90%;
+            word-break: break-all;
+        }
+
+        .result-popup h3 {
+            color: #00ff88;
+            margin-bottom: 15px;
+        }
+
+        .result-popup p {
+            margin-bottom: 20px;
+            padding: 10px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 8px;
+        }
+
+        .result-popup button {
+            background: #00ff88;
+            color: #000;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 8px;
+            cursor: pointer;
+            margin: 0 10px;
+            font-weight: 600;
+        }
+
+        .hidden {
+            display: none;
+        }
+
+        canvas {
+            display: none;
+        }
+
+        @media (max-width: 768px) {
+            .scan-frame {
+                width: 250px;
+                height: 250px;
+            }
+            
+            .instructions {
+                bottom: 100px;
+            }
+            
+            .instructions h2 {
+                font-size: 20px;
+            }
+            
+            .instructions p {
+                font-size: 14px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="scanner-container">
+        <div class="header">
+            <button class="back-button" onclick="closeScanner()">
+                <span class="back-icon">←</span>
+                <span>Scan QR Code</span>
+            </button>
+        </div>
+
+        <div class="camera-container">
+            <video id="camera" autoplay muted playsinline></video>
+            <canvas id="canvas"></canvas>
+            
+            <div class="scan-overlay">
+                <div class="scan-frame">
+                    <div class="corner top-left"></div>
+                    <div class="corner top-right"></div>
+                    <div class="corner bottom-left"></div>
+                    <div class="corner bottom-right"></div>
+                    <div class="scan-line"></div>
+                </div>
+            </div>
+        </div>
+
+        <div class="instructions">
+            <h2>Position QR code in frame</h2>
+            <p>Hold your device steady and point the camera at the QR code</p>
+        </div>
+
+        <div class="controls">
+            <button class="control-btn" onclick="toggleFlash()" title="Toggle Flash">
+                <span id="flashIcon">💡</span>
+            </button>
+            <button class="control-btn" onclick="switchCamera()" title="Switch Camera">
+                <span>🔄</span>
+            </button>
+        </div>
+
+        <div id="permissionMessage" class="permission-message hidden">
+            <h2>Camera Access Required</h2>
+            <p>Please allow camera access to scan QR codes</p>
+            <button class="start-button" onclick="requestCamera()">Enable Camera</button>
+        </div>
+
+        <div id="resultPopup" class="result-popup hidden">
+            <h3>QR Code Detected!</h3>
+            <p id="resultText"></p>
+            <button onclick="copyResult()">Copy</button>
+            <button onclick="closeResult()">Close</button>
+            <button onclick="scanAgain()">Scan Again</button>
+        </div>
+    </div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jsqr/1.4.0/jsQR.js"></script>
+    <script>
+        class QRScanner {
+            constructor() {
+                this.video = document.getElementById('camera');
+                this.canvas = document.getElementById('canvas');
+                this.ctx = this.canvas.getContext('2d');
+                this.stream = null;
+                this.isScanning = false;
+                this.flashSupported = false;
+                this.currentCamera = 'environment';
+                this.lastResult = null;
+                
+                this.init();
+            }
+            
+            async init() {
+                try {
+                    await this.requestCamera();
+                } catch (error) {
+                    this.showPermissionMessage();
+                }
+            }
+            
+            async requestCamera() {
+                try {
+                    const constraints = {
+                        video: {
+                            facingMode: this.currentCamera,
+                            width: { ideal: 1280 },
+                            height: { ideal: 720 }
+                        }
+                    };
+                    
+                    this.stream = await navigator.mediaDevices.getUserMedia(constraints);
+                    this.video.srcObject = this.stream;
+                    
+                    // Check if flash is supported
+                    const track = this.stream.getVideoTracks()[0];
+                    const capabilities = track.getCapabilities();
+                    this.flashSupported = capabilities.torch || false;
+                    
+                    this.hidePermissionMessage();
+                    this.startScanning();
+                } catch (error) {
+                    console.error('Error accessing camera:', error);
+                    this.showPermissionMessage();
+                }
+            }
+            
+            startScanning() {
+                this.isScanning = true;
+                this.video.addEventListener('loadedmetadata', () => {
+                    this.canvas.width = this.video.videoWidth;
+                    this.canvas.height = this.video.videoHeight;
+                    this.scan();
+                });
+            }
+            
+            scan() {
+                if (!this.isScanning) return;
+                
+                if (this.video.readyState === this.video.HAVE_ENOUGH_DATA) {
+                    this.canvas.width = this.video.videoWidth;
+                    this.canvas.height = this.video.videoHeight;
+                    this.ctx.drawImage(this.video, 0, 0);
+                    
+                    const imageData = this.ctx.getImageData(0, 0, this.canvas.width, this.canvas.height);
+                    const code = jsQR(imageData.data, imageData.width, imageData.height, {
+                        inversionAttempts: "dontInvert",
+                    });
+                    
+                    if (code && code.data !== this.lastResult) {
+                        this.lastResult = code.data;
+                        this.onQRCodeDetected(code.data);
+                        return;
+                    }
+                }
+                
+                requestAnimationFrame(() => this.scan());
+            }
+            
+            onQRCodeDetected(data) {
+                this.showResult(data);
+                this.playBeep();
+            }
+            
+            showResult(data) {
+                document.getElementById('resultText').textContent = data;
+                document.getElementById('resultPopup').classList.remove('hidden');
+                this.pauseScanning();
+            }
+            
+            pauseScanning() {
+                this.isScanning = false;
+            }
+            
+            resumeScanning() {
+                this.isScanning = true;
+                this.lastResult = null;
+                this.scan();
+            }
+            
+            async toggleFlash() {
+                if (!this.flashSupported) return;
+                
+                try {
+                    const track = this.stream.getVideoTracks()[0];
+                    const constraints = track.getConstraints();
+                    
+                    await track.applyConstraints({
+                        advanced: [{ torch: !constraints.torch }]
+                    });
+                    
+                    const flashIcon = document.getElementById('flashIcon');
+                    flashIcon.textContent = constraints.torch ? '💡' : '🔦';
+                } catch (error) {
+                    console.error('Error toggling flash:', error);
+                }
+            }
+            
+            async switchCamera() {
+                this.currentCamera = this.currentCamera === 'environment' ? 'user' : 'environment';
+                
+                if (this.stream) {
+                    this.stream.getTracks().forEach(track => track.stop());
+                }
+                
+                await this.requestCamera();
+            }
+            
+            playBeep() {
+                const audioContext = new (window.AudioContext || window.webkitAudioContext)();
+                const oscillator = audioContext.createOscillator();
+                const gainNode = audioContext.createGain();
+                
+                oscillator.connect(gainNode);
+                gainNode.connect(audioContext.destination);
+                
+                oscillator.frequency.value = 800;
+                oscillator.type = 'sine';
+                
+                gainNode.gain.setValueAtTime(0.3, audioContext.currentTime);
+                gainNode.gain.exponentialRampToValueAtTime(0.01, audioContext.currentTime + 0.1);
+                
+                oscillator.start(audioContext.currentTime);
+                oscillator.stop(audioContext.currentTime + 0.1);
+            }
+            
+            showPermissionMessage() {
+                document.getElementById('permissionMessage').classList.remove('hidden');
+            }
+            
+            hidePermissionMessage() {
+                document.getElementById('permissionMessage').classList.add('hidden');
+            }
+            
+            stop() {
+                this.isScanning = false;
+                if (this.stream) {
+                    this.stream.getTracks().forEach(track => track.stop());
+                }
+            }
+        }
+        
+        let scanner = null;
+        
+        function requestCamera() {
+            if (scanner) {
+                scanner.requestCamera();
+            } else {
+                scanner = new QRScanner();
+            }
+        }
+        
+        function toggleFlash() {
+            if (scanner) {
+                scanner.toggleFlash();
+            }
+        }
+        
+        function switchCamera() {
+            if (scanner) {
+                scanner.switchCamera();
+            }
+        }
+        
+        function copyResult() {
+            const text = document.getElementById('resultText').textContent;
+            navigator.clipboard.writeText(text).then(() => {
+                alert('Copied to clipboard!');
+            });
+        }
+        
+        function closeResult() {
+            document.getElementById('resultPopup').classList.add('hidden');
+            scanner.resumeScanning();
+        }
+        
+        function scanAgain() {
+            document.getElementById('resultPopup').classList.add('hidden');
+            scanner.resumeScanning();
+        }
+        
+        function closeScanner() {
+            if (scanner) {
+                scanner.stop();
+            }
+            // You can add code here to navigate back to your main app
+            window.history.back();
+        }
+        
+        // Initialize scanner when page loads
+        document.addEventListener('DOMContentLoaded', () => {
+            scanner = new QRScanner();
+        });
+        
+        // Handle page visibility changes
+        document.addEventListener('visibilitychange', () => {
+            if (document.hidden) {
+                if (scanner) scanner.pauseScanning();
+            } else {
+                if (scanner) scanner.resumeScanning();
+            }
+        });
+    </script>
+</body>
+</html>
