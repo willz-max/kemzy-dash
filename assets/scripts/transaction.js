@@ -3,6 +3,7 @@
         const transactions = document.querySelectorAll('.transaction-item');
         document.querySelector('.failed-i').style.display = "none";
         document.querySelector('.success-i').style.display = "none";
+        document.querySelector('.back-btn').addEventListener('click',goBack)
 
         filterTabs.forEach(tab => {
             tab.addEventListener('click', () => {
@@ -114,3 +115,6 @@
                 closeReceipt();
             }
         });
+        function goBack() {
+            window.history.back();
+        }
