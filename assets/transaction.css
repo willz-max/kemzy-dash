@@ -1,4 +1,4 @@
-   * {
+        * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
@@ -6,115 +6,109 @@
 
         body {
             font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-            background: black;
+            background: #1a1a1a;
             color: #ffffff;
             min-height: 100vh;
-            /* padding: 20px; */
         }
 
         .container {
             max-width: 800px;
             margin: 0 auto;
-            background: black;
-            border-radius: 20px;
-            padding: 0;
-            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
-            overflow: hidden;
+            background: #2a2a2a;
+            min-height: 100vh;
+            position: relative;
         }
 
         .header {
             display: flex;
-            justify-content: space-between;
             align-items: center;
-            padding: 20px 30px;
-            background: rgba(20, 25, 35, 0.8);
-            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            justify-content: space-between;
+            padding: 20px;
+            background: #2a2a2a;
+            border-bottom: 1px solid #3a3a3a;
         }
 
         .back-btn {
-            background: rgba(255, 255, 255, 0.1);
+            background: none;
             border: none;
-            color: white;
-            padding: 10px 12px;
-            border-radius: 8px;
-            cursor: pointer;
+            color: #ffffff;
             font-size: 18px;
-            transition: all 0.3s ease;
+            cursor: pointer;
+            padding: 8px;
+            border-radius: 8px;
+            transition: background 0.2s;
         }
 
         .back-btn:hover {
-            background: rgba(255, 255, 255, 0.2);
+            background: #3a3a3a;
         }
 
         .header h1 {
-            font-size: 1.5em;
+            font-size: 18px;
             font-weight: 600;
-            margin: 0;
         }
 
         .export-btn {
-            background: transparent;
-            border: 1px solid rgba(255, 255, 255, 0.3);
-            color: white;
+            background: none;
+            border: 1px solid #4a4a4a;
+            color: #ffffff;
             padding: 8px 16px;
             border-radius: 8px;
             cursor: pointer;
             font-size: 14px;
-            transition: all 0.3s ease;
+            transition: all 0.2s;
         }
 
         .export-btn:hover {
-            background: rgba(255, 255, 255, 0.1);
-            border-color: rgba(255, 255, 255, 0.5);
+            background: #3a3a3a;
+            border-color: #5a5a5a;
         }
 
         .filter-tabs {
             display: flex;
-            padding: 20px 30px 0;
-            gap: 10px;
+            padding: 20px;
+            gap: 8px;
         }
 
         .filter-tab {
-            background: rgba(255, 255, 255, 0.1);
+            background: #3a3a3a;
             border: none;
-            color: rgba(255, 255, 255, 0.7);
-            padding: 12px 20px;
-            border-radius: 25px;
+            color: #888;
+            padding: 10px 20px;
+            border-radius: 20px;
             cursor: pointer;
             font-size: 14px;
-            font-weight: 500;
-            transition: all 0.3s ease;
+            transition: all 0.2s;
         }
 
         .filter-tab.active {
-            background: #4a90e2;
-            color: white;
+            background: #007aff;
+            color: #ffffff;
         }
 
         .filter-tab:hover:not(.active) {
-            background: rgba(255, 255, 255, 0.15);
-            color: rgba(255, 255, 255, 0.9);
+            background: #4a4a4a;
+            color: #ffffff;
         }
 
-        .transactions-container {
-            padding: 30px;
+        .transaction-list {
+            padding: 0 20px;
         }
 
         .transaction-item {
-            background: rgba(40, 45, 60, 0.6);
-            border-radius: 15px;
-            padding: 20px;
-            margin-bottom: 15px;
             display: flex;
             align-items: center;
-            transition: all 0.3s ease;
-            border: 1px solid rgba(255, 255, 255, 0.05);
+            padding: 16px;
+            margin-bottom: 12px;
+            background: #3a3a3a;
+            border-radius: 12px;
+            cursor: pointer;
+            transition: all 0.2s;
         }
 
         .transaction-item:hover {
-            background: rgba(40, 45, 60, 0.8);
-            transform: translateY(-2px);
-            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.2);
+            background: #4a4a4a;
+            transform: translateY(-1px);
         }
 
         .transaction-icon {
@@ -124,70 +118,64 @@
             display: flex;
             align-items: center;
             justify-content: center;
-            margin-right: 15px;
-            font-size: 18px;
-            font-weight: bold;
+            margin-right: 12px;
+            font-size: 16px;
         }
 
         .transaction-icon.received {
-            background: rgba(0, 255, 136, 0.2);
-            color: #00ff88;
+            background: #34c759;
         }
 
         .transaction-icon.sent {
-            background: rgba(255, 71, 87, 0.2);
-            color: #ff4757;
+            background: #ff3b30;
         }
 
         .transaction-icon.failed {
-            background: rgba(255, 71, 87, 0.3);
-            color: #ff4757;
+            background: #ff3b30;
+            opacity: 0.6;
         }
 
         .transaction-details {
             flex: 1;
         }
 
-        .transaction-title {
+        .transaction-type {
             font-size: 16px;
             font-weight: 600;
-            margin-bottom: 5px;
-            color: white;
+            margin-bottom: 4px;
         }
 
         .transaction-info {
-            font-size: 13px;
-            color: rgba(255, 255, 255, 0.6);
-            margin-bottom: 2px;
+            font-size: 14px;
+            color: #888;
         }
 
         .transaction-amount {
             text-align: right;
         }
 
-        .amount-crypto {
+        .amount {
             font-size: 16px;
             font-weight: 600;
-            margin-bottom: 3px;
+            margin-bottom: 4px;
         }
 
-        .amount-crypto.positive {
-            color: #00ff88;
+        .amount.positive {
+            color: #34c759;
         }
 
-        .amount-crypto.negative {
-            color: #ff4757;
+        .amount.negative {
+            color: #ff3b30;
         }
 
-        .amount-usd {
-            font-size: 13px;
-            color: rgba(255, 255, 255, 0.6);
+        .amount.failed {
+            color: #ff3b30;
+            opacity: 0.6;
         }
 
-        .failed-tag {
-            color: #ff4757;
-            font-size: 12px;
-            font-weight: 600;
+        .usd-amount {
+            font-size: 14px;
+            color: #888;
         }
 
         .refresh-btn {
@@ -195,85 +183,181 @@
             align-items: center;
             justify-content: center;
             gap: 8px;
-            background: transparent;
+            margin: 20px;
+            padding: 12px;
+            background: none;
             border: none;
-            color: #4a90e2;
-            padding: 15px;
-            font-size: 14px;
+            color: #007aff;
             cursor: pointer;
-            margin: 20px auto;
-            transition: all 0.3s ease;
-            border-radius: 8px;
+            font-size: 14px;
+            transition: opacity 0.2s;
         }
 
         .refresh-btn:hover {
-            background: rgba(74, 144, 226, 0.1);
-            color: #5ba0f2;
+            opacity: 0.8;
         }
 
-        .refresh-icon {
-            width: 16px;
-            height: 16px;
-            animation: spin 2s linear infinite;
+        /* Receipt Modal */
+        .receipt-modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.8);
+            z-index: 1000;
+            justify-content: center;
+            align-items: center;
         }
 
-        @keyframes spin {
-            from { transform: rotate(0deg); }
-            to { transform: rotate(360deg); }
+        .receipt-modal.active {
+            display: flex;
         }
 
-        .empty-state {
+        .receipt {
+            background: #2a2a2a;
+            border-radius: 12px;
+            padding: 24px;
+            max-width: 750px;
+            width: 90%;
+            max-height: 80vh;
+            overflow-y: auto;
+        }
+
+        .receipt-header {
             text-align: center;
-            padding: 60px 20px;
-            color: rgba(255, 255, 255, 0.6);
+            margin-bottom: 24px;
         }
 
-        .empty-state-icon {
-            font-size: 48px;
-            margin-bottom: 20px;
-            opacity: 0.3;
-        }
-
-        .empty-state-text {
-            font-size: 16px;
+        .receipt-title {
+            font-size: 18px;
+            font-weight: 600;
             margin-bottom: 8px;
         }
 
-        .empty-state-subtext {
+        .receipt-status {
+            font-size: 16px;
+            font-weight: 600;
+            margin-bottom: 24px;
+            text-align: center;
+        }
+
+        .receipt-status.success {
+            color: #34c759;
+        }
+
+        .receipt-status.failed {
+            color: #ff3b30;
+        }
+
+        .receipt-amount {
+            text-align: center;
+            margin-bottom: 8px;
+        }
+
+        .receipt-amount .amount {
+            font-size: 24px;
+            font-weight: 700;
+            margin-bottom: 4px;
+        }
+
+        .receipt-network {
+            text-align: center;
+            color: #888;
+            margin-bottom: 24px;
+        }
+
+        .receipt-details {
+            margin-bottom: 24px;
+        }
+
+        .receipt-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 16px;
+        }
+
+        .receipt-row:last-child {
+            margin-bottom: 0;
+        }
+
+        .receipt-label {
+            color: #888;
             font-size: 14px;
-            opacity: 0.7;
         }
 
-        .hidden {
-            display: none;
+        .receipt-value {
+            font-size: 14px;
+            font-weight: 500;
+            text-align: right;
+            max-width: 60%;
+            word-break: break-all;
         }
 
-        @media (max-width: 768px) {
-            .container {
-                margin: 0;
-                border-radius: 0;
-                min-height: 100vh;
-            }
-            
-            .header {
-                padding: 15px 20px;
-            }
-            
-            .filter-tabs {
-                padding: 15px 20px 0;
-                gap: 8px;
-            }
-            
-            .filter-tab {
-                padding: 10px 16px;
-                font-size: 13px;
-            }
-            
-            .transactions-container {
-                padding: 20px;
-            }
-            
-            .transaction-item {
-                padding: 15px;
-            }
+        .copy-btn {
+            background: none;
+            border: none;
+            color: #007aff;
+            cursor: pointer;
+            font-size: 12px;
+            margin-left: 8px;
+            padding: 2px 6px;
+            border-radius: 4px;
+            transition: background 0.2s;
         }
+
+        .copy-btn:hover {
+            background: #007aff20;
+        }
+
+        .receipt-footer {
+            text-align: center;
+            color: #888;
+            font-size: 12px;
+            margin-bottom: 24px;
+        }
+
+        .done-btn {
+            width: 100%;
+            background: #00d4aa;
+            border: none;
+            color: #ffffff;
+            padding: 16px;
+            border-radius: 12px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: background 0.2s;
+        }
+
+        .done-btn:hover {
+            background: #00c49a;
+        }
+
+        .failed-badge {
+            color: #ff3b30;
+            font-size: 12px;
+            margin-left: 8px;
+        }
+        div.icon{
+            display: flex;
+            justify-content: center;
+        }
+        div.icon i{
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 50px;
+            width: 50px;
+            font-size: 40px;
+            font-weight: bold;
+            color: black;
+           background-color: red;
+           border-radius: 50%;
+        }
+        div.success-i i{
+            background-color: rgb(7, 183, 7);
+        }
+        

@@ -7,102 +7,142 @@
     <link rel="stylesheet" href="assets/transaction.css">
 </head>
 <body>
-    <div class="container">
+      <div class="container">
         <div class="header">
-            <button class="back-btn" >←</button>
+            <button class="back-btn">←</button>
             <h1>Transaction History</h1>
-            <button class="export-btn" >Export</button>
+            <button class="export-btn">Export</button>
         </div>
 
         <div class="filter-tabs">
-            <button class="filter-tab active" onclick="filterTransactions('all')">All</button>
-            <button class="filter-tab" onclick="filterTransactions('sent')">Sent</button>
-            <button class="filter-tab" onclick="filterTransactions('received')">Received</button>
-            <button class="filter-tab" onclick="filterTransactions('failed')">Failed</button>
+            <button class="filter-tab active" data-filter="all">All</button>
+            <button class="filter-tab" data-filter="sent">Sent</button>
+            <button class="filter-tab" data-filter="received">Received</button>
+            <button class="filter-tab" data-filter="failed">Failed</button>
         </div>
 
-        <div class="transactions-container">
-            <!-- Received USDT Transaction -->
-            <div class="transaction-item" data-type="received">
+        <div class="transaction-list">
+            <div class="transaction-item" data-type="received" data-currency="USDT" data-amount="+150" data-usd="150.00" data-hash="0x119...3d4f" data-date="2 mins ago" data-fee="$0.50">
                 <div class="transaction-icon received">↓</div>
                 <div class="transaction-details">
-                    <div class="transaction-title">Received USDT</div>
+                    <div class="transaction-type">Received USDT</div>
                     <div class="transaction-info">From: 0x119...3d4f • 2 mins ago</div>
                 </div>
                 <div class="transaction-amount">
-                    <div class="amount-crypto positive">+150 USDT</div>
-                    <div class="amount-usd">$150.00</div>
+                    <div class="amount positive">+150 USDT</div>
+                    <div class="usd-amount">$150.00</div>
                 </div>
             </div>
 
-            <!-- Sent BTC Transaction -->
-            <div class="transaction-item" data-type="sent">
+            <div class="transaction-item" data-type="sent" data-currency="BTC" data-amount="-0.015" data-usd="525.75" data-hash="0x8a2...9e1b" data-date="1 hour ago" data-fee="$2.15">
                 <div class="transaction-icon sent">↑</div>
                 <div class="transaction-details">
-                    <div class="transaction-title">Sent BTC</div>
+                    <div class="transaction-type">Sent BTC</div>
                     <div class="transaction-info">To: 0x8a2...9e1b • 1 hour ago</div>
                 </div>
                 <div class="transaction-amount">
-                    <div class="amount-crypto negative">-0.015 BTC</div>
-                    <div class="amount-usd">$525.75</div>
+                    <div class="amount negative">-0.015 BTC</div>
+                    <div class="usd-amount">$525.75</div>
                 </div>
             </div>
 
-            <!-- Received ETH Transaction -->
-            <div class="transaction-item" data-type="received">
+            <div class="transaction-item" data-type="received" data-currency="ETH" data-amount="+0.3" data-usd="622.40" data-hash="0x4c7...2a9d" data-date="3 hours ago" data-fee="$0.75">
                 <div class="transaction-icon received">↓</div>
                 <div class="transaction-details">
-                    <div class="transaction-title">Received ETH</div>
+                    <div class="transaction-type">Received ETH</div>
                     <div class="transaction-info">From: 0x4c7...2a9d • 3 hours ago</div>
                 </div>
                 <div class="transaction-amount">
-                    <div class="amount-crypto positive">+0.3 ETH</div>
-                    <div class="amount-usd">$622.40</div>
+                    <div class="amount positive">+0.3 ETH</div>
+                    <div class="usd-amount">$622.40</div>
                 </div>
             </div>
 
-            <!-- Sent BNB Transaction -->
-            <div class="transaction-item" data-type="sent">
+            <div class="transaction-item" data-type="sent" data-currency="BNB" data-amount="-1.2" data-usd="312.00" data-hash="0x3e5...7c2f" data-date="1 day ago" data-fee="$0.95">
                 <div class="transaction-icon sent">↑</div>
                 <div class="transaction-details">
-                    <div class="transaction-title">Sent BNB</div>
+                    <div class="transaction-type">Sent BNB</div>
                     <div class="transaction-info">To: 0x3e5...7c2f • 1 day ago</div>
                 </div>
                 <div class="transaction-amount">
-                    <div class="amount-crypto negative">-1.2 BNB</div>
-                    <div class="amount-usd">$312.00</div>
+                    <div class="amount negative">-1.2 BNB</div>
+                    <div class="usd-amount">$312.00</div>
                 </div>
             </div>
 
-            <!-- Failed SOL Transaction -->
-            <div class="transaction-item" data-type="failed">
+            <div class="transaction-item" data-type="failed" data-currency="SOL" data-amount="-5" data-usd="475.00" data-hash="0x9b1...4e3a" data-date="2 days ago" data-fee="$1.25">
                 <div class="transaction-icon failed">↑</div>
                 <div class="transaction-details">
-                    <div class="transaction-title">Sent SOL</div>
-                    <div class="transaction-info">To: 0x9b1...4e3a • 2 days ago • <span class="failed-tag">Failed</span></div>
+                    <div class="transaction-type">Sent SOL</div>
+                    <div class="transaction-info">To: 0x9b1...4e3a • 2 days ago<span class="failed-badge">• Failed</span></div>
                 </div>
                 <div class="transaction-amount">
-                    <div class="amount-crypto negative">-5 SOL</div>
-                    <div class="amount-usd">$475.00</div>
+                    <div class="amount failed">-5 SOL</div>
+                    <div class="usd-amount">$475.00</div>
                 </div>
             </div>
         </div>
 
         <button class="refresh-btn">
-            <svg class="refresh-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                <path d="M21 12a9 9 0 11-6.219-8.56"/>
-                <path d="M15 12a3 3 0 11-3-3"/>
-                <path d="M21 4v4h-4"/>
-            </svg>
-            Refresh
+            <span>↻</span>
+            <span>Refresh</span>
         </button>
+    </div>
 
-        <div class="empty-state hidden" id="emptyState">
-            <div class="empty-state-icon">📋</div>
-            <div class="empty-state-text">No transactions found</div>
-            <div class="empty-state-subtext">Transactions matching your filter will appear here</div>
+    <!-- Receipt Modal -->
+    <div class="receipt-modal" id="receiptModal">
+        <div class="receipt">
+            <div class="receipt-header">
+                <div class="receipt-title">Receipt</div>
+            </div>
+
+            <div class="receipt-status" id="receiptStatus">Transaction Successful</div>
+            <div class="icon success-i"><i><ion-icon name="checkmark-outline"></ion-icon></i></div>
+            <div class="icon failed-i"><i><ion-icon name="close-outline"></ion-icon></i></div>
+
+            <div class="receipt-amount">
+                <div class="amount" id="receiptAmount">0.25 ETH</div>
+            </div>
+            <div class="receipt-network" id="receiptNetwork">Ethereum Network</div>
+
+            <div class="receipt-details">
+                <div class="receipt-row">
+                    <div class="receipt-label">To</div>
+                    <div class="receipt-value" id="receiptTo">
+                        0xA1B2...F89C
+                        <button class="copy-btn" onclick="copyToClipboard('receiptTo')">Copy</button>
+                    </div>
+                </div>
+                <div class="receipt-row">
+                    <div class="receipt-label">Date</div>
+                    <div class="receipt-value" id="receiptDate">Jul 4, 2025 15:32</div>
+                </div>
+                <div class="receipt-row">
+                    <div class="receipt-label">Network Fee</div>
+                    <div class="receipt-value" id="receiptFee">$0.75</div>
+                </div>
+                <div class="receipt-row">
+                    <div class="receipt-label">Status</div>
+                    <div class="receipt-value" id="receiptStatusValue">Confirmed</div>
+                </div>
+                <div class="receipt-row">
+                    <div class="receipt-label">Transaction Hash</div>
+                    <div class="receipt-value" id="receiptHash">
+                        0xa9f3...bb78
+                        <button class="copy-btn" onclick="copyToClipboard('receiptHash')">Copy</button>
+                    </div>
+                </div>
+            </div>
+
+            <div class="receipt-footer">
+                This receipt confirms your transaction on the Ethereum blockchain.
+            </div>
+
+            <button class="done-btn" onclick="closeReceipt()">Done</button>
         </div>
     </div>
+     <script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
+<script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>
     <script src="assets/scripts/transaction.js"></script>
 </body>
 </html>
