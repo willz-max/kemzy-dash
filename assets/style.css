@@ -426,7 +426,7 @@ li{
 .dropdown-content {
     display: none;
     position: absolute;
-    background-color: #3a3a5a;
+    background-color: #141416;
     min-width: 160px;
     box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
     z-index: 1;
@@ -447,5 +447,8 @@ li{
 .dropdown-content a:hover {
     background-color: #5a5a7a; /* Hover background for dropdown items */
 }
+.dropdown span{
+  text-align: center;
+} 
 
 
