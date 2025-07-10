@@ -39,13 +39,12 @@
   <script src="script.js"></script>
 </body>
 </html> -->
-<!DOCTYPE html>
+<!-- <!DOCTYPE html>
 <html lang="en">
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Trading Platform</title>
+    <title>Trade History</title>
     <style>
         * {
             margin: 0;
@@ -58,642 +57,407 @@
             background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
             min-height: 100vh;
             color: white;
+            padding: 40px;
         }
 
-        .header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 20px 40px;
-            background: rgba(255, 255, 255, 0.05);
-            backdrop-filter: blur(10px);
-            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
-            flex-wrap: wrap;
-            row-gap: 20px;
-        }
-
-        .url-bar {
-            background: rgba(255, 255, 255, 0.1);
-            border: 1px solid rgba(255, 255, 255, 0.2);
-            border-radius: 8px;
-            padding: 12px 16px;
-            color: #888;
-            font-size: 14px;
-            width: 350px;
-        }
-
-        .nav-right {
-            display: flex;
-            align-items: center;
-            gap: 20px;
-        }
-
-        .trade-btn {
-            background: #2563eb;
-            color: white;
-            border: none;
-            padding: 10px 20px;
-            border-radius: 6px;
+        .page-title {
+            font-size: 32px;
             font-weight: 600;
-            cursor: pointer;
-            transition: background 0.3s;
+            color: #94a3b8;
+            margin-bottom: 40px;
         }
 
-        .trade-btn:hover {
-            background: #1d4ed8;
-        }
-
-        .profile-dropdown {
-            position: relative;
-        }
-
-        .profile-trigger {
-            display: flex;
-            align-items: center;
-            gap: 8px;
-            background: none;
-            border: none;
-            color: white;
-            cursor: pointer;
-            font-size: 16px;
-            padding: 8px 12px;
-            border-radius: 6px;
-            transition: background 0.3s;
-        }
-
-        .profile-trigger:hover {
-            background: rgba(255, 255, 255, 0.1);
-        }
-
-        .dropdown-arrow {
-            transition: transform 0.3s;
-        }
-
-        .dropdown-arrow.open {
-            transform: rotate(180deg);
-        }
-
-        .dropdown-menu {
-            position: absolute;
-            top: 100%;
-            right: 0;
-            background: rgba(30, 30, 50, 0.95);
-            backdrop-filter: blur(10px);
-            border: 1px solid rgba(255, 255, 255, 0.2);
-            border-radius: 8px;
-            min-width: 200px;
-            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
-            z-index: 1000;
-            opacity: 0;
-            visibility: hidden;
-            transform: translateY(-10px);
-            transition: all 0.3s ease;
-        }
-
-        .dropdown-menu.show {
-            opacity: 1;
-            visibility: visible;
-            transform: translateY(0);
-        }
-
-        .dropdown-item {
-            display: flex;
-            align-items: center;
-            gap: 12px;
-            padding: 12px 16px;
-            color: white;
-            text-decoration: none;
-            transition: background 0.3s;
-            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
-        }
-
-        .dropdown-item:last-child {
-            border-bottom: none;
-        }
-
-        .dropdown-item:hover {
-            background: rgba(255, 255, 255, 0.1);
-        }
-
-        .dropdown-icon {
-            font-size: 16px;
-            opacity: 0.7;
-        }
-
-        .main-content {
-            text-align: center;
-            max-width: 1200px;
-            margin: auto;
-            padding: 40px 20px;
-        }
-
-        .title {
-            font-size: 48px;
-            font-weight: 700;
-            margin-bottom: 60px;
-            background: linear-gradient(45deg, #fbbf24, #f59e0b);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
-        }
-
-        .title::before {
-            margin-right: 20px;
-        }
-
-        .traders-grid {
-            /* display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(400px, 1fr)); */
-            display: flex;
-            flex-wrap: wrap;
+        .stats-container {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
             gap: 30px;
-            max-width: 1400px;
-            margin: 0 auto;
-            justify-content: center;
+            margin-bottom: 50px;
+            max-width: 1200px;
         }
 
-        .trader-card {
-            background: rgba(20, 20, 35, 0.8);
-            border: 1px solid rgba(255, 255, 255, 0.1);
+        .stat-card {
+            padding: 30px;
             border-radius: 16px;
-            padding: 32px;
-            text-align: center;
-            backdrop-filter: blur(10px);
-            transition: all 0.3s ease;
             position: relative;
             overflow: hidden;
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            transition: transform 0.3s ease;
         }
 
-        .trader-card::before {
+        .stat-card:hover {
+            transform: translateY(-2px);
+        }
+
+        .stat-card.profits {
+            background: linear-gradient(135deg, #10b981 0%, #059669 100%);
+        }
+
+        .stat-card.investment {
+            background: linear-gradient(135deg, #3b82f6 0%, #2563eb 100%);
+        }
+
+        .stat-card::before {
             content: '';
             position: absolute;
             top: 0;
             left: 0;
             right: 0;
             bottom: 0;
-            background: linear-gradient(135deg, rgba(37, 99, 235, 0.1), rgba(245, 158, 11, 0.1));
+            background: rgba(255, 255, 255, 0.1);
             opacity: 0;
             transition: opacity 0.3s;
         }
 
-        .trader-card:hover::before {
+        .stat-card:hover::before {
             opacity: 1;
         }
 
-        .trader-card:hover {
-            transform: translateY(-5px);
-            border-color: rgba(255, 255, 255, 0.2);
-            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+        .stat-header {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin-bottom: 16px;
         }
 
-        .trader-avatar {
+        .stat-icon {
+            width: 24px;
+            height: 24px;
+            border: 2px solid rgba(255, 255, 255, 0.3);
+            border-radius: 4px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 12px;
+        }
+
+        .stat-title {
+            font-size: 18px;
+            font-weight: 600;
+            color: white;
+        }
+
+        .stat-amount {
+            font-size: 36px;
+            font-weight: 700;
+            color: white;
+        }
+
+        .trade-table-container {
+            background: rgba(30, 30, 50, 0.6);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 16px;
+            padding: 30px;
+            backdrop-filter: blur(10px);
+            max-width: 1200px;
+        }
+
+        .table-header {
+            display: grid;
+            grid-template-columns: 80px 200px 150px 150px 150px 150px 120px;
+            gap: 20px;
+            padding: 20px 0;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            margin-bottom: 30px;
+        }
+
+        .table-header-cell {
+            font-size: 14px;
+            font-weight: 600;
+            color: #94a3b8;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .empty-state {
+            text-align: center;
+            padding: 80px 20px;
+            color: #64748b;
+        }
+
+        .empty-icon {
             width: 80px;
             height: 80px;
-            border-radius: 50%;
             margin: 0 auto 20px;
-            border: 3px solid #2563eb;
-            object-fit: cover;
+            opacity: 0.3;
+            stroke: currentColor;
+            stroke-width: 1.5;
+            fill: none;
+            stroke-linecap: round;
+            stroke-linejoin: round;
         }
 
-        .trader-name {
-            font-size: 24px;
-            font-weight: 700;
-            margin-bottom: 8px;
-            color: white;
-        }
-
-        .trader-id {
-            color: #888;
-            margin-bottom: 24px;
-            font-size: 14px;
-        }
-
-        .copy-btn {
-            background: #2563eb;
-            color: white;
-            border: none;
-            padding: 14px 32px;
-            border-radius: 8px;
-            font-weight: 600;
-            cursor: pointer;
-            width: 100%;
-            margin-bottom: 24px;
-            font-size: 16px;
-            transition: all 0.3s;
-        }
-
-        .copy-btn:hover {
-            background: #1d4ed8;
-            transform: translateY(-2px);
-        }
-
-        .stats-grid {
-            gap: 16px;
-            margin-bottom: 20px;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-        }
-
-        .stat-item {
-            text-align: left;
-        }
-
-        .stat-label {
-            color: #888;
-            font-size: 14px;
-            margin-bottom: 4px;
-        }
-
-        .stat-value {
+        .empty-message {
             font-size: 18px;
-            font-weight: 600;
-            color: white;
+            font-weight: 500;
         }
 
-        .roi-positive {
-            color: #10b981;
-        }
 
-        .fee-info {
-            display: flex;
-            justify-content: space-between;
-            margin-top: 16px;
-            font-size: 14px;
-            color: #888;
-        }
 
-        .accuracy {
-            text-align: center;
-            margin-top: 16px;
-            padding-top: 16px;
-            border-top: 1px solid rgba(255, 255, 255, 0.1);
-        }
-
-        .accuracy-label {
-            color: #888;
-            font-size: 14px;
-            margin-bottom: 4px;
-        }
-
-        .accuracy-value {
-            font-size: 18px;
-            font-weight: 600;
-            color: #10b981;
+        @media (max-width: 768px) {
+            .stats-container {
+                grid-template-columns: 1fr;
+                gap: 20px;
+            }
+            
+            .table-header {
+                display: none;
+            }
+            
+            .trade-table-container {
+                padding: 20px;
+            }
+            
+            body {
+                padding: 20px;
+            }
         }
     </style>
 </head>
-
 <body>
-    <header class="header">
-        <div class="url-bar">
-            https://bullfortunna.com/register/?ref=
+    <div class="page-title">Trade History</div>
+    
+    <div class="stats-container">
+        <div class="stat-card profits">
+            <div class="stat-header">
+                <div class="stat-icon">📈</div>
+                <div class="stat-title">Accumulated Profits</div>
+            </div>
+            <div class="stat-amount">$0.00</div>
         </div>
-        <div class="nav-right">
-            <button class="trade-btn">📈 TRADE</button>
-            <div class="profile-dropdown">
-                <button class="profile-trigger" onclick="toggleDropdown()">
-                    Vic
-                    <span class="dropdown-arrow">▼</span>
-                </button>
-                <div class="dropdown-menu" id="dropdownMenu">
-                    <a href="#" class="dropdown-item">
-                        <span class="dropdown-icon">👤</span>
-                        My Profile
-                    </a>
-                    <a href="#" class="dropdown-item">
-                        <span class="dropdown-icon">🔧</span>
-                        Change Password
-                    </a>
-                    <a href="#" class="dropdown-item">
-                        <span class="dropdown-icon">🚪</span>
-                        Logout
-                    </a>
-                </div>
+        
+        <div class="stat-card investment">
+            <div class="stat-header">
+                <div class="stat-icon">📊</div>
+                <div class="stat-title">Total Investment in CopyTrade</div>
             </div>
+            <div class="stat-amount">$0.00</div>
         </div>
-    </header>
-
-    <main class="main-content">
-        <h1 class="title">Top Traders</h1>
-
-        <div class="traders-grid">
-
-            <div class="trader-card">
-                <img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=80&h=80&fit=crop&crop=face"
-                    alt="Stock Moe" class="trader-avatar">
-                <h3 class="trader-name">Stock Moe</h3>
-                <p class="trader-id">ID: 745318627</p>
-                <button class="copy-btn">Copy & Start Trading</button>
-
-                <div class="stats-grid">
-                    <div class="stat-item">
-                        <div class="stat-label">ROI: <span class="stat-value roi-positive">15%</span></div>
-                        <!-- <div ></div> -->
-                    </div>
-                    <div class="stat-item">
-                        <div class="stat-label">All Profits: <span class="stat-value">$715000</span></div>
-                        <!-- <div class="stat-value"></div> -->
-                    </div>
-                    <div class="stat-item">
-                        <div class="stat-label">Copiers: <span class="stat-value">92</span></div>
-                        <!-- <div >92</div> -->
-                    </div>
-                </div>
-
-                <div class="fee-info">
-                    <span>Min Fee: $5000.00</span>
-                    <span>Max Fee: $600000.00</span>
-                </div>
-
-                <div class="accuracy">
-                    <div class="accuracy-label">Accuracy:</div>
-                    <div class="accuracy-value">86%</div>
-                </div>
-            </div>
-
-            <div class="trader-card">
-                <img src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=80&h=80&fit=crop&crop=face"
-                    alt="Josh Trades" class="trader-avatar">
-                <h3 class="trader-name">Josh Trades</h3>
-                <p class="trader-id">ID: 712128235</p>
-                <button class="copy-btn">Copy & Start Trading</button>
-
-                <div class="stats-grid">
-                    <div class="stat-item">
-                        <div class="stat-label">ROI: <span class="stat-value roi-positive">15%</span></div>
-                        <!-- <div ></div> -->
-                    </div>
-                    <div class="stat-item">
-                        <div class="stat-label">All Profits: <span class="stat-value">$715000</span></div>
-                        <!-- <div class="stat-value"></div> -->
-                    </div>
-                    <div class="stat-item">
-                        <div class="stat-label">Copiers: <span class="stat-value">92</span></div>
-                        <!-- <div >92</div> -->
-                    </div>
-                </div>
-
-                <div class="fee-info">
-                    <span>Min Fee: $5000.00</span>
-                    <span>Max Fee: $600000.00</span>
-                </div>
-
-                <div class="accuracy">
-                    <div class="accuracy-label">Accuracy:</div>
-                    <div class="accuracy-value">86%</div>
-                </div>
-            </div>
-
-            <div class="trader-card">
-                <img src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=80&h=80&fit=crop&crop=face"
-                    alt="Beehoney Trades" class="trader-avatar">
-                <h3 class="trader-name">Beehoney Trades</h3>
-                <p class="trader-id">ID: 1660813581</p>
-                <button class="copy-btn">Copy & Start Trading</button>
-
-                <div class="stats-grid">
-                    <div class="stat-item">
-                        <div class="stat-label">ROI: <span class="stat-value roi-positive">15%</span></div>
-                        <!-- <div ></div> -->
-                    </div>
-                    <div class="stat-item">
-                        <div class="stat-label">All Profits: <span class="stat-value">$715000</span></div>
-                        <!-- <div class="stat-value"></div> -->
-                    </div>
-                    <div class="stat-item">
-                        <div class="stat-label">Copiers: <span class="stat-value">92</span></div>
-                        <!-- <div >92</div> -->
-                    </div>
-                </div>
-
-                <div class="fee-info">
-                    <span>Min Fee: $5000.00</span>
-                    <span>Max Fee: $600000.00</span>
-                </div>
-
-                <div class="accuracy">
-                    <div class="accuracy-label">Accuracy:</div>
-                    <div class="accuracy-value">86%</div>
-                </div>
-            </div>
-            <div class="trader-card">
-                <img src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=80&h=80&fit=crop&crop=face"
-                    alt="Beehoney Trades" class="trader-avatar">
-                <h3 class="trader-name">Beehoney Trades</h3>
-                <p class="trader-id">ID: 1660813581</p>
-                <button class="copy-btn">Copy & Start Trading</button>
-
-                <div class="stats-grid">
-                    <div class="stat-item">
-                        <div class="stat-label">ROI: <span class="stat-value roi-positive">15%</span></div>
-                        <!-- <div ></div> -->
-                    </div>
-                    <div class="stat-item">
-                        <div class="stat-label">All Profits: <span class="stat-value">$715000</span></div>
-                        <!-- <div class="stat-value"></div> -->
-                    </div>
-                    <div class="stat-item">
-                        <div class="stat-label">Copiers: <span class="stat-value">92</span></div>
-                        <!-- <div >92</div> -->
-                    </div>
-                </div>
-
-                <div class="fee-info">
-                    <span>Min Fee: $5000.00</span>
-                    <span>Max Fee: $600000.00</span>
-                </div>
-
-                <div class="accuracy">
-                    <div class="accuracy-label">Accuracy:</div>
-                    <div class="accuracy-value">86%</div>
-                </div>
-            </div>
-            <div class="trader-card">
-                <img src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=80&h=80&fit=crop&crop=face"
-                    alt="Beehoney Trades" class="trader-avatar">
-                <h3 class="trader-name">Beehoney Trades</h3>
-                <p class="trader-id">ID: 1660813581</p>
-                <button class="copy-btn">Copy & Start Trading</button>
-
-                <div class="stats-grid">
-                    <div class="stat-item">
-                        <div class="stat-label">ROI: <span class="stat-value roi-positive">15%</span></div>
-                        <!-- <div ></div> -->
-                    </div>
-                    <div class="stat-item">
-                        <div class="stat-label">All Profits: <span class="stat-value">$715000</span></div>
-                        <!-- <div class="stat-value"></div> -->
-                    </div>
-                    <div class="stat-item">
-                        <div class="stat-label">Copiers: <span class="stat-value">92</span></div>
-                        <!-- <div >92</div> -->
-                    </div>
-                </div>
-
-                <div class="fee-info">
-                    <span>Min Fee: $5000.00</span>
-                    <span>Max Fee: $600000.00</span>
-                </div>
-
-                <div class="accuracy">
-                    <div class="accuracy-label">Accuracy:</div>
-                    <div class="accuracy-value">86%</div>
-                </div>
-            </div>
-            <div class="trader-card">
-                <img src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=80&h=80&fit=crop&crop=face"
-                    alt="Beehoney Trades" class="trader-avatar">
-                <h3 class="trader-name">Beehoney Trades</h3>
-                <p class="trader-id">ID: 1660813581</p>
-                <button class="copy-btn">Copy & Start Trading</button>
-
-                <div class="stats-grid">
-                    <div class="stat-item">
-                        <div class="stat-label">ROI: <span class="stat-value roi-positive">15%</span></div>
-                        <!-- <div ></div> -->
-                    </div>
-                    <div class="stat-item">
-                        <div class="stat-label">All Profits: <span class="stat-value">$715000</span></div>
-                        <!-- <div class="stat-value"></div> -->
-                    </div>
-                    <div class="stat-item">
-                        <div class="stat-label">Copiers: <span class="stat-value">92</span></div>
-                        <!-- <div >92</div> -->
-                    </div>
-                </div>
-
-                <div class="fee-info">
-                    <span>Min Fee: $5000.00</span>
-                    <span>Max Fee: $600000.00</span>
-                </div>
-
-                <div class="accuracy">
-                    <div class="accuracy-label">Accuracy:</div>
-                    <div class="accuracy-value">86%</div>
-                </div>
-            </div>
-            <div class="trader-card">
-                <img src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=80&h=80&fit=crop&crop=face"
-                    alt="Beehoney Trades" class="trader-avatar">
-                <h3 class="trader-name">Beehoney Trades</h3>
-                <p class="trader-id">ID: 1660813581</p>
-                <button class="copy-btn">Copy & Start Trading</button>
-
-                <div class="stats-grid">
-                    <div class="stat-item">
-                        <div class="stat-label">ROI: <span class="stat-value roi-positive">15%</span></div>
-                        <!-- <div ></div> -->
-                    </div>
-                    <div class="stat-item">
-                        <div class="stat-label">All Profits: <span class="stat-value">$715000</span></div>
-                        <!-- <div class="stat-value"></div> -->
-                    </div>
-                    <div class="stat-item">
-                        <div class="stat-label">Copiers: <span class="stat-value">92</span></div>
-                        <!-- <div >92</div> -->
-                    </div>
-                </div>
-
-                <div class="fee-info">
-                    <span>Min Fee: $5000.00</span>
-                    <span>Max Fee: $600000.00</span>
-                </div>
-
-                <div class="accuracy">
-                    <div class="accuracy-label">Accuracy:</div>
-                    <div class="accuracy-value">86%</div>
-                </div>
-            </div>
-            <div class="trader-card">
-                <img src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=80&h=80&fit=crop&crop=face"
-                    alt="Beehoney Trades" class="trader-avatar">
-                <h3 class="trader-name">Beehoney Trades</h3>
-                <p class="trader-id">ID: 1660813581</p>
-                <button class="copy-btn">Copy & Start Trading</button>
-
-                <div class="stats-grid">
-                    <div class="stat-item">
-                        <div class="stat-label">ROI: <span class="stat-value roi-positive">15%</span></div>
-                        <!-- <div ></div> -->
-                    </div>
-                    <div class="stat-item">
-                        <div class="stat-label">All Profits: <span class="stat-value">$715000</span></div>
-                        <!-- <div class="stat-value"></div> -->
-                    </div>
-                    <div class="stat-item">
-                        <div class="stat-label">Copiers: <span class="stat-value">92</span></div>
-                        <!-- <div >92</div> -->
-                    </div>
-                </div>
-
-                <div class="fee-info">
-                    <span>Min Fee: $5000.00</span>
-                    <span>Max Fee: $600000.00</span>
-                </div>
-
-                <div class="accuracy">
-                    <div class="accuracy-label">Accuracy:</div>
-                    <div class="accuracy-value">86%</div>
-                </div>
-            </div>
-            <div class="trader-card">
-                <img src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=80&h=80&fit=crop&crop=face"
-                    alt="Beehoney Trades" class="trader-avatar">
-                <h3 class="trader-name">Beehoney Trades</h3>
-                <p class="trader-id">ID: 1660813581</p>
-                <button class="copy-btn">Copy & Start Trading</button>
-
-                <div class="stats-grid">
-                    <div class="stat-item">
-                        <div class="stat-label">ROI: <span class="stat-value roi-positive">15%</span></div>
-                        <!-- <div ></div> -->
-                    </div>
-                    <div class="stat-item">
-                        <div class="stat-label">All Profits: <span class="stat-value">$715000</span></div>
-                        <!-- <div class="stat-value"></div> -->
-                    </div>
-                    <div class="stat-item">
-                        <div class="stat-label">Copiers: <span class="stat-value">92</span></div>
-                        <!-- <div >92</div> -->
-                    </div>
-                </div>
-
-                <div class="fee-info">
-                    <span>Min Fee: $5000.00</span>
-                    <span>Max Fee: $600000.00</span>
-                </div>
-
-                <div class="accuracy">
-                    <div class="accuracy-label">Accuracy:</div>
-                    <div class="accuracy-value">86%</div>
-                </div>
-            </div>
-
-
+    </div>
+    
+    <div class="trade-table-container">
+        <div class="table-header">
+            <div class="table-header-cell">Trx</div>
+            <div class="table-header-cell">Order Date | Pair</div>
+            <div class="table-header-cell">Trade Date</div>
+            <div class="table-header-cell">Trader</div>
+            <div class="table-header-cell">Amount</div>
+            <div class="table-header-cell">Profit Earned</div>
+            <div class="table-header-cell">Status</div>
         </div>
-    </main>
+        
+        <div class="empty-state">
+            <svg class="empty-icon" viewBox="0 0 24 24">
+                <path d="M20 7l-8-4-8 4m16 0l-8 4m8-4v10l-8 4m0-10L4 7m8 4v10M9 1v6m6-6v6"/>
+            </svg>
+            <div class="empty-message">No trade found</div>
+        </div>
+    </div>
+    
 
-    <script>
-        function toggleDropdown() {
-            const dropdown = document.getElementById('dropdownMenu');
-            const arrow = document.querySelector('.dropdown-arrow');
 
-            dropdown.classList.toggle('show');
-            arrow.classList.toggle('open');
-        }
-
-        // Close dropdown when clicking outside
-        document.addEventListener('click', function (event) {
-            const dropdown = document.querySelector('.profile-dropdown');
-            const menu = document.getElementById('dropdownMenu');
-
-            if (!dropdown.contains(event.target)) {
-                menu.classList.remove('show');
-                document.querySelector('.dropdown-arrow').classList.remove('open');
-            }
-        });
-    </script>
 </body>
+</html> -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Scalping Bot Dashboard</title>
+  <style>
+    body {
+      background-color: #111;
+      color: #fff;
+      font-family: Arial, sans-serif;
+      margin: 0;
+      padding: 20px;
+    }
 
+    .container {
+      max-width: 1000px;
+      margin: auto;
+    }
+
+    h1, h2 {
+      color: #0f0;
+    }
+
+    .status {
+      margin: 20px 0;
+      font-size: 1.2em;
+    }
+
+    button {
+      padding: 10px 20px;
+      font-size: 1em;
+      background-color: #0f0;
+      border: none;
+      cursor: pointer;
+      border-radius: 5px;
+      margin-right: 10px;
+    }
+
+    .history {
+      margin-top: 30px;
+    }
+
+    .trade-entry {
+      background-color: #222;
+      padding: 10px;
+      margin-bottom: 10px;
+      border-left: 5px solid #0f0;
+    }
+
+    .inactive {
+      color: #f00;
+    }
+
+    .active {
+      color: #0f0;
+    }
+
+    canvas {
+      background-color: #222;
+      padding: 10px;
+      border-radius: 10px;
+      margin-top: 20px;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>Scalping Bot (8 AM - 11 AM)</h1>
+    <div class="status">
+      Status: <span id="botStatus" class="inactive">Inactive</span>
+    </div>
+    <button id="startBtn">Start Bot</button>
+    <button id="stopBtn">Stop Bot</button>
+
+    <canvas id="priceChart" width="900" height="300"></canvas>
+
+    <div class="history">
+      <h2>Trade History</h2>
+      <div id="tradeHistory"></div>
+    </div>
+  </div>
+
+  <!-- Chart.js CDN -->
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+  <script>
+    // Initial variables
+    let botRunning = false;
+    let tradeHistory = document.getElementById("tradeHistory");
+    let botStatus = document.getElementById("botStatus");
+    let chart, chartData;
+    let price = 100;
+
+    // Setup chart
+    function setupChart() {
+      const ctx = document.getElementById('priceChart').getContext('2d');
+      chartData = {
+        labels: [],
+        datasets: [{
+          label: 'Price',
+          borderColor: '#0f0',
+          backgroundColor: 'rgba(0,255,0,0.1)',
+          data: [],
+          fill: true,
+          tension: 0.2,
+        }]
+      };
+
+      chart = new Chart(ctx, {
+        type: 'line',
+        data: chartData,
+        options: {
+          scales: {
+            x: { ticks: { color: '#aaa' }, grid: { color: '#444' } },
+            y: { ticks: { color: '#aaa' }, grid: { color: '#444' } }
+          },
+          plugins: {
+            legend: { labels: { color: '#0f0' } }
+          }
+        }
+      });
+    }
+
+    function updateChart() {
+      const now = new Date();
+      const timeLabel = now.toLocaleTimeString();
+      price += (Math.random() - 0.5) * 0.5; // small random walk
+
+      chartData.labels.push(timeLabel);
+      chartData.datasets[0].data.push(price.toFixed(2));
+
+      if (chartData.labels.length > 30) {
+        chartData.labels.shift();
+        chartData.datasets[0].data.shift();
+      }
+
+      chart.update();
+    }
+
+    function getCurrentTime() {
+      const now = new Date();
+      return { hour: now.getHours(), minute: now.getMinutes() };
+    }
+
+    function startBot() {
+      const time = getCurrentTime();
+      if (time.hour >= 8 && time.hour < 11) {
+        if (!botRunning) {
+          botRunning = true;
+          botStatus.textContent = "Active";
+          botStatus.classList.remove("inactive");
+          botStatus.classList.add("active");
+          simulateTrade();
+        }
+      } else {
+        alert("Bot can only run between 8 AM and 11 AM.");
+      }
+    }
+
+    function stopBot() {
+      botRunning = false;
+      botStatus.textContent = "Inactive";
+      botStatus.classList.remove("active");
+      botStatus.classList.add("inactive");
+    }
+
+    function simulateTrade() {
+      if (!botRunning) return;
+
+      updateChart(); // simulate chart price update
+
+      const now = new Date();
+      const trade = {
+        time: now.toLocaleTimeString(),
+        asset: Math.random() > 0.5 ? "Forex - EUR/USD" : "Stock - TSLA",
+        result: Math.random() > 0.5 ? "+$15" : "-$10"
+      };
+
+      const entry = document.createElement("div");
+      entry.className = "trade-entry";
+      entry.innerHTML = `<strong>${trade.asset}</strong><br/>
+                         Time: ${trade.time}<br/>
+                         Result: ${trade.result}`;
+      tradeHistory.prepend(entry);
+
+      // Schedule next trade every 10 seconds
+      setTimeout(simulateTrade, 10000);
+    }
+
+    // Hook up buttons after DOM is ready
+    window.onload = function () {
+      setupChart();
+      setInterval(() => {
+        if (botRunning) updateChart();
+      }, 3000);
+
+      document.getElementById("startBtn").onclick = startBot;
+      document.getElementById("stopBtn").onclick = stopBot;
+    };
+  </script>
+</body>
 </html>

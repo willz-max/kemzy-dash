@@ -174,6 +174,10 @@
             font-size: 14px;
             color: #05C0A5;
         }
+        a{
+            text-decoration: none;
+            color: inherit;
+        }
         .menu-icon i{
             font-size: 20px;
         }

