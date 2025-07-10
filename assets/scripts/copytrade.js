@@ -90,3 +90,7 @@ function toggleDropdown() {
 
 
 document.querySelector(".profile-trigger").addEventListener("click", toggleDropdown); 
+
+ document.querySelector('.trade-btn').addEventListener('click', function() {
+            window.location.href = 'copy_trade_history.html';
+        } );

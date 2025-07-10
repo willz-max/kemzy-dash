@@ -12,7 +12,7 @@
             https://BukaWallets.com/register/?ref=
         </div>
         <div class="nav-right">
-            <button class="trade-btn">📈 TRADE</button>
+            <button class="trade-btn">Back</button>
             <div class="profile-dropdown">
                 <button class="profile-trigger">
                     Vic
@@ -35,6 +35,114 @@
             </div>
         </div>
     </header>
+    <main>
+         <div class="container">
+        <div class="header">
+            <h1>Trade History</h1>
+            
+            <div class="stats-grid">
+                <div class="stat-card profits">
+                    <div class="stat-header">
+                        <div class="stat-icon"></div>
+                        <div class="stat-title">Accumulated Profits</div>
+                    </div>
+                    <div class="stat-value">$0.00</div>
+                </div>
+                
+                <div class="stat-card investment">
+                    <div class="stat-header">
+                        <div class="stat-icon"></div>
+                        <div class="stat-title">Total Investment in CopyTrade</div>
+                    </div>
+                    <div class="stat-value">$0.00</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="table-container">
+            <div class="table-wrapper">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Trx</th>
+                            <th>Order Date | Pair</th>
+                            <th>Trade Date</th>
+                            <th>Trader</th>
+                            <th>Amount</th>
+                            <th>Profit Earned</th>
+                            <th>Status</th>
+                        </tr>
+                    </thead>
+                    <tbody id="tradeTableBody">
+                        <!-- Sample data - remove in production -->
+                        <tr style="display: none;">
+                            <td>TRX001</td>
+                            <td>2024-01-15<br><small>BTC/USDT</small></td>
+                            <td>2024-01-15</td>
+                            <td>John Trader</td>
+                            <td>$1,000.00</td>
+                            <td class="profit-positive">+$150.00</td>
+                            <td><span class="status-badge status-completed">Completed</span></td>
+                        </tr>
+                    </tbody>
+                </table>
+                
+                <div class="empty-state">
+                    <div class="empty-icon">
+                        <svg viewBox="0 0 24 24">
+                            <path d="M20 7H4a1 1 0 0 0-1 1v10a1 1 0 0 0 1 1h16a1 1 0 0 0 1-1V8a1 1 0 0 0-1-1z"></path>
+                            <path d="M3 8l9 6 9-6"></path>
+                            <path d="M12 2v6"></path>
+                        </svg>
+                    </div>
+                    <div class="empty-message">No trade found</div>
+                </div>
+            </div>
+        </div>
+    </div>
+    </main>
+     <div class="section">
+        <h2 class="section-title">Ongoing Trades</h2>
+        
+        <div class="stats-container">
+            <div class="stat-card active">
+                <div class="stat-label">
+                    <!-- <input type="checkbox" style="margin-right: 4px;"> -->
+                    Active Trades
+                </div>
+                <div class="stat-value">0</div>
+            </div>
+            
+            <div class="stat-card pending">
+                <div class="stat-label">
+                    <!-- <input type="checkbox" style="margin-right: 4px;"> -->
+                    Pending Orders
+                </div>
+                <div class="stat-value">0</div>
+            </div>
+        </div>
+        
+        <div class="trades-table">
+            <div class="table-header">
+                <div>TRX</div>
+                <div>ORDER DATE | PAIR</div>
+                <div>ENTRY DATE</div>
+                <div>TRADER</div>
+                <div>AMOUNT</div>
+                <div>CURRENT P&L</div>
+                <div>ENTRY PRICE</div>
+                <div>STATUS</div>
+            </div>
+            
+            <div class="table-body">
+                <div class="empty-state">
+                    <div class="empty-icon">📊</div>
+                    <div class="empty-text">No ongoing trades</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
     
     <script src="assets/scripts/copy_trade_history.js"></script>
      <script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
