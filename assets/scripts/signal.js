@@ -168,3 +168,4 @@
 
 
 document.querySelector(".profile-trigger").addEventListener("click", toggleDropdown); 
+document.querySelector(".trade-btn").addEventListener('click',()=>{window.location.href = 'signal_history.html'});
