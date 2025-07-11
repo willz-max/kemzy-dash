@@ -7,81 +7,376 @@
     <link rel="stylesheet" href="assets/signal.css">
 </head>
 <body>
-    <div id="signal-cards-container">
-        </div>
-
-    <div id="subscription-modal" class="modal-overlay hidden">
-        <div class="modal-content">
-            <button id="close-modal-btn" class="modal-close-btn">
-                &times;
-            </button>
-            <h2 id="modal-signal-name-main">Subscribe to Signal</h2>
-
-            <div class="modal-inner-card">
-                <h3 id="modal-signal-name-inner"></h3>
-                <p id="modal-signal-username-inner" class="username"></p>
-
-                <div class="modal-stats-grid">
+  <div class="container">
+        <div class="signals-grid">
+            <!-- Edison Signal -->
+            <div class="signal-card">
+                <div class="signal-header">
+                    <div>
+                        <div class="signal-title">Edison Signal</div>
+                        <div class="signal-username">@Edison Signal</div>
+                    </div>
+                    
+                </div>
+                <div class="stats-row">
                     <div class="stat-item">
-                        <span id="modal-signal-gain" class="stat-value text-green-500"></span>
-                        <span class="stat-label">Gain</span>
+                        <div class="stat-value gain-positive">30.0%</div>
+                        <div class="stat-label">Gain</div>
                     </div>
                     <div class="stat-item">
-                        <span id="modal-signal-risk" class="stat-value"></span>
-                        <span class="stat-label">Risk</span>
+                        <div class="stat-value">
+                            <div class="risk-level risk-3">3</div>
+                        </div>
+                        <div class="stat-label">Risk</div>
                     </div>
                     <div class="stat-item">
-                        <span id="modal-signal-trades" class="stat-value text-gray-200"></span>
-                        <span class="stat-label">Trades</span>
+                        <div class="stat-value">1540</div>
+                        <div class="stat-label">Trades</div>
                     </div>
-                    <div class="stat-item col-span-3">
-                        <span id="modal-signal-inv-capital" class="stat-value text-gray-200"></span>
-                        <span class="stat-label">Inv. Capital</span>
+                    <div class="stat-item">
+                        <div class="stat-value">$20000.00</div>
+                        <div class="stat-label">Inv. Capital</div>
                     </div>
                 </div>
+                <div class="copiers-info">
+                    <span class="copiers-count">105 Copiers</span>
+                </div>
+                <button class="subscribe-btn" onclick="openModal('Edison Signal', '30.0%', '3', '1540', '$20000.00')">SUBSCRIBE</button>
+            </div>
 
-                <div class="modal-stats-grid" style="margin-top: 1.5rem;">
+            <!-- Wall Street Signals -->
+            <div class="signal-card">
+                <div class="signal-header">
+                    <div>
+                        <div class="signal-title">Wall Street Signals</div>
+                        <div class="signal-username">@Wall Street Signals</div>
+                    </div>
+                    
+                </div>
+                <div class="stats-row">
                     <div class="stat-item">
-                        <span id="modal-risk-no" class="stat-value"></span>
-                        <span class="stat-label">No.</span>
+                        <div class="stat-value gain-positive">10.0%</div>
+                        <div class="stat-label">Gain</div>
                     </div>
                     <div class="stat-item">
-                        <span id="modal-copiers" class="stat-value text-gray-200">181</span> <span class="stat-label">Copiers</span>
+                        <div class="stat-value">
+                            <div class="risk-level risk-2">2</div>
+                        </div>
+                        <div class="stat-label">Risk</div>
                     </div>
                     <div class="stat-item">
-                        <span id="modal-duration" class="stat-value text-gray-200">15</span> <span class="stat-label">Duration</span>
+                        <div class="stat-value">2500</div>
+                        <div class="stat-label">Trades</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-value">$10000.00</div>
+                        <div class="stat-label">Inv. Capital</div>
                     </div>
                 </div>
+                <div class="copiers-info">
+                    <span class="copiers-count">435 Copiers</span>
+                </div>
+                <button class="subscribe-btn" onclick="openModal('Wall Street Signals', '10.0%', '2', '2500', '$10000.00')">SUBSCRIBE</button>
             </div>
 
-            <div class="modal-deposit-info">
-                <p>Total Balance: <span class="highlight">$0.00 USD</span></p>
-                <p id="modal-deposit-required" class="modal-deposit-required-text"></p>
+            <!-- Pipmen Signals -->
+            <div class="signal-card">
+                <div class="signal-header">
+                    <div>
+                        <div class="signal-title">Pipmen Signals</div>
+                        <div class="signal-username">@Pipmen Signals</div>
+                    </div>
+                    
+                </div>
+                <div class="stats-row">
+                    <div class="stat-item">
+                        <div class="stat-value gain-positive">37.0%</div>
+                        <div class="stat-label">Gain</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-value">
+                            <div class="risk-level risk-2">2</div>
+                        </div>
+                        <div class="stat-label">Risk</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-value">876</div>
+                        <div class="stat-label">Trades</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-value">$50000.00</div>
+                        <div class="stat-label">Inv. Capital</div>
+                    </div>
+                </div>
+                <div class="copiers-info">
+                    <span class="copiers-count">102 Copiers</span>
+                </div>
+                <button class="subscribe-btn" onclick="openModal('Pipmen Signals', '37.0%', '2', '876', '$50000.00')">SUBSCRIBE</button>
             </div>
 
-            <button class="modal-deposit-btn">
-                DEPOSIT
-            </button>
+            <!-- Breakout Signal -->
+            <div class="signal-card">
+                <div class="signal-header">
+                    <div>
+                        <div class="signal-title">Breakout signal</div>
+                        <div class="signal-username">@Breakout signal</div>
+                    </div>
+                    
+                </div>
+                <div class="stats-row">
+                    <div class="stat-item">
+                        <div class="stat-value gain-positive">35.0%</div>
+                        <div class="stat-label">Gain</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-value">
+                            <div class="risk-level risk-2">2</div>
+                        </div>
+                        <div class="stat-label">Risk</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-value">1411</div>
+                        <div class="stat-label">Trades</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-value">$60000.00</div>
+                        <div class="stat-label">Inv. Capital</div>
+                    </div>
+                </div>
+                <div class="copiers-info">
+                    <span class="copiers-count">139 Copiers</span>
+                </div>
+                <button class="subscribe-btn" onclick="openModal('Breakout signal', '35.0%', '2', '1411', '$60000.00')">SUBSCRIBE</button>
+            </div>
 
-            <p class="modal-disclaimer">
-                Signal trades will be executed based on the trader's strategies and current market conditions.
-            </p>
+            <!-- BTC miner s10 data circuits -->
+            <div class="signal-card">
+                <div class="signal-header">
+                    <div>
+                        <div class="signal-title">BTC miner s10 data circuits</div>
+                        <div class="signal-username">@BTC miner s10 data circuits</div>
+                    </div>
+                    
+                </div>
+                <div class="stats-row">
+                    <div class="stat-item">
+                        <div class="stat-value gain-positive">8.0%</div>
+                        <div class="stat-label">Gain</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-value">
+                            <div class="risk-level risk-3">3</div>
+                        </div>
+                        <div class="stat-label">Risk</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-value">765</div>
+                        <div class="stat-label">Trades</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-value">$3000.00</div>
+                        <div class="stat-label">Inv. Capital</div>
+                    </div>
+                </div>
+                <div class="copiers-info">
+                    <span class="copiers-count">181 Copiers</span>
+                </div>
+                <button class="subscribe-btn" onclick="openModal('BTC miner s10 data circuits', '8.0%', '3', '765', '$3000.00')">SUBSCRIBE</button>
+            </div>
 
-            <button id="close-modal-btn-bottom" class="modal-close-btn-bottom">
-                Close
-            </button>
+            <!-- Trend signals -->
+            <div class="signal-card">
+                <div class="signal-header">
+                    <div>
+                        <div class="signal-title">Trend signals</div>
+                        <div class="signal-username">@Trend signals</div>
+                    </div>
+                    
+                </div>
+                <div class="stats-row">
+                    <div class="stat-item">
+                        <div class="stat-value gain-positive">8.0%</div>
+                        <div class="stat-label">Gain</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-value">
+                            <div class="risk-level risk-3">3</div>
+                        </div>
+                        <div class="stat-label">Risk</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-value">411</div>
+                        <div class="stat-label">Trades</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-value">$5000.00</div>
+                        <div class="stat-label">Inv. Capital</div>
+                    </div>
+                </div>
+                <div class="copiers-info">
+                    <span class="copiers-count">146 Copiers</span>
+                </div>
+                <button class="subscribe-btn" onclick="openModal('Trend signals', '8.0%', '3', '411', '$5000.00')">SUBSCRIBE</button>
+            </div>
+
+            <!-- BTC Trend Signal -->
+            <div class="signal-card">
+                <div class="signal-header">
+                    <div>
+                        <div class="signal-title">BTC Trend Signal</div>
+                        <div class="signal-username">@BTC Trend Signal</div>
+                    </div>
+                    
+                </div>
+                <div class="stats-row">
+                    <div class="stat-item">
+                        <div class="stat-value gain-positive">40.0%</div>
+                        <div class="stat-label">Gain</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-value">
+                            <div class="risk-level risk-3">3</div>
+                        </div>
+                        <div class="stat-label">Risk</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-value">265</div>
+                        <div class="stat-label">Trades</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-value">$100000.00</div>
+                        <div class="stat-label">Inv. Capital</div>
+                    </div>
+                </div>
+                <div class="copiers-info">
+                    <span class="copiers-count">98 Copiers</span>
+                </div>
+                <button class="subscribe-btn" onclick="openModal('BTC Trend Signal', '40.0%', '3', '265', '$100000.00')">SUBSCRIBE</button>
+            </div>
+
+            <!-- Jonathan H. Wage -->
+            <div class="signal-card">
+                <div class="signal-header">
+                    <div>
+                        <div class="signal-title">Jonathan H. Wage</div>
+                        <div class="signal-username">@Jonathan H. Wage</div>
+                    </div>
+                    
+                </div>
+                <div class="stats-row">
+                    <div class="stat-item">
+                        <div class="stat-value gain-positive">20.0%</div>
+                        <div class="stat-label">Gain</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-value">
+                            <div class="risk-level risk-3">3</div>
+                        </div>
+                        <div class="stat-label">Risk</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-value">953854</div>
+                        <div class="stat-label">Trades</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-value">$500000.00</div>
+                        <div class="stat-label">Inv. Capital</div>
+                    </div>
+                </div>
+                <div class="copiers-info">
+                    <span class="copiers-count">32 Copiers</span>
+                </div>
+                <button class="subscribe-btn" onclick="openModal('Jonathan H. Wage', '20.0%', '3', '953854', '$500000.00')">SUBSCRIBE</button>
+            </div>
+
+            <!-- Golden Sweeps -->
+            <div class="signal-card">
+                <div class="signal-header">
+                    <div>
+                        <div class="signal-title">Golden Sweeps</div>
+                        <div class="signal-username">@Golden Sweeps</div>
+                    </div>
+                    
+                </div>
+                <div class="stats-row">
+                    <div class="stat-item">
+                        <div class="stat-value gain-positive">10.0%</div>
+                        <div class="stat-label">Gain</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-value">
+                            <div class="risk-level risk-2">2</div>
+                        </div>
+                        <div class="stat-label">Risk</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-value">5275000</div>
+                        <div class="stat-label">Trades</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-value">$100000.00</div>
+                        <div class="stat-label">Inv. Capital</div>
+                    </div>
+                </div>
+                <div class="copiers-info">
+                    <span class="copiers-count">121 Copiers</span>
+                </div>
+                <button class="subscribe-btn" onclick="openModal('Golden Sweeps', '10.0%', '2', '5275000', '$100000.00')">SUBSCRIBE</button>
+            </div>
         </div>
     </div>
 
-    <button class="chat-button">
-        <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 10h.01M12 10h.01M16 10h.01M9 16H5a2 2 0 01-2-2V6a2 2 0 012-2h14a2 2 0 012 2v8a2 2 0 01-2 2h-5l-5 4v-4z" />
-        </svg>
-        <span class="chat-text">Chat</span>
-        <span class="notification-badge">
-            1
-        </span>
-    </button>
+    <!-- Modal -->
+    <div id="subscribeModal" class="modal">
+        <div class="modal-content">
+            <span class="close" onclick="closeModal()">&times;</span>
+            <div class="modal-header">
+                <h2 class="modal-title">Subscribe to <span id="modalSignalName"></span></h2>
+                <div class="signal-username">@<span id="modalUsername"></span></div>
+            </div>
+            
+            <div class="modal-stats">
+                <div class="modal-stat">
+                    <div class="modal-stat-value" id="modalGain"></div>
+                    <div class="modal-stat-label">Gain</div>
+                </div>
+                <div class="modal-stat">
+                    <div class="modal-stat-value" id="modalTrades"></div>
+                    <div class="modal-stat-label">Trades</div>
+                </div>
+                <div class="modal-stat">
+                    <div class="modal-stat-value" id="modalDuration">15 Days</div>
+                    <div class="modal-stat-label">Duration</div>
+                </div>
+            </div>
+
+            <div class="modal-stats">
+                <div class="modal-stat">
+                    <div class="modal-stat-value">
+                        <div class="risk-level risk-3" id="modalRisk"></div>
+                    </div>
+                    <div class="modal-stat-label">Risk rate</div>
+                </div>
+                <div class="modal-stat">
+                    <div class="modal-stat-value" id="modalCopiers">181</div>
+                    <div class="modal-stat-label">No. Copiers</div>
+                </div>
+            </div>
+
+            <div class="balance-info">
+                <div class="balance-label">Total Balance:</div>
+                <div class="balance-value">$0.00 USD</div>
+                <div class="deposit-required">You need to deposit <span id="requiredDeposit"></span> to subscribe.</div>
+            </div>
+
+            <button class="deposit-btn">DEPOSIT</button>
+            
+            <div class="modal-footer">
+                <p>Signal trades will be executed based on the trader's strategies and current market conditions.</p>
+                <button class="close-modal-btn" onclick="closeModal()">Close</button>
+            </div>
+        </div>
+    </div>
 
     <script src="assets/scripts/signal.js"></script>
 </body>
