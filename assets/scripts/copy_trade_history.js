@@ -236,8 +236,8 @@ document.querySelector(".profile-trigger").addEventListener("click", toggleDropd
 
         // Update stats
         function updateStats(activeTrades, pendingOrders) {
-            document.querySelector('.stat-card.active .stat-value').textContent = activeTrades;
-            document.querySelector('.stat-card.pending .stat-value').textContent = pendingOrders;
+            // document.querySelector('.stat-card.active .stat-value').textContent = activeTrades;
+            // document.querySelector('.stat-card.pending .stat-value').textContent = pendingOrders;
         }
 
         // Example of how to use with sample data (uncomment to test)
@@ -247,3 +247,6 @@ document.querySelector(".profile-trigger").addEventListener("click", toggleDropd
         document.querySelector('.trade-btn').addEventListener('click', function() {
             window.history.back();
         } );
+
+
+        // ai bot

@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>AI Crypto Trading Bot</title>
+  <script src="https://s3.tradingview.com/tv.js"></script>
+  <style>
+    body {
+      margin: 0;
+      font-family: 'Segoe UI', sans-serif;
+      background-color: #0e0e0e;
+      color: #ffffff;
+    }
+
+    header {
+      padding: 20px;
+      text-align: center;
+      background: linear-gradient(90deg, #0f2027, #203a43, #2c5364);
+      font-size: 24px;
+      font-weight: bold;
+      color: #0fffc1;
+    }
+
+    .container {
+      padding: 30px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+
+    #status {
+      margin: 20px;
+      padding: 15px 25px;
+      background-color: #1f1f1f;
+      border: 1px solid #0fffc1;
+      border-radius: 8px;
+      font-size: 18px;
+      color: #0fffc1;
+    }
+
+    .chart-box {
+      width: 100%;
+      max-width: 1000px;
+      height: 500px;
+      margin-bottom: 30px;
+      border-radius: 10px;
+      overflow: hidden;
+      border: 1px solid #333;
+    }
+
+    #history {
+      width: 90%;
+      max-width: 1000px;
+      background-color: #121212;
+      padding: 20px;
+      border-radius: 10px;
+      overflow-y: auto;
+      max-height: 300px;
+      border: 1px solid #333;
+    }
+
+    .log-entry {
+      padding: 8px;
+      border-bottom: 1px solid #333;
+    }
+
+    .log-entry.buy {
+      color: #00ff88;
+    }
+
+    .log-entry.sell {
+      color: #ff0066;
+    }
+
+    #history h3 {
+      margin-top: 0;
+      color: #0fffc1;
+    }
+  </style>
+</head>
+<body>
+  <header>🤖 AI Crypto Trading Bot</header>
+
+  <div class="container">
+    <div id="status">✅ Your bot is working for you</div>
+
+    <div class="chart-box">
+      <!-- TradingView Widget BEGIN -->
+      <div class="tradingview-widget-container" style="height:100%; width:100%;">
+        <div id="tradingview_chart" style="height:100%; width:100%;"></div>
+        <script type="text/javascript">
+          new TradingView.widget({
+            "autosize": true,
+            "symbol": "BINANCE:BTCUSDT",
+            "interval": "1",
+            "timezone": "Etc/UTC",
+            "theme": "dark",
+            "style": "1", // Candlestick
+            "locale": "en",
+            "toolbar_bg": "#0e0e0e",
+            "enable_publishing": false,
+            "hide_legend": false,
+            "save_image": false,
+            "container_id": "tradingview_chart"
+          });
+        </script>
+      </div>
+      <!-- TradingView Widget END -->
+    </div>
+
+    <div id="history">
+      <h3>📈 Trade History</h3>
+      <div id="tradeLog"></div>
+    </div>
+  </div>
+
+  <script>
+    const tradeLog = document.getElementById('tradeLog');
+
+    function executeTrade() {
+      const type = Math.random() > 0.5 ? 'buy' : 'sell';
+      const price = (Math.random() * 1000 + 28000).toFixed(2);
+      const time = new Date().toLocaleTimeString();
+
+      const entry = document.createElement('div');
+      entry.className = `log-entry ${type}`;
+      entry.textContent = `[${time}] ${type.toUpperCase()} at $${price}`;
+      tradeLog.prepend(entry);
+    }
+
+    // Initial trade
+    executeTrade();
+
+    // Simulate every 10s (use 3600000 for 1 hour)
+    setInterval(executeTrade, 10000);
+  </script>
+</body>
+</html>

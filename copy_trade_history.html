@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>STAKING - history</title>
     <link rel="stylesheet" href="assets/copy_trade_history.css">
+     <script src="https://s3.tradingview.com/tv.js"></script>
 </head>
 <body>
     <header class="header">
@@ -101,13 +102,13 @@
         </div>
     </div>
     </main>
-     <div class="section">
+     <!-- <div class="section">
         <h2 class="section-title">Ongoing Trades</h2>
         
         <div class="stats-container">
             <div class="stat-card active">
                 <div class="stat-label">
-                    <!-- <input type="checkbox" style="margin-right: 4px;"> -->
+                  
                     Active Trades
                 </div>
                 <div class="stat-value">0</div>
@@ -115,7 +116,7 @@
             
             <div class="stat-card pending">
                 <div class="stat-label">
-                    <!-- <input type="checkbox" style="margin-right: 4px;"> -->
+                  
                     Pending Orders
                 </div>
                 <div class="stat-value">0</div>
@@ -141,7 +142,41 @@
                 </div>
             </div>
         </div>
+    </div> -->
+      <header class="ai">🤖 AI Crypto Trading Bot</header>
+
+  <div class="containerII">
+    <div id="status">✅ Your bot is working for you</div>
+
+    <div class="chart-box">
+      <!-- TradingView Widget BEGIN -->
+      <div class="tradingview-widget-container" style="height:100%; width:100%;">
+        <div id="tradingview_chart" style="height:100%; width:100%;"></div>
+        <script type="text/javascript">
+          new TradingView.widget({
+            "autosize": true,
+            "symbol": "BINANCE:BTCUSDT",
+            "interval": "1",
+            "timezone": "Etc/UTC",
+            "theme": "dark",
+            "style": "1", // Candlestick
+            "locale": "en",
+            "toolbar_bg": "#0e0e0e",
+            "enable_publishing": false,
+            "hide_legend": false,
+            "save_image": false,
+            "container_id": "tradingview_chart"
+          });
+        </script>
+      </div>
+      <!-- TradingView Widget END -->
     </div>
+
+    <div id="history">
+      <h3>📈 Trade History</h3>
+      <div id="tradeLog"></div>
+    </div>
+  </div>
 
     
     <script src="assets/scripts/copy_trade_history.js"></script>
