@@ -6,8 +6,8 @@
 
         body {
             font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
-            background-color: #0a0a0a;
-            color: #ffffff;
+            background-color: var(--bg-primary);
+            color: var(--text-primary);
             min-height: 100vh;
             padding: 20px;
         }
@@ -15,7 +15,7 @@
         .container {
             max-width: 500px;
             margin: 0 auto;
-            background-color: #0a0a0a;
+            background-color: var(--bg-primary);
         }
 
         .header {
@@ -27,7 +27,7 @@
         .back-button {
             background: none;
             border: none;
-            color: #ffffff;
+            color: var(--text-primary);
             font-size: 18px;
             cursor: pointer;
             margin-right: 15px;
@@ -35,7 +35,7 @@
         }
 
         .back-button:hover {
-            color: #cccccc;
+            color: var(--text-secondary);
         }
 
         .back-text {
@@ -55,7 +55,7 @@
 
         .subtitle {
             font-size: 14px;
-            color: #888888;
+            color: var(--text-secondary);
             margin-bottom: 40px;
         }
 
@@ -79,10 +79,10 @@
         .dropdown-select {
             width: 100%;
             padding: 15px;
-            background-color: #2a2a2a;
-            border: 1px solid #3a3a3a;
+            background-color: var(--bg-secondary);
+            border: 1px solid var(--border-color);;
             border-radius: 8px;
-            color: #ffffff;
+            color: var(--text-primary);
             font-size: 16px;
             cursor: pointer;
             appearance: none;
@@ -100,7 +100,7 @@
             top: 50%;
             transform: translateY(-50%);
             pointer-events: none;
-            color: #888888;
+            color: var(--text-secondary);
         }
 
         .dropdown-options {
@@ -108,8 +108,8 @@
             top: 100%;
             left: 0;
             right: 0;
-            background-color: #2a2a2a;
-            border: 1px solid #3a3a3a;
+            background-color: var(--bg-primary);
+            border: 1px solid var(--border-color);;
             border-radius: 8px;
             border-top: none;
             border-top-left-radius: 0;
@@ -128,7 +128,7 @@
             padding: 12px 15px;
             cursor: pointer;
             font-size: 16px;
-            border-bottom: 1px solid #3a3a3a;
+            border-bottom: 1px solid var(--border-color);;
         }
 
         .dropdown-option:last-child {
@@ -146,9 +146,9 @@
         .upload-zone {
             width: 100%;
             height: 150px;
-            border: 2px dashed #4a4a4a;
+            border: 2px dashed var(--border-color);;
             border-radius: 8px;
-            background-color: #1a1a1a;
+            background-color: var(--bg-primary);
             display: flex;
             align-items: center;
             justify-content: center;
@@ -158,8 +158,8 @@
         }
 
         .upload-zone:hover {
-            border-color: #6a6a6a;
-            background-color: #2a2a2a;
+            border-color: var(--border-color);;
+            background-color: var(--bg-primary);
         }
 
         .upload-zone.dragover {
@@ -168,7 +168,7 @@
         }
 
         .upload-text {
-            color: #888888;
+            color: var(--text-secondary);
             font-size: 14px;
             text-align: center;
         }
@@ -260,7 +260,7 @@
         }
 
         .submit-button:disabled {
-            background-color: #333333;
+            background-color: var(--bg-secondary);
             cursor: not-allowed;
         }
 

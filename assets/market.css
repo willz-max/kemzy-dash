@@ -6,15 +6,15 @@
 
       body {
         font-family: "Arial", sans-serif;
-        background-color: black;
-        color: #ffffff;
+        background-color: var(--bg-primary);
+        color: var(--text-primary);
         min-height: 100vh;
       }
 
       .container {
         max-width: 1200px;
         margin: 0 auto;
-        background: black;
+        background: var(--bg-primary);
         border-radius: 20px;
         padding: 30px;
         box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
@@ -29,16 +29,17 @@
       .header h1 {
         font-size: 20px;
         margin-bottom: 10px;
-        background: white;
+        background: var(--bg-primary);
         -webkit-background-clip: text;
-        -webkit-text-fill-color: transparent;
+        -webkit-text-fill-color: var(--text-primary);
         background-clip: text;
+        
       }
 
       .price {
         font-size: 20px;
         font-weight: bold;
-        color: white;
+        color: var(--text-primary);
         margin-bottom: 20px;
       }
 
@@ -213,7 +214,7 @@
 
       .buy-btn {
         background: #198754;
-        color: white;
+        color: var(--text-primary);
       }
 
       .buy-btn:hover {
@@ -224,7 +225,7 @@
 
       .sell-btn {
         background: #dc3545;
-        color: white;
+        color: var(--text-primary);
       }
 
       .sell-btn:hover {
@@ -234,7 +235,7 @@
       }
 
       .stats-section {
-        background: #151a21;
+        background: var(--bg-primary);
         border-radius: 12px;
         padding: 30px;
         margin-bottom: 20px;
@@ -243,7 +244,7 @@
       .stats-title {
         font-size: 1.5em;
         margin-bottom: 20px;
-        color: white;
+        color: var(--text-primary);
       }
 
       .stats-grid {
@@ -257,20 +258,20 @@
         justify-content: space-between;
         align-items: center;
         padding: 15px 0;
-        border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        border-bottom: 1px solid var(--border-color);
       }
 
       .stat-label {
-        color: #888;
+        color: var(--text-secondary);
         font-size: 0.9em;
       }
 
       .stat-value {
-        color: white;
+        color: var(--text-primary);
       }
 
       .about-section {
-        background: #151a21;
+        background: var(--bg-primary);
         border-radius: 12px;
         padding: 30px;
         margin-bottom: 20px;
@@ -279,11 +280,11 @@
       .about-title {
         font-size: 1.5em;
         margin-bottom: 15px;
-        color: whitesmoke;
+        color: var(--text-primary);
       }
 
       .about-text {
-        color: #ccc;
+        color: var(--text-primary);
         line-height: 1.6;
         margin-bottom: 15px;
       }
@@ -295,7 +296,7 @@
       }
 
       .links-section {
-        background: #151a21;
+        background: var(--bg-primary);
         border-radius: 12px;
         padding: 30px;
       }
@@ -303,7 +304,7 @@
       .links-title {
         font-size: 1.5em;
         margin-bottom: 20px;
-        color: white;
+        color: var(--text-primary);
       }
 
       .links-container {

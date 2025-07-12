@@ -71,14 +71,14 @@
                 <div class="menu-arrow">›</div>
             </a>
 
-            <div class="menu-item">
+            <a href="perference.html" class="menu-item">
                 <div class="menu-icon"><i><ion-icon name="settings"></ion-icon></i></div>
                 <div class="menu-content">
                     <div class="menu-title">Preferences</div>
-                    <div class="menu-subtitle">Theme, currency, language</div>
+                    <div class="menu-subtitle">Theme,language</div>
                 </div>
                 <div class="menu-arrow">›</div>
-            </div>
+            </a>
 
             <div class="menu-item" >
                 <div class="menu-icon"><i><ion-icon name="help"></ion-icon></i></div>
@@ -104,6 +104,12 @@
     <div class="copy-notification" id="copyNotification">
         Address copied to clipboard!
     </div>
+     <script>
+        (function() {
+            const savedTheme = localStorage.getItem('theme') || 'dark';
+            document.documentElement.setAttribute('data-theme', savedTheme);
+        })();
+    </script>
     <script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
 <script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>
 <script src="assets/scripts/profile.js"></script>

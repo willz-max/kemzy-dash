@@ -8,7 +8,13 @@
 </head>
 <body>
     
-
+    <script>
+// Theme detection - add this to every page
+(function() {
+    const savedTheme = localStorage.getItem('theme') || 'dark';
+    document.documentElement.setAttribute('data-theme', savedTheme);
+})();
+</script>
     <script src="assets/scripts/copytrade_history.js"></script>
 </body>
 </html>

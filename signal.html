@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Signal</title>
+    <link rel="stylesheet" href="assets/theme.css">
     <link rel="stylesheet" href="assets/signal.css">
 </head>
 <body>
@@ -407,7 +408,13 @@
             </div>
         </div>
     </div>
-
+    <script>
+// Theme detection - add this to every page
+(function() {
+    const savedTheme = localStorage.getItem('theme') || 'dark';
+    document.documentElement.setAttribute('data-theme', savedTheme);
+})();
+</script>
     <script src="assets/scripts/signal.js"></script>
        <script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
 <script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>

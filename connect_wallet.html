@@ -148,6 +148,14 @@
             </div>
         </div>
     </div>
+    <script>
+// Theme detection - add this to every page
+(function() {
+    const savedTheme = localStorage.getItem('theme') || 'dark';
+    document.documentElement.setAttribute('data-theme', savedTheme);
+})();
+</script>
     <script src="assets/scripts/connect_wallet.js"></script>
+    
 </body>
 </html>

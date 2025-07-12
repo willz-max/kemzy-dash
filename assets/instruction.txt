@@ -1,0 +1,147 @@
+To add light mode support to all your pages, you need to follow these steps:
+1. Add the CSS Variables to Each Page
+First, add these CSS variables to the top of your stylesheets on every page:
+css:root {
+    --primary-color: #00d4aa;
+    --primary-hover: #00b896;
+    --bg-primary: #1a1a1a;
+    --bg-secondary: #2a2a2a;
+    --bg-card: #333333;
+    --text-primary: #ffffff;
+    --text-secondary: #b0b0b0;
+    --border-color: #444444;
+    --shadow: rgba(0, 0, 0, 0.3);
+}
+
+[data-theme="light"] {
+    --bg-primary: #f5f5f5;
+    --bg-secondary: #ffffff;
+    --bg-card: #ffffff;
+    --text-primary: #333333;
+    --text-secondary: #666666;
+    --border-color: #e0e0e0;
+    --shadow: rgba(0, 0, 0, 0.1);
+}
+
+body {
+    background-color: background-color: var(--bg-primary);
+    color: var(--text-primary);
+    transition: background-color 0.3s ease, color 0.3s ease;
+}
+2. Update Your Existing CSS
+Replace your hardcoded colors with the CSS variables. For example:
+Instead of:
+cssbackground-color: #1a1a1a;
+color: #ffffff;
+border: 1px solid #444444;
+Use:
+css
+background-color: var(--bg-primary);
+color: var(--text-primary);
+border: 1px solid var(--border-color);
+3. Add Theme Detection Script
+Add this JavaScript to every page (preferably in the <head> section or at the very beginning of your <body>):
+html<script>
+// Theme detection - add this to every page
+(function() {
+    const savedTheme = localStorage.getItem('theme') || 'dark';
+    document.documentElement.setAttribute('data-theme', savedTheme);
+})();
+</script>
+4. Example Implementation
+Here's how your existing profile page would look with light mode support:
+html<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Profile</title>
+    <style>
+        :root {
+            --primary-color: #00d4aa;
+            --primary-hover: #00b896;
+            --bg-primary: #1a1a1a;
+            --bg-secondary: #2a2a2a;
+            --bg-card: #333333;
+            --text-primary: #ffffff;
+            --text-secondary: #b0b0b0;
+            --border-color: #444444;
+            --shadow: rgba(0, 0, 0, 0.3);
+        }
+
+        [data-theme="light"] {
+            --bg-primary: #f5f5f5;
+            --bg-secondary: #ffffff;
+            --bg-card: #ffffff;
+            --text-primary: #333333;
+            --text-secondary: #666666;
+            --border-color: #e0e0e0;
+            --shadow: rgba(0, 0, 0, 0.1);
+        }
+
+        body {
+            background-color: var(--bg-primary);
+            color: var(--text-primary);
+            transition: background-color 0.3s ease, color 0.3s ease;
+            /* ... rest of your styles ... */
+        }
+
+        .profile-card {
+            background-color: var(--bg-card);
+            border: 1px solid var(--border-color);
+            box-shadow: 0 4px 12px var(--shadow);
+            /* ... rest of your styles ... */
+        }
+    </style>
+    
+    <!-- Theme detection script -->
+    <script>
+        (function() {
+            const savedTheme = localStorage.getItem('theme') || 'dark';
+            document.documentElement.setAttribute('data-theme', savedTheme);
+        })();
+    </script>
+</head>
+<body>
+    <!-- Your page content -->
+</body>
+</html>
+5. For Multiple CSS Files
+If you use separate CSS files, create a theme.css file with the variables:
+theme.css:
+css:root {
+    --primary-color: #00d4aa;
+    --primary-hover: #00b896;
+    --bg-primary: #1a1a1a;
+    --bg-secondary: #2a2a2a;
+    --bg-card: #333333;
+    --text-primary: #ffffff;
+    --text-secondary: #b0b0b0;
+    --border-color: #444444;
+    --shadow: rgba(0, 0, 0, 0.3);
+}
+
+[data-theme="light"] {
+    --bg-primary: #f5f5f5;
+    --bg-secondary: #ffffff;
+    --bg-card: #ffffff;
+    --text-primary: #333333;
+    --text-secondary: #666666;
+    --border-color: #e0e0e0;
+    --shadow: rgba(0, 0, 0, 0.1);
+}
+
+body {
+    background-color: var(--bg-primary);
+    color: var(--text-primary);
+    transition: background-color 0.3s ease, color 0.3s ease;
+}
+Then include it in every page:
+html<link rel="stylesheet" href="theme.css">
+6. Testing
+
+Open your preferences page and toggle between light and dark mode
+Navigate to other pages - they should automatically use the selected theme
+Refresh the page - the theme should persist
+
+The key is using CSS variables and the data-theme attribute on the HTML element, which allows you to switch all colors instantly across your entire website!
