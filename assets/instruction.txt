@@ -145,3 +145,5 @@ Navigate to other pages - they should automatically use the selected theme
 Refresh the page - the theme should persist
 
 The key is using CSS variables and the data-theme attribute on the HTML element, which allows you to switch all colors instantly across your entire website!
+
+language system

@@ -12,12 +12,15 @@ const translations = {
         twoFactorAuth: '2FA, Password, Recovery',
         alertsReminders: 'Alerts and reminders',
         crypto: 'Crypto',
-        themeSettings: 'Theme, currency, language',
+        themeSettings: 'Theme, language',
         
         // Security Page
         password: 'Password',
         twoFactor: 'Two Factor Authentication',
         recovery: 'Recovery',
+        connectWallet: 'Connect Wallet',
+        Helpandsupport:'Help & Support',
+        logout:'Help & Support',
         
         // Add more translations as needed
     },
@@ -34,12 +37,15 @@ const translations = {
         twoFactorAuth: '2FA, Mot de passe, Récupération',
         alertsReminders: 'Alertes et rappels',
         crypto: 'Crypto',
-        themeSettings: 'Thème, devise, langue',
+        themeSettings: 'Thème, langue',
         
         // Security Page
         password: 'Mot de passe',
         twoFactor: 'Authentification à deux facteurs',
         recovery: 'Récupération',
+        connectWallet: 'Conectar billetera',
+        Helpandsupport:'Aide et support',
+        logout:'Aide et support',
         
         // Add more translations as needed
     },
@@ -58,10 +64,14 @@ const translations = {
         crypto: 'Cripto',
         themeSettings: 'Tema, moneda, idioma',
         
+        
         // Security Page
         password: 'Contraseña',
         twoFactor: 'Autenticación de dos factores',
         recovery: 'Recuperación',
+        connectWallet: 'Conectar billetera',
+        Helpandsupport:'Ayuda y soporte',
+        logout:'Ayuda y soporte',
         
         // Add more translations as needed
     }

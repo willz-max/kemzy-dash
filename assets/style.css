@@ -200,7 +200,8 @@ body {
 }
 
 .asset-item {
-  background: var(--bg-primary);
+  background: var(--bg-secondary);
+  opacity: 0.95;
   border-radius: 16px;
   padding: 16px;
   margin-bottom: 12px;
@@ -210,7 +211,8 @@ body {
   transition: all .25s ease-in-out;
 }
 .asset-item:hover{
-background: var(--bg-secondary);
+/* background: var(--bg-secondary); */
+opacity: 1;
 transform: translatey(-5px);
 }
 
