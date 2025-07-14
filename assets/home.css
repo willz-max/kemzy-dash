@@ -8,6 +8,9 @@
 html {
   scroll-behavior: smooth;
 }
+body{
+  background-color: #fefefe;
+}
 nav {
   display: flex;
   justify-content: space-between;
@@ -175,7 +178,7 @@ nav {
   width: 100%;
   height: 100%;
 }
-video {
+.hero-img {
   width: 100%;
   height: 100%;
   object-fit: cover;
@@ -302,7 +305,7 @@ video {
 }
 
 .About {
-  background: linear-gradient(180deg, #0a192f 0%, #08152a 100%);
+  /* background: linear-gradient(180deg, #0a192f 0%, #08152a 100%); */
   padding: 100px 20px;
   text-align: center;
 }
@@ -367,8 +370,8 @@ video {
 .what-we-offer-section {
   padding: 60px 20px;
   text-align: center;
-  background-color: #0a192f;
-  color: #ccd6f6;
+  /* background-color: #0a192f; */
+  color: black;
 }
 
 .what-we-offer-section h2 {
@@ -503,12 +506,12 @@ video {
 .why-choose-us-section {
   padding: 60px 20px;
   text-align: center;
-  background-color: rgba(1, 1, 24, 0.71);
-  color: #ffffff;
+  /* background-color: rgba(1, 1, 24, 0.71); */
+  color: black;
 }
 
 .why-choose-us-section h2 {
-  color: #ffffff;
+  color: #032B44;
   font-size: 2.5em;
   margin-bottom: 40px;
 }
@@ -523,9 +526,9 @@ video {
 }
 
 .why-choose-card {
-  background-color: #112240a0;
-  padding: 30px;
-  border-radius: 10px;
+  background-color: #032B44;
+  padding: 15px 35px;
+  border-radius: 20px;
   text-align: left;
   transition: transform 0.3s ease-in-out;
   min-height: 250px;
@@ -539,7 +542,7 @@ video {
 }
 .why-choose-icon {
   background-color: #1a1a3a;
-  color: #4d8eff;
+  color: #d5dbe6;
   width: 60px;
   height: 60px;
   border-radius: 50%;
@@ -635,14 +638,15 @@ video {
 .powerful-features-section {
   padding: 80px 20px;
   text-align: center;
-  background-color: rgba(1, 1, 24, 0.71);
-  color: #ccd6f6;
+  /* background-color: rgba(1, 1, 24, 0.71); */
+  color: #032B44;
 }
 
 .powerful-features-section h2 {
-  color: #ffffff;
+  color: #032B44;
   font-size: 2.5em;
   margin-bottom: 20px;
+  display: block;
 }
 
 .powerful-features-section .features-tagline {
@@ -661,7 +665,7 @@ video {
 }
 
 .feature-card {
-  background-color: #112240a0;
+  background-color: #032B44;
   padding: 30px;
   border-radius: 10px;
   text-align: left;
