@@ -1,9 +1,10 @@
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Trading Signals Platform</title>
+    <title>Live Forex Carousel</title>
     <style>
         * {
             margin: 0;
@@ -13,826 +14,357 @@
 
         body {
             font-family: 'Arial', sans-serif;
-            background: linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f0f23 100%);
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
             min-height: 100vh;
-            color: #fff;
-            overflow-x: hidden;
-        }
-
-        .container {
-            max-width: 1400px;
-            margin: 0 auto;
-            padding: 20px;
-        }
-
-        .signals-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 20px;
-            margin-bottom: 20px;
-        }
-
-        .signal-card {
-            background: rgba(20, 20, 40, 0.9);
-            border-radius: 12px;
-            padding: 20px;
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            backdrop-filter: blur(10px);
-            transition: all 0.3s ease;
-            position: relative;
-            overflow: hidden;
-        }
-
-        .signal-card:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 10px 30px rgba(0, 123, 255, 0.3);
-            border-color: rgba(0, 123, 255, 0.5);
-        }
-
-        .signal-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 15px;
-        }
-
-        .signal-title {
-            font-size: 16px;
-            font-weight: 600;
-            color: #fff;
-        }
-
-        .signal-username {
-            color: #007bff;
-            font-size: 14px;
-            margin-top: 5px;
-        }
-
-        .notification-icon {
-            width: 24px;
-            height: 24px;
-            background: rgba(255, 255, 255, 0.2);
-            border-radius: 50%;
             display: flex;
             align-items: center;
             justify-content: center;
-            cursor: pointer;
+            padding: 20px;
         }
 
-        .stats-row {
+        .carousel-container {
+            width: 100%;
+            max-width: 1200px;
+            overflow: hidden;
+            position: relative;
+            border-radius: 15px;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.1);
+        }
+
+        .carousel-track {
             display: flex;
-            justify-content: space-between;
-            margin-bottom: 15px;
+            animation: scroll 30s linear infinite;
+            gap: 0;
         }
 
-        .stat-item {
+        .carousel-track:hover {
+            animation-play-state: paused;
+        }
+
+        .forex-card {
+            min-width: 200px;
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: bold;
             text-align: center;
-            flex: 1;
+            transition: all 0.3s ease;
+            cursor: pointer;
+            border-right: 1px solid rgba(255,255,255,0.1);
         }
 
-        .stat-value {
+        .forex-card:hover {
+            transform: scale(1.05);
+            z-index: 10;
+            border-radius: 10px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+        }
+
+        .forex-card.positive {
+            background: linear-gradient(135deg, #4CAF50, #45a049);
+        }
+
+        .forex-card.negative {
+            background: linear-gradient(135deg, #f44336, #da190b);
+        }
+
+        .forex-card.neutral {
+            background: linear-gradient(135deg, #9E9E9E, #757575);
+        }
+
+        .forex-card.loading {
+            background: linear-gradient(135deg, #2196F3, #1976D2);
+        }
+
+        .currency-pair {
+            font-size: 14px;
+            font-weight: bold;
+            margin-bottom: 8px;
+            opacity: 0.9;
+        }
+
+        .price {
             font-size: 18px;
             font-weight: bold;
             margin-bottom: 5px;
         }
 
-        .stat-label {
+        .change {
             font-size: 12px;
-            color: #888;
-            text-transform: uppercase;
-        }
-
-        .gain-positive {
-            color: #28a745;
-        }
-
-        .gain-negative {
-            color: #dc3545;
-        }
-
-        .risk-level {
-            width: 24px;
-            height: 24px;
-            border-radius: 50%;
             display: flex;
             align-items: center;
-            justify-content: center;
-            font-weight: bold;
+            gap: 5px;
+        }
+
+        .change-arrow {
+            font-size: 10px;
+        }
+
+        .loading {
+            color: rgba(255,255,255,0.7);
             font-size: 12px;
-            margin: 0 auto;
         }
 
-        .risk-2 {
-            background: #28a745;
+        .error {
+            color: #ffcccb;
+            font-size: 11px;
         }
 
-        .risk-3 {
-            background: #ffc107;
-            color: #000;
-        }
-
-        .copiers-info {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 15px;
-        }
-
-        .copiers-count {
-            color: #888;
-            font-size: 14px;
-        }
-
-        .subscribe-btn {
-            width: 100%;
-            background: #007bff;
-            color: white;
-            border: none;
-            padding: 12px;
-            border-radius: 8px;
-            font-size: 14px;
-            font-weight: 600;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            text-transform: uppercase;
-        }
-
-        .subscribe-btn:hover {
-            background: #0056b3;
-            transform: scale(1.02);
-        }
-
-        .modal {
-            display: none;
-            position: fixed;
-            z-index: 1000;
-            left: 0;
-            top: 0;
-            width: 100%;
-            height: 100%;
-            background-color: rgba(0, 0, 0, 0.8);
-            backdrop-filter: blur(5px);
-        }
-
-        .modal-content {
-            background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
-            margin: 5% auto;
-            padding: 30px;
-            border-radius: 15px;
-            width: 90%;
-            max-width: 500px;
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            position: relative;
-            animation: modalSlideIn 0.3s ease;
-        }
-
-        @keyframes modalSlideIn {
-            from {
-                transform: translateY(-50px);
-                opacity: 0;
-            }
-            to {
-                transform: translateY(0);
-                opacity: 1;
-            }
-        }
-
-        .close {
+        .last-updated {
             position: absolute;
-            right: 20px;
-            top: 20px;
-            color: #aaa;
-            font-size: 28px;
-            font-weight: bold;
-            cursor: pointer;
-            transition: color 0.3s ease;
+            bottom: 10px;
+            right: 15px;
+            color: rgba(255,255,255,0.6);
+            font-size: 11px;
         }
 
-        .close:hover {
-            color: #fff;
+        @keyframes scroll {
+            0% {
+                transform: translateX(0);
+            }
+            100% {
+                transform: translateX(-100%);
+            }
         }
 
-        .modal-header {
-            margin-bottom: 20px;
+        @keyframes pulse {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.7; }
         }
 
-        .modal-title {
-            font-size: 20px;
-            font-weight: 600;
-            margin-bottom: 10px;
+        .pulse {
+            animation: pulse 1s ease-in-out infinite;
         }
 
-        .modal-stats {
-            display: flex;
-            justify-content: space-between;
-            margin-bottom: 20px;
-            padding: 15px;
-            background: rgba(255, 255, 255, 0.05);
-            border-radius: 8px;
-        }
-
-        .modal-stat {
-            text-align: center;
-        }
-
-        .modal-stat-value {
-            font-size: 16px;
-            font-weight: bold;
-            color: #28a745;
-        }
-
-        .modal-stat-label {
-            font-size: 12px;
-            color: #888;
-            margin-top: 5px;
-        }
-
-        .balance-info {
-            background: rgba(255, 255, 255, 0.05);
-            padding: 15px;
-            border-radius: 8px;
-            margin-bottom: 20px;
-        }
-
-        .balance-label {
-            font-size: 14px;
-            color: #888;
-            margin-bottom: 5px;
-        }
-
-        .balance-value {
-            font-size: 16px;
-            font-weight: bold;
-        }
-
-        .deposit-required {
-            color: #dc3545;
-            font-size: 14px;
-            margin-top: 10px;
-        }
-
-        .deposit-btn {
-            width: 100%;
-            background: #17a2b8;
-            color: white;
-            border: none;
-            padding: 12px;
-            border-radius: 8px;
-            font-size: 14px;
-            font-weight: 600;
-            cursor: pointer;
-            margin-bottom: 15px;
-            transition: all 0.3s ease;
-        }
-
-        .deposit-btn:hover {
-            background: #138496;
-        }
-
-        .modal-footer {
-            text-align: center;
-            color: #888;
-            font-size: 12px;
-            margin-top: 20px;
-        }
-
-        .close-modal-btn {
-            background: rgba(255, 255, 255, 0.1);
-            color: #fff;
-            border: none;
-            padding: 10px 20px;
-            border-radius: 8px;
-            cursor: pointer;
-            transition: all 0.3s ease;
-        }
-
-        .close-modal-btn:hover {
-            background: rgba(255, 255, 255, 0.2);
-        }
-
-        .chat-button {
-            display: none;
-        }
-
-        .chat-notification {
-            display: none;
-        }
-
-        /* Responsive Design */
         @media (max-width: 768px) {
-            .container {
+            .forex-card {
+                min-width: 150px;
                 padding: 15px;
             }
-
-            .signals-grid {
-                grid-template-columns: 1fr;
-                gap: 15px;
-            }
-
-            .signal-card {
-                padding: 15px;
-            }
-
-            .stats-row {
-                flex-wrap: wrap;
-            }
-
-            .stat-item {
-                min-width: 60px;
-            }
-
-            .modal-content {
-                margin: 10% auto;
-                padding: 20px;
-                width: 95%;
-            }
-
-            .modal-stats {
-                flex-direction: column;
-                gap: 10px;
-            }
-
-            .modal-stat {
-                display: flex;
-                justify-content: space-between;
-                align-items: center;
-            }
-
-            .chat-button {
-                display: none;
-            }
-        }
-
-        @media (max-width: 480px) {
-            .signal-header {
-                flex-direction: column;
-                align-items: flex-start;
-                gap: 5px;
-            }
-
-            .stat-value {
+            
+            .price {
                 font-size: 16px;
             }
-
-            .modal-content {
-                padding: 15px;
+            
+            .currency-pair {
+                font-size: 13px;
             }
         }
     </style>
 </head>
 <body>
-    <div class="container">
-        <div class="signals-grid">
-            <!-- Edison Signal -->
-            <div class="signal-card">
-                <div class="signal-header">
-                    <div>
-                        <div class="signal-title">Edisons Signal</div>
-                        <div class="signal-username">@Edison Signal</div>
-                    </div>
-                    <div class="notification-icon">🔔</div>
-                </div>
-                <div class="stats-row">
-                    <div class="stat-item">
-                        <div class="stat-value gain-positive">30.0%</div>
-                        <div class="stat-label">Gain</div>
-                    </div>
-                    <div class="stat-item">
-                        <div class="stat-value">
-                            <div class="risk-level risk-3">3</div>
-                        </div>
-                        <div class="stat-label">Risk</div>
-                    </div>
-                    <div class="stat-item">
-                        <div class="stat-value">1540</div>
-                        <div class="stat-label">Trades</div>
-                    </div>
-                    <div class="stat-item">
-                        <div class="stat-value">$20000.00</div>
-                        <div class="stat-label">Inv. Capital</div>
-                    </div>
-                </div>
-                <div class="copiers-info">
-                    <span class="copiers-count">105 Copiers</span>
-                </div>
-                <button class="subscribe-btn" onclick="openModal('Edison Signal', '30.0%', '3', '1540', '$20000.00')">SUBSCRIBE</button>
-            </div>
-
-            <!-- Wall Street Signals -->
-            <div class="signal-card">
-                <div class="signal-header">
-                    <div>
-                        <div class="signal-title">Wall Street Signals</div>
-                        <div class="signal-username">@Wall Street Signals</div>
-                    </div>
-                    <div class="notification-icon">🔔</div>
-                </div>
-                <div class="stats-row">
-                    <div class="stat-item">
-                        <div class="stat-value gain-positive">10.0%</div>
-                        <div class="stat-label">Gain</div>
-                    </div>
-                    <div class="stat-item">
-                        <div class="stat-value">
-                            <div class="risk-level risk-2">2</div>
-                        </div>
-                        <div class="stat-label">Risk</div>
-                    </div>
-                    <div class="stat-item">
-                        <div class="stat-value">2500</div>
-                        <div class="stat-label">Trades</div>
-                    </div>
-                    <div class="stat-item">
-                        <div class="stat-value">$10000.00</div>
-                        <div class="stat-label">Inv. Capital</div>
-                    </div>
-                </div>
-                <div class="copiers-info">
-                    <span class="copiers-count">435 Copiers</span>
-                </div>
-                <button class="subscribe-btn" onclick="openModal('Wall Street Signals', '10.0%', '2', '2500', '$10000.00')">SUBSCRIBE</button>
-            </div>
-
-            <!-- Pipmen Signals -->
-            <div class="signal-card">
-                <div class="signal-header">
-                    <div>
-                        <div class="signal-title">Pipmen Signals</div>
-                        <div class="signal-username">@Pipmen Signals</div>
-                    </div>
-                    <div class="notification-icon">🔔</div>
-                </div>
-                <div class="stats-row">
-                    <div class="stat-item">
-                        <div class="stat-value gain-positive">37.0%</div>
-                        <div class="stat-label">Gain</div>
-                    </div>
-                    <div class="stat-item">
-                        <div class="stat-value">
-                            <div class="risk-level risk-2">2</div>
-                        </div>
-                        <div class="stat-label">Risk</div>
-                    </div>
-                    <div class="stat-item">
-                        <div class="stat-value">876</div>
-                        <div class="stat-label">Trades</div>
-                    </div>
-                    <div class="stat-item">
-                        <div class="stat-value">$50000.00</div>
-                        <div class="stat-label">Inv. Capital</div>
-                    </div>
-                </div>
-                <div class="copiers-info">
-                    <span class="copiers-count">102 Copiers</span>
-                </div>
-                <button class="subscribe-btn" onclick="openModal('Pipmen Signals', '37.0%', '2', '876', '$50000.00')">SUBSCRIBE</button>
-            </div>
-
-            <!-- Breakout Signal -->
-            <div class="signal-card">
-                <div class="signal-header">
-                    <div>
-                        <div class="signal-title">Breakout signal</div>
-                        <div class="signal-username">@Breakout signal</div>
-                    </div>
-                    <div class="notification-icon">🔔</div>
-                </div>
-                <div class="stats-row">
-                    <div class="stat-item">
-                        <div class="stat-value gain-positive">35.0%</div>
-                        <div class="stat-label">Gain</div>
-                    </div>
-                    <div class="stat-item">
-                        <div class="stat-value">
-                            <div class="risk-level risk-2">2</div>
-                        </div>
-                        <div class="stat-label">Risk</div>
-                    </div>
-                    <div class="stat-item">
-                        <div class="stat-value">1411</div>
-                        <div class="stat-label">Trades</div>
-                    </div>
-                    <div class="stat-item">
-                        <div class="stat-value">$60000.00</div>
-                        <div class="stat-label">Inv. Capital</div>
-                    </div>
-                </div>
-                <div class="copiers-info">
-                    <span class="copiers-count">139 Copiers</span>
-                </div>
-                <button class="subscribe-btn" onclick="openModal('Breakout signal', '35.0%', '2', '1411', '$60000.00')">SUBSCRIBE</button>
-            </div>
-
-            <!-- BTC miner s10 data circuits -->
-            <div class="signal-card">
-                <div class="signal-header">
-                    <div>
-                        <div class="signal-title">BTC miner s10 data circuits</div>
-                        <div class="signal-username">@BTC miner s10 data circuits</div>
-                    </div>
-                    <div class="notification-icon">🔔</div>
-                </div>
-                <div class="stats-row">
-                    <div class="stat-item">
-                        <div class="stat-value gain-positive">8.0%</div>
-                        <div class="stat-label">Gain</div>
-                    </div>
-                    <div class="stat-item">
-                        <div class="stat-value">
-                            <div class="risk-level risk-3">3</div>
-                        </div>
-                        <div class="stat-label">Risk</div>
-                    </div>
-                    <div class="stat-item">
-                        <div class="stat-value">765</div>
-                        <div class="stat-label">Trades</div>
-                    </div>
-                    <div class="stat-item">
-                        <div class="stat-value">$3000.00</div>
-                        <div class="stat-label">Inv. Capital</div>
-                    </div>
-                </div>
-                <div class="copiers-info">
-                    <span class="copiers-count">181 Copiers</span>
-                </div>
-                <button class="subscribe-btn" onclick="openModal('BTC miner s10 data circuits', '8.0%', '3', '765', '$3000.00')">SUBSCRIBE</button>
-            </div>
-
-            <!-- Trend signals -->
-            <div class="signal-card">
-                <div class="signal-header">
-                    <div>
-                        <div class="signal-title">Trend signals</div>
-                        <div class="signal-username">@Trend signals</div>
-                    </div>
-                    <div class="notification-icon">🔔</div>
-                </div>
-                <div class="stats-row">
-                    <div class="stat-item">
-                        <div class="stat-value gain-positive">8.0%</div>
-                        <div class="stat-label">Gain</div>
-                    </div>
-                    <div class="stat-item">
-                        <div class="stat-value">
-                            <div class="risk-level risk-3">3</div>
-                        </div>
-                        <div class="stat-label">Risk</div>
-                    </div>
-                    <div class="stat-item">
-                        <div class="stat-value">411</div>
-                        <div class="stat-label">Trades</div>
-                    </div>
-                    <div class="stat-item">
-                        <div class="stat-value">$5000.00</div>
-                        <div class="stat-label">Inv. Capital</div>
-                    </div>
-                </div>
-                <div class="copiers-info">
-                    <span class="copiers-count">146 Copiers</span>
-                </div>
-                <button class="subscribe-btn" onclick="openModal('Trend signals', '8.0%', '3', '411', '$5000.00')">SUBSCRIBE</button>
-            </div>
-
-            <!-- BTC Trend Signal -->
-            <div class="signal-card">
-                <div class="signal-header">
-                    <div>
-                        <div class="signal-title">BTC Trend Signal</div>
-                        <div class="signal-username">@BTC Trend Signal</div>
-                    </div>
-                    <div class="notification-icon">🔔</div>
-                </div>
-                <div class="stats-row">
-                    <div class="stat-item">
-                        <div class="stat-value gain-positive">40.0%</div>
-                        <div class="stat-label">Gain</div>
-                    </div>
-                    <div class="stat-item">
-                        <div class="stat-value">
-                            <div class="risk-level risk-3">3</div>
-                        </div>
-                        <div class="stat-label">Risk</div>
-                    </div>
-                    <div class="stat-item">
-                        <div class="stat-value">265</div>
-                        <div class="stat-label">Trades</div>
-                    </div>
-                    <div class="stat-item">
-                        <div class="stat-value">$100000.00</div>
-                        <div class="stat-label">Inv. Capital</div>
-                    </div>
-                </div>
-                <div class="copiers-info">
-                    <span class="copiers-count">98 Copiers</span>
-                </div>
-                <button class="subscribe-btn" onclick="openModal('BTC Trend Signal', '40.0%', '3', '265', '$100000.00')">SUBSCRIBE</button>
-            </div>
-
-            <!-- Jonathan H. Wage -->
-            <div class="signal-card">
-                <div class="signal-header">
-                    <div>
-                        <div class="signal-title">Jonathan H. Wage</div>
-                        <div class="signal-username">@Jonathan H. Wage</div>
-                    </div>
-                    <div class="notification-icon">🔔</div>
-                </div>
-                <div class="stats-row">
-                    <div class="stat-item">
-                        <div class="stat-value gain-positive">20.0%</div>
-                        <div class="stat-label">Gain</div>
-                    </div>
-                    <div class="stat-item">
-                        <div class="stat-value">
-                            <div class="risk-level risk-3">3</div>
-                        </div>
-                        <div class="stat-label">Risk</div>
-                    </div>
-                    <div class="stat-item">
-                        <div class="stat-value">953854</div>
-                        <div class="stat-label">Trades</div>
-                    </div>
-                    <div class="stat-item">
-                        <div class="stat-value">$500000.00</div>
-                        <div class="stat-label">Inv. Capital</div>
-                    </div>
-                </div>
-                <div class="copiers-info">
-                    <span class="copiers-count">32 Copiers</span>
-                </div>
-                <button class="subscribe-btn" onclick="openModal('Jonathan H. Wage', '20.0%', '3', '953854', '$500000.00')">SUBSCRIBE</button>
-            </div>
-
-            <!-- Golden Sweeps -->
-            <div class="signal-card">
-                <div class="signal-header">
-                    <div>
-                        <div class="signal-title">Golden Sweeps</div>
-                        <div class="signal-username">@Golden Sweeps</div>
-                    </div>
-                    <div class="notification-icon">🔔</div>
-                </div>
-                <div class="stats-row">
-                    <div class="stat-item">
-                        <div class="stat-value gain-positive">10.0%</div>
-                        <div class="stat-label">Gain</div>
-                    </div>
-                    <div class="stat-item">
-                        <div class="stat-value">
-                            <div class="risk-level risk-2">2</div>
-                        </div>
-                        <div class="stat-label">Risk</div>
-                    </div>
-                    <div class="stat-item">
-                        <div class="stat-value">5275000</div>
-                        <div class="stat-label">Trades</div>
-                    </div>
-                    <div class="stat-item">
-                        <div class="stat-value">$100000.00</div>
-                        <div class="stat-label">Inv. Capital</div>
-                    </div>
-                </div>
-                <div class="copiers-info">
-                    <span class="copiers-count">121 Copiers</span>
-                </div>
-                <button class="subscribe-btn" onclick="openModal('Golden Sweeps', '10.0%', '2', '5275000', '$100000.00')">SUBSCRIBE</button>
-            </div>
+    <div class="carousel-container">
+        <div class="carousel-track" id="carouselTrack">
+            <!-- Forex cards will be inserted here -->
         </div>
-    </div>
-
-    <!-- Modal -->
-    <div id="subscribeModal" class="modal">
-        <div class="modal-content">
-            <span class="close" onclick="closeModal()">&times;</span>
-            <div class="modal-header">
-                <h2 class="modal-title">Subscribe to <span id="modalSignalName"></span></h2>
-                <div class="signal-username">@<span id="modalUsername"></span></div>
-            </div>
-            
-            <div class="modal-stats">
-                <div class="modal-stat">
-                    <div class="modal-stat-value" id="modalGain"></div>
-                    <div class="modal-stat-label">Gain</div>
-                </div>
-                <div class="modal-stat">
-                    <div class="modal-stat-value" id="modalTrades"></div>
-                    <div class="modal-stat-label">Trades</div>
-                </div>
-                <div class="modal-stat">
-                    <div class="modal-stat-value" id="modalDuration">15 Days</div>
-                    <div class="modal-stat-label">Duration</div>
-                </div>
-            </div>
-
-            <div class="modal-stats">
-                <div class="modal-stat">
-                    <div class="modal-stat-value">
-                        <div class="risk-level risk-3" id="modalRisk"></div>
-                    </div>
-                    <div class="modal-stat-label">Risk rate</div>
-                </div>
-                <div class="modal-stat">
-                    <div class="modal-stat-value" id="modalCopiers">181</div>
-                    <div class="modal-stat-label">No. Copiers</div>
-                </div>
-            </div>
-
-            <div class="balance-info">
-                <div class="balance-label">Total Balance:</div>
-                <div class="balance-value">$0.00 USD</div>
-                <div class="deposit-required">You need to deposit <span id="requiredDeposit"></span> to subscribe.</div>
-            </div>
-
-            <button class="deposit-btn">DEPOSIT</button>
-            
-            <div class="modal-footer">
-                <p>Signal trades will be executed based on the trader's strategies and current market conditions.</p>
-                <button class="close-modal-btn" onclick="closeModal()">Close</button>
-            </div>
-        </div>
-    </div>
-
-    <!-- Chat Button -->
-    <div class="chat-button">
-        <div class="chat-notification">1</div>
-        💬
+        <div class="last-updated" id="lastUpdated">Loading...</div>
     </div>
 
     <script>
-        function openModal(signalName, gain, risk, trades, invCapital) {
-            document.getElementById('modalSignalName').textContent = signalName;
-            document.getElementById('modalUsername').textContent = signalName;
-            document.getElementById('modalGain').textContent = gain;
-            document.getElementById('modalTrades').textContent = trades;
-            document.getElementById('modalRisk').textContent = risk;
-            document.getElementById('requiredDeposit').textContent = invCapital;
-            
-            // Update risk styling
-            const riskElement = document.getElementById('modalRisk');
-            riskElement.className = 'risk-level risk-' + risk;
-            
-            document.getElementById('subscribeModal').style.display = 'block';
-        }
+        class ForexCarousel {
+            constructor() {
+                this.pairs = [
+                    'GBPJPY', 'XAUUSD', 'GBPUSD', 'EURUSD', 'USDJPY', 'GBPEUR',
+                    'AUDUSD', 'USDCAD', 'NZDUSD', 'EURGBP', 'EURJPY', 'AUDJPY',
+                    'CADJPY', 'CHFJPY', 'EURCHF', 'GBPCHF', 'USDCHF', 'XAGUSD'
+                ];
+                this.track = document.getElementById('carouselTrack');
+                this.lastUpdated = document.getElementById('lastUpdated');
+                this.data = {};
+                this.init();
+            }
 
-        function closeModal() {
-            document.getElementById('subscribeModal').style.display = 'none';
-        }
+            init() {
+                this.createCards();
+                this.fetchData();
+                // Update every 30 seconds
+                setInterval(() => this.fetchData(), 30000);
+            }
 
-        // Close modal when clicking outside
-        window.onclick = function(event) {
-            const modal = document.getElementById('subscribeModal');
-            if (event.target === modal) {
-                closeModal();
+            createCards() {
+                // Create cards twice for seamless loop
+                const cardHTML = this.pairs.map(pair => this.createCard(pair)).join('');
+                this.track.innerHTML = cardHTML + cardHTML;
+            }
+
+            createCard(pair) {
+                return `
+                    <div class="forex-card loading" id="card-${pair}">
+                        <div class="currency-pair">${this.formatPair(pair)}</div>
+                        <div class="price">Loading...</div>
+                        <div class="change">
+                            <span class="loading">Fetching data...</span>
+                        </div>
+                    </div>
+                `;
+            }
+
+            formatPair(pair) {
+                // Format currency pairs for display
+                const formatted = {
+                    'GBPJPY': 'GBP/JPY',
+                    'XAUUSD': 'XAU/USD',
+                    'GBPUSD': 'GBP/USD',
+                    'EURUSD': 'EUR/USD',
+                    'USDJPY': 'USD/JPY',
+                    'GBPEUR': 'GBP/EUR',
+                    'AUDUSD': 'AUD/USD',
+                    'USDCAD': 'USD/CAD',
+                    'NZDUSD': 'NZD/USD',
+                    'EURGBP': 'EUR/GBP',
+                    'EURJPY': 'EUR/JPY',
+                    'AUDJPY': 'AUD/JPY',
+                    'CADJPY': 'CAD/JPY',
+                    'CHFJPY': 'CHF/JPY',
+                    'EURCHF': 'EUR/CHF',
+                    'GBPCHF': 'GBP/CHF',
+                    'USDCHF': 'USD/CHF',
+                    'XAGUSD': 'XAG/USD'
+                };
+                return formatted[pair] || pair;
+            }
+
+            async fetchData() {
+                try {
+                    // Using exchangerate-api.com (free tier)
+                    const promises = this.pairs.map(async (pair) => {
+                        try {
+                            if (pair === 'XAUUSD' || pair === 'XAGUSD') {
+                                // For precious metals, use a different approach
+                                return this.fetchMetalPrice(pair);
+                            }
+                            
+                            const base = pair.substring(0, 3);
+                            const target = pair.substring(3, 6);
+                            
+                            const response = await fetch(`https://api.exchangerate-api.com/v4/latest/${base}`);
+                            const data = await response.json();
+                            
+                            if (data.rates && data.rates[target]) {
+                                const rate = data.rates[target];
+                                // Generate mock change for demo (in real app, you'd track historical data)
+                                const change = (Math.random() - 0.5) * 0.02; // -1% to +1%
+                                const changePercent = change * 100;
+                                
+                                return {
+                                    pair,
+                                    price: rate,
+                                    change: changePercent,
+                                    success: true
+                                };
+                            }
+                            throw new Error('Rate not found');
+                        } catch (error) {
+                            return {
+                                pair,
+                                success: false,
+                                error: error.message
+                            };
+                        }
+                    });
+
+                    const results = await Promise.all(promises);
+                    results.forEach(result => {
+                        if (result.success) {
+                            this.updateCard(result.pair, result.price, result.change);
+                        } else {
+                            this.updateCardError(result.pair, result.error);
+                        }
+                    });
+
+                    this.lastUpdated.textContent = `Last updated: ${new Date().toLocaleTimeString()}`;
+                } catch (error) {
+                    console.error('Error fetching data:', error);
+                    this.lastUpdated.textContent = `Error: ${error.message}`;
+                }
+            }
+
+            async fetchMetalPrice(pair) {
+                // Mock data for precious metals (in real app, use metals-api.com or similar)
+                const prices = {
+                    'XAUUSD': 1950 + (Math.random() - 0.5) * 100,
+                    'XAGUSD': 24 + (Math.random() - 0.5) * 2
+                };
+                
+                const change = (Math.random() - 0.5) * 0.04; // -2% to +2%
+                
+                return {
+                    pair,
+                    price: prices[pair],
+                    change: change * 100,
+                    success: true
+                };
+            }
+
+            updateCard(pair, price, changePercent) {
+                const cards = document.querySelectorAll(`#card-${pair}`);
+                
+                cards.forEach(card => {
+                    const priceElement = card.querySelector('.price');
+                    const changeElement = card.querySelector('.change');
+                    
+                    // Format price based on pair
+                    let formattedPrice;
+                    if (pair.includes('JPY')) {
+                        formattedPrice = price.toFixed(3);
+                    } else if (pair === 'XAUUSD') {
+                        formattedPrice = price.toFixed(2);
+                    } else if (pair === 'XAGUSD') {
+                        formattedPrice = price.toFixed(3);
+                    } else {
+                        formattedPrice = price.toFixed(5);
+                    }
+                    
+                    priceElement.textContent = formattedPrice;
+                    
+                    const arrow = changePercent >= 0 ? '↗' : '↘';
+                    const sign = changePercent >= 0 ? '+' : '';
+                    changeElement.innerHTML = `
+                        <span class="change-arrow">${arrow}</span>
+                        <span>${sign}${changePercent.toFixed(2)}%</span>
+                    `;
+                    
+                    // Update background color based on change
+                    card.classList.remove('positive', 'negative', 'neutral', 'loading');
+                    if (changePercent > 0.01) {
+                        card.classList.add('positive');
+                    } else if (changePercent < -0.01) {
+                        card.classList.add('negative');
+                    } else {
+                        card.classList.add('neutral');
+                    }
+                    
+                    // Add pulse effect for significant changes
+                    if (Math.abs(changePercent) > 0.5) {
+                        card.classList.add('pulse');
+                        setTimeout(() => card.classList.remove('pulse'), 3000);
+                    }
+                });
+            }
+
+            updateCardError(pair, error) {
+                const cards = document.querySelectorAll(`#card-${pair}`);
+                
+                cards.forEach(card => {
+                    const priceElement = card.querySelector('.price');
+                    const changeElement = card.querySelector('.change');
+                    
+                    priceElement.textContent = 'Error';
+                    changeElement.innerHTML = `<span class="error">Failed to load</span>`;
+                    
+                    card.classList.remove('positive', 'negative', 'neutral', 'loading');
+                    card.classList.add('neutral');
+                });
             }
         }
 
-        // Add smooth scrolling and animations
-        document.addEventListener('DOMContentLoaded', function() {
-            // Animate cards on scroll
-            const cards = document.querySelectorAll('.signal-card');
-            
-            const observer = new IntersectionObserver((entries) => {
-                entries.forEach(entry => {
-                    if (entry.isIntersecting) {
-                        entry.target.style.animation = 'fadeInUp 0.6s ease forwards';
-                    }
-                });
-            });
-
-            cards.forEach(card => {
-                observer.observe(card);
-            });
-
-            // Add CSS for fadeInUp animation
-            const style = document.createElement('style');
-            style.textContent = `
-                @keyframes fadeInUp {
-                    from {
-                        opacity: 0;
-                        transform: translateY(30px);
-                    }
-                    to {
-                        opacity: 1;
-                        transform: translateY(0);
-                    }
-                }
-            `;
-            document.head.appendChild(style);
-        });
-
-        // Chat button functionality
-        // document.querySelector('.chat-button').addEventListener('click', function() {
-        //     alert('Chat functionality would be implemented here');
-        // });
-
-        // Notification icons functionality
-        document.querySelectorAll('.notification-icon').forEach(icon => {
-            icon.addEventListener('click', function() {
-                this.style.background = 'rgba(0, 123, 255, 0.3)';
-                setTimeout(() => {
-                    this.style.background = 'rgba(255, 255, 255, 0.2)';
-                }, 300);
-            });
+        // Initialize the carousel when the page loads
+        document.addEventListener('DOMContentLoaded', () => {
+            new ForexCarousel();
         });
     </script>
 </body>
+</html>
