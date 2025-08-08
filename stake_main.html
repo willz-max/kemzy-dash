@@ -1,0 +1,554 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Crypto Staking Dashboard</title>
+    <link rel="stylesheet" href="assets/theme.css">
+    <link rel="stylesheet" href="assets/stacking.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: linear-gradient(135deg, #1a1a1a 0%, #2d2d2d 100%);
+            min-height: 100vh;
+            color: white;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 600px;
+            margin: 50px auto;
+            background: rgba(45, 45, 45, 0.8);
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+        }
+
+        .tabs {
+            display: flex;
+            background: #2d2d2d;
+        }
+
+        .tab {
+            flex: 1;
+            padding: 16px;
+            text-align: center;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            border: none;
+            background: #3d3d3d;
+            color: #ccc;
+        }
+
+        .tab.active {
+            background: #fbbf24;
+            color: #000;
+        }
+
+        .tab:hover:not(.active) {
+            background: #4d4d4d;
+            color: #fff;
+        }
+
+        .tab-content {
+            padding: 24px;
+            min-height: 400px;
+        }
+
+        .input-group {
+            margin-bottom: 20px;
+        }
+
+        .stake-input {
+            width: 100%;
+            padding: 12px 16px;
+            background: #1f2937;
+            border: 1px solid #4b5563;
+            border-radius: 8px;
+            color: white;
+            font-size: 14px;
+            transition: border-color 0.3s ease;
+        }
+
+        .stake-input:focus {
+            outline: none;
+            border-color: #06b6d4;
+            box-shadow: 0 0 0 2px rgba(6, 182, 212, 0.1);
+        }
+
+        .stake-input::placeholder {
+            color: #9ca3af;
+        }
+
+        .period-buttons {
+            display: flex;
+            gap: 8px;
+            margin-top: 16px;
+        }
+
+        .period-btn {
+            padding: 8px 16px;
+            background: #374151;
+            border: 1px solid #4b5563;
+            border-radius: 6px;
+            color: #d1d5db;
+            font-size: 12px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .period-btn.active {
+            background: #06b6d4;
+            color: #000;
+            border-color: #06b6d4;
+        }
+
+        .period-btn:hover:not(.active) {
+            background: #4b5563;
+            color: white;
+        }
+
+        .rewards-card {
+            background: #1f2937;
+            border: 1px solid #374151;
+            border-radius: 8px;
+            padding: 16px;
+            margin: 20px 0;
+        }
+
+        .rewards-header {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin-bottom: 12px;
+        }
+
+        .icon {
+            width: 20px;
+            height: 20px;
+            fill: #06b6d4;
+        }
+
+        .rewards-title {
+            font-weight: 600;
+            color: white;
+        }
+
+        .rewards-info {
+            font-size: 14px;
+            color: #9ca3af;
+            line-height: 1.5;
+        }
+
+        .highlight {
+            color: #06b6d4;
+            font-weight: 600;
+        }
+
+        .disclaimer {
+            font-size: 11px;
+            color: #6b7280;
+            margin: 16px 0;
+        }
+
+        .action-btn {
+            width: 100%;
+            padding: 12px;
+            background: #06b6d4;
+            color: #000;
+            font-weight: 600;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 14px;
+            transition: all 0.3s ease;
+        }
+
+        .action-btn:hover {
+            background: #0891b2;
+            transform: translateY(-1px);
+        }
+
+        .position-card {
+            background: #1f2937;
+            border: 1px solid #374151;
+            border-radius: 8px;
+            padding: 16px;
+            margin-bottom: 12px;
+        }
+
+        .position-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 12px;
+        }
+
+        .position-left {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .coin-icon {
+            width: 32px;
+            height: 32px;
+            background: #fbbf24;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            color: #000;
+            font-size: 12px;
+        }
+
+        .position-amount {
+            font-weight: 600;
+            color: white;
+        }
+
+        .position-usd {
+            font-size: 12px;
+            color: #9ca3af;
+        }
+
+        .period-badge {
+            background: #374151;
+            color: #d1d5db;
+            padding: 4px 8px;
+            border-radius: 4px;
+            font-size: 12px;
+        }
+
+        .position-details {
+            display: flex;
+            justify-content: space-between;
+            font-size: 12px;
+            color: #9ca3af;
+        }
+
+        .rewards-section {
+            text-align: center;
+            padding: 40px 20px;
+        }
+
+        .rewards-icon {
+            width: 48px;
+            height: 48px;
+            margin: 0 auto 16px;
+            fill: #06b6d4;
+        }
+
+        .rewards-title-main {
+            font-size: 18px;
+            font-weight: 600;
+            margin-bottom: 8px;
+        }
+
+        .rewards-subtitle {
+            color: #9ca3af;
+            margin-bottom: 24px;
+        }
+
+        .share-info {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            background: #1f2937;
+            border: 1px solid #374151;
+            border-radius: 8px;
+            padding: 16px;
+        }
+
+        .share-left {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .share-percentage {
+            color: #9ca3af;
+            font-size: 24px;
+            font-weight: 600;
+        }
+
+        .hidden {
+            display: none;
+        }
+    </style>
+</head>
+
+<body>
+    <header class="header">
+        <div class="url-bar">
+            https://BukaWallets.com/register/?ref=
+        </div>
+        <div class="nav-right">
+            <!-- <button class="trade-btn">Staking history</button> -->
+            <div class="profile-dropdown">
+                <button class="profile-trigger">
+                    Vic
+                    <span class="dropdown-arrow">▼</span>
+                </button>
+                <div class="dropdown-menu" id="dropdownMenu">
+                    <a href="profile.html" class="dropdown-item">
+                        <span class="dropdown-icon">👤</span>
+                        <span data-translate="myProfile">My Profile</span>
+                    </a>
+                    <a href="setting.html" class="dropdown-item">
+                        <span class="dropdown-icon"><i><ion-icon name="settings-outline"></ion-icon></i></span>
+                        <span data-translate="Settings">Settings</span>
+                    </a>
+                    <a href="#" class="dropdown-item">
+                        <span class="dropdown-icon"><i><ion-icon name="log-out-outline"></ion-icon></i></span>
+                        <span data-translate="logout">Logout</span>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </header>
+
+
+    <div class="container">
+        <!-- Tab Headers -->
+        <div class="tabs">
+            <button class="tab active" data-tab="stake">Stake</button>
+            <button class="tab" data-tab="unstake">Unstake</button>
+            <button class="tab" data-tab="rewards">Rewards</button>
+        </div>
+
+        <!-- Stake Tab Content -->
+        <div id="stake-content" class="tab-content">
+            <div class="input-group">
+                <input type="text" class="stake-input" placeholder="Enter the amount to stake..." id="stakeAmount">
+
+                <div class="period-buttons">
+                    <button class="period-btn active" data-period="1">1 Month</button>
+                    <button class="period-btn" data-period="3">3 Month</button>
+                    <button class="period-btn" data-period="6">6 Month</button>
+                    <button class="period-btn" data-period="12">12 Month</button>
+                </div>
+            </div>
+
+            <div class="rewards-card">
+                <div class="rewards-header">
+                    <svg class="icon" viewBox="0 0 24 24">
+                        <path
+                            d="M19 3h-1V1h-2v2H8V1H6v2H5c-1.11 0-1.99.9-1.99 2L3 19c0 1.1.89 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm0 16H5V8h14v11zM7 10h5v5H7z" />
+                    </svg>
+                    <span class="rewards-title">Timeframe (<span id="selectedPeriod">1 Month</span>)</span>
+                </div>
+                <div style="margin-top: 4px;">
+                    Based on the current BNB price of <span style="color: white;" id="bnbPriceDisplay">$ 250 USD</span>
+                </div>
+            </div>
+
+            <div class="disclaimer">
+                N.B: Staking rates are variable. Crypto assets are high risk and are not regulated.
+            </div>
+
+            <button class="action-btn">Stake Now</button>
+        </div>
+
+        <!-- Unstake Tab Content -->
+        <div id="unstake-content" class="tab-content hidden">
+            <div class="position-card">
+                <div class="position-header">
+                    <div class="position-left">
+                        <div class="coin-icon">BNB</div>
+                        <div>
+                            <div class="position-amount">1,250 BNB's</div>
+                            <div class="position-usd">≈ $312,500 USD</div>
+                        </div>
+                    </div>
+                    <div class="period-badge">1 Month</div>
+                </div>
+                <div class="position-details">
+                    <span>Current Rewards Rate: <span class="highlight">5% APY</span></span>
+                    <span>15 days remaining</span>
+                </div>
+            </div>
+
+            <div class="position-card">
+                <div class="position-header">
+                    <div class="position-left">
+                        <div class="coin-icon">BNB</div>
+                        <div>
+                            <div class="position-amount">500 BNB's</div>
+                            <div class="position-usd">≈ $125,000 USD</div>
+                        </div>
+                    </div>
+                    <div class="period-badge">3 Month</div>
+                </div>
+                <div class="position-details">
+                    <span>Current Rewards Rate: <span class="highlight">8% APY</span></span>
+                    <span>45 days remaining</span>
+                </div>
+            </div>
+
+            <div class="position-card">
+                <div class="position-header">
+                    <div class="position-left">
+                        <div class="coin-icon">BNB</div>
+                        <div>
+                            <div class="position-amount">2,000 BNB's</div>
+                            <div class="position-usd">≈ $500,000 USD</div>
+                        </div>
+                    </div>
+                    <div class="period-badge">6 Month</div>
+                </div>
+                <div class="position-details">
+                    <span>Current Rewards Rate: <span class="highlight">12% APY</span></span>
+                    <span>120 days remaining</span>
+                </div>
+            </div>
+
+            <div class="position-card">
+                <div class="position-header">
+                    <div class="position-left">
+                        <div class="coin-icon">BNB</div>
+                        <div>
+                            <div class="position-amount">800 BNB's</div>
+                            <div class="position-usd">≈ $200,000 USD</div>
+                        </div>
+                    </div>
+                    <div class="period-badge">12 Month</div>
+                </div>
+                <div class="position-details">
+                    <span>Current Rewards Rate: <span class="highlight">18% APY</span></span>
+                    <span>280 days remaining</span>
+                </div>
+            </div>
+
+            <div style="margin-top: 24px;">
+                <input type="text" class="stake-input" placeholder="Enter the amount to unstake...">
+            </div>
+
+            <button class="action-btn" style="margin-top: 16px;">Unstake</button>
+        </div>
+
+        <!-- Rewards Tab Content -->
+        <div id="rewards-content" class="tab-content hidden">
+            <div class="share-info">
+                <div class="share-left">
+                    <svg class="icon" viewBox="0 0 24 24">
+                        <path
+                            d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z" />
+                    </svg>
+                    <div>
+                        <div class="position-amount">0 BNB's</div>
+                        <div class="position-usd">0 USD</div>
+                    </div>
+                </div>
+                <div>
+                    <div style="text-align: right; color: #9ca3af; font-size: 12px;">Share of Pool</div>
+                    <div class="share-percentage">0%</div>
+                </div>
+            </div>
+
+            <div style="margin-top: 24px;">
+                <input type="text" class="stake-input" placeholder="Enter the amount to unstake...">
+            </div>
+
+            <button class="action-btn" style="margin-top: 16px;">Unstake</button>
+        </div>
+    </div>
+       <script>
+// Theme detection - add this to every page
+(function() {
+    const savedTheme = localStorage.getItem('theme') || 'dark';
+    document.documentElement.setAttribute('data-theme', savedTheme);
+})();
+</script>
+    <script src="assets/scripts/staking.js"></script>
+     <script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
+<script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>
+<script src="assets/scripts/language.js"></script>
+
+    <script>
+        const tabs = document.querySelectorAll('.tab');
+        const tabContents = document.querySelectorAll('.tab-content');
+
+        tabs.forEach(tab => {
+            tab.addEventListener('click', () => {
+                const targetTab = tab.dataset.tab;
+                tabs.forEach(t => t.classList.remove('active'));
+                tab.classList.add('active');
+                tabContents.forEach(content => content.classList.add('hidden'));
+                document.getElementById(targetTab + '-content').classList.remove('hidden');
+            });
+        });
+
+        const periodBtns = document.querySelectorAll('.period-btn');
+        let selectedPeriod = 1;
+
+        periodBtns.forEach(btn => {
+            btn.addEventListener('click', () => {
+                selectedPeriod = parseInt(btn.dataset.period);
+                periodBtns.forEach(b => b.classList.remove('active'));
+                btn.classList.add('active');
+                document.getElementById('selectedPeriod').textContent = btn.textContent;
+                calculateRewards();
+            });
+        });
+
+        const stakeAmountInput = document.getElementById('stakeAmount');
+        const estimatedRewardsElement = document.getElementById('estimatedRewards');
+        const bnbPriceDisplay = document.getElementById('bnbPriceDisplay');
+
+        let currentBNBPrice = 250; // fallback default
+
+        async function fetchBNBPrice() {
+            try {
+                const response = await fetch('https://api.coingecko.com/api/v3/simple/price?ids=binancecoin&vs_currencies=usd');
+                const data = await response.json();
+                currentBNBPrice = data.binancecoin.usd;
+                bnbPriceDisplay.textContent = `$ ${currentBNBPrice.toFixed(2)} USD`;
+                calculateRewards();
+            } catch (error) {
+                console.error('Error fetching BNB price:', error);
+            }
+        }
+
+        function calculateRewards() {
+            const amount = parseFloat(stakeAmountInput.value) || 0;
+            const rates = { 1: 0.05, 3: 0.08, 6: 0.12, 12: 0.18 };
+            const rate = rates[selectedPeriod];
+            const monthlyRate = rate / 12;
+            const rewards = amount * monthlyRate * selectedPeriod;
+            const usdValue = rewards * currentBNBPrice;
+
+            estimatedRewardsElement.textContent =
+                `${rewards.toFixed(3)} BNB ≈ $ ${usdValue.toFixed(2)} USD`;
+        }
+
+        stakeAmountInput.addEventListener('input', calculateRewards);
+
+        // Confirmation alerts
+        document.querySelector('.action-btn').addEventListener('click', () => {
+            const amount = stakeAmountInput.value || 0;
+            alert(`You have successfully staked ${amount} BNB for ${selectedPeriod} month(s)!`);
+        });
+
+        const unstakeBtns = document.querySelectorAll('#unstake-content .action-btn, #rewards-content .action-btn');
+        unstakeBtns.forEach(btn => {
+            btn.addEventListener('click', () => {
+                alert('You have successfully unstaked your BNB!');
+            });
+        });
+
+        // Initial setup
+        fetchBNBPrice();
+    </script>
+</body>
+
+</html>

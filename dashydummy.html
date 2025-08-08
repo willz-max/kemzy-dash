@@ -1,0 +1,337 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="assets/theme.css">
+    <link rel="stylesheet" href="assets/dummy.css">
+    <link rel="stylesheet" href="assets/font-awesome-4.7.0/font-awesome-4.7.0/css/font-awesome.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+    <style>
+        .action-btn {
+            text-decoration: none;
+        }
+
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 999;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            overflow: auto;
+            background-color: rgba(0, 0, 0, 0.5);
+        }
+
+        .modal-content {
+            background-color: #fff;
+            margin: 15% auto;
+            padding: 20px;
+            border-radius: 10px;
+            width: 90%;
+            max-width: 400px;
+            text-align: center;
+        }
+
+        .modal-content button {
+            display: block;
+            width: 100%;
+            padding: 12px;
+            margin-top: 10px;
+            border: none;
+            border-radius: 5px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: #fff;
+            font-size: 16px;
+            cursor: pointer;
+        }
+
+        .modal-content button:hover {
+            opacity: 0.9;
+        }
+    </style>
+
+</head>
+
+<body>
+    <!-- trade invest..copy trading,stacking  -->
+    <div class="container">
+        <div class="beginning-title">
+            <div>
+                <p>cinpaxtrade</p>
+            </div>
+            <div>
+                <a href="QR_scan.html"><ion-icon name="scan-sharp"></ion-icon></a>
+                <a href="setting.html"><i><ion-icon name="settings"></ion-icon></i></a>
+            </div>
+        </div>
+        <div class="balance-card">
+            <div class="balance-header">
+                <span class="balance-label">Total Balance</span>
+                <svg class="eye-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z" />
+                    <circle cx="12" cy="12" r="3" />
+                </svg>
+            </div>
+            <div class="balance-amount">$<span class="grandTotal">0.0000000</span></div>
+            <div class="balance-change">▲$428.56 (3.45%) today</div>
+        </div>
+
+        <div class="actions-grid">
+            <a href="#" class="action-btn">
+                <svg class="action-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <line x1="12" y1="5" x2="12" y2="19" />
+                    <polyline points="19,12 12,5 5,12" />
+                </svg>
+                <span class="action-label">Withdraw</span>
+            </a>
+
+            <a href="deposit.html" class="action-btn">
+                <svg class="action-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <line x1="12" y1="5" x2="12" y2="19" />
+                    <polyline points="5,12 12,19 19,12" />
+                </svg>
+                <span class="action-label">Deposit</span>
+            </a>
+            <a href="#" class="action-btn">
+              <svg class="action-icon" fill="none" stroke="currentColor"   xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
+  <path d="M4 6h16v12H4V6zm4 4h8v4H8V10z"/>
+  <path d="M8 14l4 4 4-4" stroke="#000" stroke-width="2" fill="none"/>
+</svg>
+
+                <span class="action-label">Swap</span>
+            </a>
+
+            <a href="#" class="action-btn">
+                <svg class="action-icon" xmlns="http://www.w3.org/2000/svg" fill="currentColor" stroke="currentColor"
+                    width="24" height="24" viewBox="0 0 24 24">
+                    <path
+                        d="M18 8h-1V6c0-2.76-2.24-5-5-5S7 3.24 7 6v2H6c-1.1 0-2 .9-2 2v10c0 1.1.9 2 2 2h12c1.1 0 2-.9 2-2V10c0-1.1-.9-2-2-2zm-6 9c-1.1 0-2-.9-2-2s.9-2 2-2 2 .9 2 2-.9 2-2 2zm3.1-9H8.9V6c0-1.71 1.39-3.1 3.1-3.1 1.71 0 3.1 1.39 3.1 3.1v2z" />
+                </svg>
+                <span class="action-label">STAKE</span>
+            </a>
+        </div>
+
+        <section class="dashboard-stats">
+            <div class="stat-card">
+                <h3>Profit</h3>
+                <p class="profit-amount">$12,750.80</p>
+            </div>
+            <div class="stat-card">
+                <h3>Total Withdrawal</h3>
+                <p class="withdrawal-amount">$5,200.00</p>
+            </div>
+            <div class="stat-card">
+                <h3>Total Trades</h3>
+                <p class="trade-amount">342</p>
+            </div>
+            <div class="stat-card">
+                <h3>Total Deposit</h3>
+                <p class="deposit-amount">$20,000.00</p>
+            </div>
+        </section>
+
+        <div class="assets-section">
+            <div class="assets-header">
+                <h2 class="assets-title">Your Assets</h2>
+                <a href="#" class="view-all">View All</a>
+            </div>
+
+            <div class="asset-item">
+                <div class="asset-icon bitcoin-icon">₿</div>
+                <div class="asset-info">
+                    <div class="asset-name">Bitcoin <span class="asset-symbol">BTC</span></div>
+                    <div class="asset-amount"><span class="btc">0.2546</span> BTC</div>
+                </div>
+                <div class="asset-value">
+                    <div class="asset-price btc-price">$<span class="your_total_btc">0.0000</span></div>
+                    <div class="asset-change positive">▲5.2%</div>
+                </div>
+            </div>
+
+            <div class="asset-item">
+                <div class="asset-icon ethereum-icon">Ξ</div>
+                <div class="asset-info">
+                    <div class="asset-name">Ethereum <span class="asset-symbol">ETH</span></div>
+                    <div class="asset-amount"><span class="eth">3.42</span> ETH</div>
+                </div>
+                <div class="asset-value">
+                    <div class="asset-price">$<span class="your_total_eth">0.0000</span></div>
+                    <div class="asset-change positive">▲2.8%</div>
+                </div>
+            </div>
+
+            <div class="asset-item">
+                <div class="asset-icon binance-icon">⦣</div>
+                <div class="asset-info">
+                    <div class="asset-name">Binance Coin <span class="asset-symbol">BNB</span></div>
+                    <div class="asset-amount"><span class="bnb">12.5</span> BNB</div>
+                </div>
+                <div class="asset-value">
+                    <div class="asset-price">$<span class="your_total_bnb">0.0000</span></div>
+                    <div class="asset-change negative">▼1.2%</div>
+                </div>
+            </div>
+
+            <div class="asset-item">
+                <div class="asset-icon binance-icon">⦣</div>
+                <div class="asset-info">
+                    <div class="asset-name">Tether <span class="asset-symbol">USDT</span></div>
+                    <div class="asset-amount"><span class="usdt">1250</span> USDT</div>
+                </div>
+                <div class="asset-value">
+                    <div class="asset-price">$<span class="your_total_usdt">0.0000</span></div>
+                    <div class="asset-change no-change">▼0.0%</div>
+                </div>
+            </div>
+        </div>
+        <!-- <div class="header-nft">
+            <h2>NFT Collections</h2>
+            <a href="#">View All</a>
+        </div>
+        <div>  <div class="nft-grid">
+            <div class="nft-card bored-ape">
+                <img src="assets/image/ape.avif" alt="Bored Ape Yacht Club">
+                <p>Bored Ape</p>
+            </div>
+            <div class="nft-card azuki">
+                <img src="assets/image/asuki.avif" alt="Azuki">
+                <p>Azuki</p>
+            </div>
+            <div class="nft-card doodles">
+                <img src="assets/image/rainbow.avif" alt="Doodles">
+                <p>Doodles</p>
+            </div>
+            <div class="nft-card doodles">
+                <img src="assets/image/bolt.avif" alt="CloneX">
+                <p>CloneX</p>
+            </div>
+            <div class="nft-card doodles">
+                <img src="assets/image/corrupt.png" alt="CryptoPunk">
+                <p>CryptoPunk</p>
+            </div>
+            </div></div> -->
+    </div>
+
+    <div class="bottom-nav">
+        <div class="nav-items">
+            <a href="#" class="nav-item active">
+                <svg class="nav-icon" viewBox="0 0 24 24" fill="currentColor">
+                    <rect x="2" y="3" width="20" height="14" rx="2" ry="2" />
+                    <line x1="8" y1="21" x2="16" y2="21" />
+                    <line x1="12" y1="17" x2="12" y2="21" />
+                </svg>
+                <span>Wallet</span>
+            </a>
+
+            <a href="market.html" class="nav-item">
+                <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <polyline points="22,12 18,12 15,21 9,3 6,12 2,12" />
+                </svg>
+                <span>Markets</span>
+            </a>
+            <li class="dropdown">
+                <a href="#" class="nav-item dropbtn">
+                    <i class="nav-icon"><ion-icon name="bar-chart"></ion-icon></i>
+                    <span>Investment Trades</span>
+                </a>
+                <div class="dropdown-content">
+                    <a href="copy_trade.html">Copy Trade</a>
+                    <a href="stake.html">Stacking</a>
+                    <a href="signal.html">Signal</a>
+                </div>
+            </li>
+
+            <a href="transaction-history.html" class="nav-item">
+                <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9" />
+                    <path d="M13.73 21a2 2 0 0 1-3.46 0" />
+                </svg>
+                <span>Activity</span>
+            </a>
+
+            <a href="profile.html" class="nav-item">
+                <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2" />
+                    <circle cx="12" cy="7" r="4" />
+                </svg>
+                <span>Profile</span>
+            </a>
+        </div>
+    </div>
+
+    <!-- popout -->
+    <div id="withdrawModal" class="modal">
+        <div class="modal-content">
+            <h3>Select Withdrawal Type</h3>
+            <button onclick="window.location.href='crypto-withdrawal.html'">Crypto Withdrawal</button>
+            <button onclick="window.location.href='bank-transfer.html'">Bank Transfer</button>
+            <button onclick="closeModal()" style="background: #ccc; color: #000;">Cancel</button>
+        </div>
+    </div>
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            const dropdown = document.querySelector('.dropdown');
+            const dropbtn = document.querySelector('.dropbtn');
+            const dropdownContent = document.querySelector('.dropdown-content');
+
+
+            dropbtn.addEventListener('click', function (event) {
+                event.preventDefault();
+                dropdown.classList.toggle('active');
+            });
+
+
+            document.addEventListener('click', function (event) {
+                if (!dropdown.contains(event.target)) {
+                    dropdown.classList.remove('active');
+                }
+            });
+
+
+            dropdownContent.querySelectorAll('a').forEach(item => {
+                item.addEventListener('click', function () {
+                    dropdown.classList.remove('active');
+                });
+            });
+        });
+    </script>
+    <script>
+        document.querySelectorAll('.action-btn').forEach(btn => {
+            if (btn.textContent.includes('Withdraw')) {
+                btn.addEventListener('click', function (e) {
+                    e.preventDefault();
+                    document.getElementById('withdrawModal').style.display = 'block';
+                });
+            }
+        });
+
+        function closeModal() {
+            document.getElementById('withdrawModal').style.display = 'none';
+        }
+
+        window.onclick = function (event) {
+            const modal = document.getElementById('withdrawModal');
+            if (event.target === modal) {
+                modal.style.display = 'none';
+            }
+        }
+    </script>
+    <script>
+            // Theme detection - add this to every page
+            (function () {
+                const savedTheme = localStorage.getItem('theme') || 'dark';
+                document.documentElement.setAttribute('data-theme', savedTheme);
+            })();
+    </script>
+    <script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
+    <script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>
+
+
+</body>
+
+</html>

@@ -11,13 +11,7 @@
             }
         }
 
-        function showForgotPassword() {
-            alert('Forgot password functionality would be implemented here');
-        }
-
-        function showRegister() {
-            alert('Registration page would be shown here');
-        }
+     
 
         document.getElementById('loginForm').addEventListener('submit', function(e) {
             e.preventDefault();
@@ -32,7 +26,6 @@
                 
                 // Simulate login process
                 setTimeout(() => {
-                    alert('Login successful! (This is a demo)');
                     btn.textContent = 'Sign In';
                     btn.disabled = false;
                 }, 2000);

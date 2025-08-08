@@ -378,19 +378,31 @@
                 "theme": currentTheme,
                 "style": "1",
                 "locale": "en",
-                "toolbar_bg": "#f1f3f6",
+                "toolbar_bg": "var(--bg-secondary)",
                 "enable_publishing": false,
                 "hide_side_toolbar": false,
-                "allow_symbol_change": true,
+                "allow_symbol_change": false,
                 "container_id": "tradingview-chart",
                 "studies": [],
                 "disabled_features": [
                     "volume_force_overlay",
                     "use_localstorage_for_settings",
-                    "header_widget_dom_node"
+                    "left_toolbar",
+                    "header_widget",
+                    "header_compare",
+                    "header_screenshot",
+                    "header_undo_redo",
+                    "header_fullscreen_button",
+                    "header_settings",
+                    "header_indicators",
+                    "header_interval_dialog_button",
+                    "header_resolutions",
+                    "header_saveload",
+                    "header_chart_type",
+                    "timeframes_toolbar"
                 ],
                 "enabled_features": [
-                    "study_templates"
+                    "hide_left_toolbar_by_default"
                 ],
                 "overrides": {
                     "paneProperties.background": "var(--bg-card)",
@@ -532,9 +544,6 @@
             assetCategorySelect.dispatchEvent(new Event('change'));
             assetSelect.value = 'GBP/USD';
             assetSelect.dispatchEvent(new Event('change'));
-            
-            // Initialize TradingView with default symbol
-            initTradingView('FX_IDC:GBPUSD');
         });
     </script>
 </body>

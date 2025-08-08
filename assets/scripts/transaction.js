@@ -36,14 +36,14 @@
             const usd = transaction.dataset.usd;
             const hash = transaction.dataset.hash;
             const date = transaction.dataset.date;
-            const fee = transaction.dataset.fee;
+            // const fee = transaction.dataset.fee;
 
             // Update receipt content
             document.getElementById('receiptAmount').textContent = `${amount} ${currency}`;
-            document.getElementById('receiptNetwork').textContent = `${currency} Network`;
+            // document.getElementById('receiptNetwork').textContent = `${currency} Network`;
             document.getElementById('receiptTo').textContent = hash;
             document.getElementById('receiptDate').textContent = formatDate(date);
-            document.getElementById('receiptFee').textContent = fee;
+            // document.getElementById('receiptFee').textContent = fee;
             document.getElementById('receiptHash').textContent = `0xa9f3...bb78`;
 
             // Update status

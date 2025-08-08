@@ -1,0 +1,947 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>cinpaxtrade</title>
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary-gradient: linear-gradient(90deg, #00aae3 0, #00d4c0 100.04%);
+            --primary-blue: #007bff;
+            --dark-bg: #212529;
+            --card-bg: #032b44;
+        }
+        
+        body {
+            font-family: 'Poppins', sans-serif;
+            background-color: var(--dark-bg);
+            color: white;
+            scroll-behavior: smooth;
+        }
+        
+        .highlight-s {
+            background: var(--primary-gradient);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        
+        .navbar {
+            background-color: white;
+            box-shadow: 1px 5px 15px 1px rgba(0, 0, 0, 0.05);
+        }
+        
+        .navbar-brand img {
+            width: 87px;
+        }
+        
+        .nav-link {
+            color: #8498ae;
+            font-weight: 500;
+            transition: color 0.3s;
+        }
+        
+        .nav-link:hover {
+            color: var(--primary-blue);
+        }
+        
+        .hero-section {
+            position: relative;
+            height: 100vh;
+            overflow: hidden;
+        }
+        
+        .hero-video {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            z-index: -1;
+        }
+        
+        .hero-overlay {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            background: rgba(5, 9, 14, 0.81);
+            display: flex;
+            align-items: center;
+        }
+        
+        .hero-content {
+            max-width: 800px;
+        }
+        
+        .hero-content h1 {
+            font-size: 72px;
+            line-height: 1.3;
+        }
+        
+        @media (max-width: 768px) {
+            .hero-content h1 {
+                font-size: 50px;
+            }
+        }
+        
+        /* Features Section */
+        .features-section {
+            background: var(--primary-gradient);
+            padding: 80px 0;
+        }
+        
+        .feature-card {
+            background-color: var(--card-bg);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 10px;
+            padding: 30px;
+            height: 100%;
+            transition: transform 0.3s;
+        }
+        
+        .feature-card:hover {
+            transform: translateY(-5px);
+        }
+        
+        .feature-icon {
+            width: 60px;
+            height: 60px;
+            background: rgba(26, 26, 58, 0.7);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 20px;
+        }
+        
+        /* Services Section */
+        .service-card {
+            overflow: hidden;
+            border-radius: 15px;
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+        
+        .service-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.15);
+        }
+        
+        .service-img {
+            height: 250px;
+            object-fit: cover;
+            transition: transform 0.3s;
+        }
+        
+        .service-card:hover .service-img {
+            transform: scale(1.05);
+        }
+        
+        .service-title {
+            background: var(--primary-gradient);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            font-weight: 600;
+        }
+        
+        /* Testimonials */
+        .testimonial-card {
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            transition: all 0.3s;
+        }
+        
+        .testimonial-card:hover {
+            transform: translateY(-5px);
+            border-color: rgba(0, 217, 255, 0.3);
+            box-shadow: 0 20px 40px rgba(0, 217, 255, 0.1);
+        }
+        
+        /* Stats Section */
+        .stat-card {
+            background-color: rgba(51, 51, 51, 0.75);
+            border: 1px solid rgba(255, 255, 255, 0.6);
+            border-radius: 10px;
+            padding: 40px;
+            position: relative;
+        }
+        
+        .stat-card::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            border-radius: 10px;
+            border: 1px solid #4d8eff;
+            box-shadow: 0 0 15px rgba(77, 142, 255, 0.3);
+            opacity: 0.5;
+            pointer-events: none;
+        }
+        
+        .stat-number {
+            font-size: 42px;
+            font-weight: bold;
+        }
+        
+        /* Footer */
+        footer {
+            background: rgb(36, 45, 56);
+        }
+        
+        .footer-link {
+            color: #a0a8c0;
+            text-decoration: none;
+            transition: color 0.3s;
+        }
+        
+        .footer-link:hover {
+            color: white;
+        }
+        
+        /* Investment Popup */
+        #investment-popup {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            background: #000;
+            color: white;
+            padding: 16px 24px;
+            border-radius: 10px;
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3);
+            z-index: 1000;
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 1s ease;
+        }
+        
+        #investment-popup.show {
+            opacity: 1;
+            pointer-events: auto;
+        }
+        
+        #investment-popup .country {
+            color: #4d8eff;
+            font-weight: bold;
+        }
+        
+        /* Floating Icons Animation */
+        .floating-icon {
+            position: absolute;
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s ease;
+            animation: float 6s ease-in-out infinite;
+        }
+        
+        .floating-icon:hover {
+            transform: scale(1.1);
+            background: rgba(255, 255, 255, 0.2);
+        }
+        
+        .floating-icon img {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+        }
+        
+        @keyframes float {
+            0%, 100% { transform: translateY(0px) rotate(0deg); }
+            25% { transform: translateY(-10px) rotate(1deg); }
+            50% { transform: translateY(-5px) rotate(-1deg); }
+            75% { transform: translateY(-15px) rotate(0.5deg); }
+        }
+        
+        /* Positioning for floating icons - same as before */
+        .icon-1 { top: 10%; left: 8%; animation-delay: 0s; }
+        .icon-2 { top: 5%; left: 25%; animation-delay: 1s; }
+        .icon-3 { top: 15%; left: 45%; animation-delay: 2s; }
+        .icon-4 { top: 8%; right: 30%; animation-delay: 0.5s; }
+        .icon-5 { top: 12%; right: 15%; animation-delay: 1.5s; }
+        .icon-6 { top: 12%; right: 5%; animation-delay: 2.5s; }
+        .icon-7 { top: 35%; left: 5%; animation-delay: 3s; }
+        .icon-8 { top: 30%; left: 18%; animation-delay: 0.8s; }
+        .icon-9 { top: 40%; right: 12%; animation-delay: 1.8s; }
+        .icon-10 { top: 45%; right: 3%; animation-delay: 2.8s; }
+        .icon-11 { bottom: 35%; left: 3%; animation-delay: 1.2s; }
+        .icon-12 { bottom: 40%; left: 15%; animation-delay: 2.2s; }
+        .icon-13 { bottom: 30%; left: 30%; animation-delay: 3.2s; }
+        .icon-14 { bottom: 45%; right: 25%; animation-delay: 0.3s; }
+        .icon-15 { bottom: 35%; right: 8%; animation-delay: 1.3s; }
+        .icon-16 { bottom: 15%; left: 12%; animation-delay: 2.3s; }
+        .icon-17 { bottom: 8%; left: 28%; animation-delay: 0.7s; }
+        .icon-18 { bottom: 12%; right: 35%; animation-delay: 1.7s; }
+        .icon-19 { bottom: 5%; right: 18%; animation-delay: 2.7s; }
+        .icon-20 { bottom: 10%; right: 8%; animation-delay: 3.5s; }
+        .icon-21 { top: 25%; left: 2%; animation-delay: 4s; }
+        .icon-22 { top: 55%; left: 8%; animation-delay: 4.5s; }
+        .icon-23 { top: 60%; right: 5%; animation-delay: 5s; }
+        .icon-24 { top: 20%; right: 2%; animation-delay: 5.5s; }
+    </style>
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar navbar-expand-lg navbar-light fixed-top">
+        <div class="container">
+            <a class="navbar-brand" href="#">
+                <img src="assets/image/main-logo.png" alt="cinpaxtrade">
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item">
+                        <a class="nav-link" href="#features">Features</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#products">What we offer</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#testimonials">Testimonials</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#about">About Us</a>
+                    </li>
+                </ul>
+                <div class="d-flex ms-lg-3">
+                    <a href="login.html" class="btn btn-outline-primary me-2">Sign In</a>
+                    <a href="sign-up.html" class="btn btn-primary">Get Started</a>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="hero-section">
+        <video muted autoplay loop class="hero-video">
+            <source src="assets/image/hero.mp4" type="video/mp4">
+        </video>
+        <div class="hero-overlay">
+            <div class="container">
+                <div class="hero-content">
+                    <h1 class="fw-bold mb-4 animate__animated animate__fadeInDown">Empowering Your <span class="highlight-s">Financial Future</span></h1>
+                    <p class="fs-5 mb-4 animate__animated animate__zoomIn animate__delay-4">Take control of your investments and achieve your goals</p>
+                    <a href="#" class="btn btn-primary btn-lg px-4">Get Started Today</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Crypto Ticker -->
+    <div class="bg-dark py-2">
+        <iframe src="https://widget.coinlib.io/widget?type=horizontal_v2&theme=dark&pref_coin_id=1505&invert_hover=no" 
+                width="100%" height="36px" scrolling="auto" marginwidth="0" marginheight="0" frameborder="0" border="0"></iframe>
+    </div>
+
+    <!-- Investment Popup -->
+    <div id="investment-popup">
+        Someone from <span class="country">Italy</span> just invested <br>
+        <strong class="amount">$5000</strong>.
+    </div>
+
+    <!-- Features Section -->
+    <section id="features" class="features-section py-5">
+        <div class="container">
+            <div class="text-center mb-5">
+                <h2 class="display-4 fw-bold mb-3">Powerful Features for Successful Trading</h2>
+                <p class="lead">Our platform combines cutting-edge technology with user-friendly tools to help you maximize your trading potential.</p>
+            </div>
+            
+            <div class="position-relative" style="min-height: 500px;">
+                <div class="container">
+                    <div class="row justify-content-center">
+                        <div class="col-lg-8 text-center">
+                            <h1 class="display-4 fw-bold mb-4">View all your coins in one simple dashboard</h1>
+                            <p class="lead mb-4">Add up to 30 API connections and unlimited manual wallets and exchanges.</p>
+                            <a href="#" class="text-primary text-decoration-none fw-bold">View all our connections</a>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Floating Icons -->
+                <div class="floating-icon icon-1">
+                    <img src="assets/image/bitcoin.png" alt="Bitcoin">
+                </div>
+                <div class="floating-icon icon-2">
+                    <img src="assets/image/ethereum.png" alt="Ethereum">
+                </div>
+                <div class="floating-icon icon-3">
+                    <img src="assets/image/cardano.png" alt="Cardano">
+                </div>
+                <div class="floating-icon icon-4">
+                    <img src="assets/image/polkadot.png" alt="Polkadot">
+                </div>
+                <div class="floating-icon icon-7">
+                    <img src="assets/image/tron.png" alt="Tron">
+                </div>
+                <div class="floating-icon icon-8">
+                    <img src="assets/image/dash.png" alt="Dash">
+                </div>
+                <div class="floating-icon icon-9">
+                    <img src="assets/image/xrp.png" alt="XRP">
+                </div>
+                <div class="floating-icon icon-10">
+                    <img src="assets/image/tether.jpg" alt="Tether">
+                </div>
+                <div class="floating-icon icon-11">
+                    <img src="assets/image/litecoin.png" alt="Litecoin">
+                </div>
+                <div class="floating-icon icon-13">
+                    <img src="assets/image/binance.png" alt="Binance">
+                </div>
+                <div class="floating-icon icon-14">
+                    <img src="assets/image/atomicwallet.png" alt="Cosmos">
+                </div>
+                <div class="floating-icon icon-15">
+                    <img src="assets/image/bitcoin.png" alt="Bitcoin Cash">
+                </div>
+                <div class="floating-icon icon-16">
+                    <img src="assets/image/algorand.png" alt="Algorand">
+                </div>
+                <div class="floating-icon icon-17">
+                    <img src="assets/image/terra.png" alt="Terra">
+                </div>
+                <div class="floating-icon icon-18">
+                    <img src="assets/image/polygon.png" alt="Polygon">
+                </div>
+                <div class="floating-icon icon-20">
+                    <img src="assets/image/stellar.png" alt="Stellar">
+                </div>
+                <div class="floating-icon icon-21">
+                    <img src="assets/image/solana.png" alt="Solana">
+                </div>
+                <div class="floating-icon icon-24">
+                    <img src="assets/image/metamask.9d0bcbd4.png" alt="Metamask">
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Products Section -->
+    <section id="products" class="py-5 bg-dark">
+        <div class="container">
+            <div class="text-center mb-5">
+                <h2 class="display-4 fw-bold">Our Services</h2>
+                <div class="mx-auto" style="height: 4px; width: 80px; background: var(--primary-gradient);"></div>
+            </div>
+            
+            <div class="row g-4">
+                <div class="col-md-6">
+                    <div class="service-card h-100">
+                        <img src="assets/image/hero-1.jpg" class="service-img w-100" alt="Copy Trading">
+                        <div class="p-4">
+                            <h3 class="service-title fs-2 fw-bold mb-3">Copy Trading</h3>
+                            <p class="text-muted">
+                                Automatically replicate the trades of successful investors in real-time. Our copy trading system
+                                allows you to follow expert traders and mirror their strategies with customizable risk
+                                parameters. Perfect for beginners and experienced traders looking to diversify their approach.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="col-md-6">
+                    <div class="service-card h-100">
+                        <img src="assets/image/staking-main.jpg" class="service-img w-100" alt="Staking">
+                        <div class="p-4">
+                            <h3 class="service-title fs-2 fw-bold mb-3">Staking</h3>
+                            <p class="text-muted">
+                                Earn passive income by staking your crypto assets. Our staking platform offers competitive
+                                yields on a wide range of cryptocurrencies with flexible lock-up periods. Stake your assets to
+                                support network operations while generating returns without active trading.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="col-md-6">
+                    <div class="service-card h-100">
+                        <img src="assets/image/hero-3.jpg" class="service-img w-100" alt="Stock Trading">
+                        <div class="p-4">
+                            <h3 class="service-title fs-2 fw-bold mb-3">Stock Trading</h3>
+                            <p class="text-muted">
+                                Trade thousands of stocks from major exchanges worldwide. Our stock trading platform offers
+                                advanced charting tools, fundamental analysis data, and commission-free trading on select
+                                markets. Invest in companies you believe in with instant execution.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="col-md-6">
+                    <div class="service-card h-100">
+                        <img src="https://images.unsplash.com/photo-1554224155-6726b3ff858f?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1000&q=80"
+                            class="service-img w-100" alt="Investment Consulting">
+                        <div class="p-4">
+                            <h3 class="service-title fs-2 fw-bold mb-3">Investment Consulting</h3>
+                            <p class="text-muted">
+                                Professional business consulting services designed to help your organization grow and succeed.
+                                We offer strategic planning, operational improvements, and innovative solutions tailored to your
+                                specific needs.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Stats Section -->
+    <section class="py-5">
+        <div class="container">
+            <div class="text-center mb-5">
+                <h2 class="display-4 fw-bold"><span class="highlight-s">Our</span> Numbers</h2>
+                <p class="lead">Achievements of our Company</p>
+            </div>
+            
+            <div class="row justify-content-center">
+                <div class="col-md-6 col-lg-4 mb-4">
+                    <div class="stat-card text-center p-4">
+                        <div class="stat-number fs-1 fw-bold mb-2" id="traders-count" data-target="23">0</div>
+                        <div class="stat-label text-muted mb-4">Active Traders</div>
+                        <div class="mx-auto">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="70" height="70" viewBox="0 0 24 24" fill="#4d8eff">
+                                <circle cx="10" cy="8.5" r="5" fill="#667" />
+                                <path d="M10,15c-4.5,0-8,2-8,5v2h16v-2C18,17,14.5,15,10,15z" fill="#667" />
+                                <circle cx="18" cy="10" r="3" fill="#4d8eff" />
+                                <path d="M17,12l2,2l2-2" stroke="#fff" stroke-width="1.5" fill="none" />
+                            </svg>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="col-md-6 col-lg-4 mb-4">
+                    <div class="stat-card text-center p-4">
+                        <div class="stat-number fs-1 fw-bold mb-2" id="market-cap" data-target="3.7">0</div>
+                        <div class="stat-label text-muted mb-4">Market Capitalization</div>
+                        <div class="mx-auto">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="70" height="70" viewBox="0 0 24 24" fill="#4d8eff">
+                                <rect x="4" y="12" width="3" height="8" fill="#4d8eff" />
+                                <rect x="10" y="8" width="3" height="12" fill="#4d8eff" />
+                                <rect x="16" y="4" width="3" height="16" fill="#4d8eff" />
+                                <line x1="2" y1="20" x2="22" y2="20" stroke="#4d8eff" stroke-width="2" />
+                            </svg>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="text-center mt-5">
+                <p class="text-uppercase text-muted fw-bold">FOR BEGINNERS AND PROS</p>
+                <h3 class="display-6">
+                    <span class="highlight-s">Trade</span> Spot, Margin, Futures & OTC 
+                    <span class="highlight-s">on the best trading platform</span>
+                </h3>
+            </div>
+        </div>
+    </section>
+
+    <!-- Security Section -->
+    <section class="py-5 bg-dark">
+        <div class="container">
+            <div class="text-center mb-5">
+                <p class="text-uppercase text-primary mb-2">Security</p>
+                <h2 class="display-4 fw-bold mb-4">Your Coins are Never at Risk</h2>
+                <div class="row justify-content-center">
+                    <div class="col-lg-8">
+                        <p class="lead">
+                            We've partnered with <span class="text-primary fw-bold">VEZGO</span>, a SOC2, Type II certified data provider to ensure your data remains secure. Your API keys are never shared with us.
+                        </p>
+                        <p class="lead">
+                            We employ military-grade encryption and multi-factor authentication to ensure your account remains secure.
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Testimonials Section -->
+    <section id="testimonials" class="py-5" style="background: rgba(0, 0, 0, 0.2);">
+        <div class="container">
+            <div class="text-center mb-5">
+                <p class="text-uppercase text-primary mb-2">Reviews</p>
+                <h2 class="display-4 fw-bold mb-4">What Our Customers are Saying</h2>
+            </div>
+            
+            <div class="row g-4">
+                <div class="col-md-4">
+                    <div class="testimonial-card p-4 h-100">
+                        <p class="mb-4">
+                            "Wanted to thank the team who's brought this application to our fingertips! I've been able to add all of my crypto assets to one location with ease so I can see what's up and what's down... The only application that allows me to make an exit strategy that makes sense! It also includes estimating taxes and your profit and losses!"
+                        </p>
+                        <p class="fw-bold text-primary mb-0">Arthur</p>
+                    </div>
+                </div>
+                
+                <div class="col-md-4">
+                    <div class="testimonial-card p-4 h-100">
+                        <p class="mb-4">
+                            "As a business owner getting a text that my exit target was reached is vital in the bull market I believe we are going to have. I can't look at my phone every 20 minutes to check the marker then find my notes on what exchange my asset is in to take profits. With Merlin it's all in one place. This is not just a website this is a must have tool for me!"
+                        </p>
+                        <p class="fw-bold text-primary mb-0">George</p>
+                    </div>
+                </div>
+                
+                <div class="col-md-4">
+                    <div class="testimonial-card p-4 h-100">
+                        <p class="mb-4">
+                            "You don't have to be super tech savvy to set this app up correctly. Makes it super easy to pull in your exchanges and see automatically other exchanges/coins that can't be brought in through the automatic system. Love to see all my crypto in one, easy to view place!"
+                        </p>
+                        <p class="fw-bold text-primary mb-0">Cory</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA Section -->
+    <section class="py-5 bg-dark">
+        <div class="container">
+            <div class="row justify-content-center">
+                <div class="col-lg-8 text-center">
+                    <div class="p-5 rounded-3" style="background: rgba(10, 10, 30, 0.8); box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);">
+                        <h2 class="display-5 fw-bold mb-4">Ready to Transform Your Trading Experience?</h2>
+                        <p class="lead mb-4">
+                            Join thousands of successful traders who have already taken control of their financial
+                            future with our comprehensive trading platform.
+                        </p>
+                        <a href="#" class="btn btn-primary btn-lg px-4">
+                            Create Free Account
+                            <i class="fas fa-arrow-right ms-2"></i>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- About Section -->
+    <section id="about" class="py-5">
+        <div class="container">
+            <div class="text-center mb-5">
+                <h2 class="display-4 fw-bold">
+                    Putting our clients first <span class="highlight-s">since 2019</span>
+                </h2>
+                <p class="lead">
+                    For more than 7 years, we've been empowering clients by helping them take control of their financial lives.
+                </p>
+            </div>
+            
+            <div class="row g-4">
+                <div class="col-md-6 col-lg-4">
+                    <div class="feature-card">
+                        <div class="d-flex align-items-center mb-3">
+                            <div class="feature-icon me-3">
+                                <i class="fas fa-shield-alt text-white"></i>
+                            </div>
+                            <h3 class="fs-3 fw-bold mb-0">Who We Are</h3>
+                        </div>
+                        <p class="text-muted">
+                            At cinpaxtrade Trade, we pride ourselves on being a trusted and innovative leader in the online
+                            trading industry. Since our inception in 2018, we have continuously strived to provide an
+                            exceptional trading experience for our clients.
+                        </p>
+                    </div>
+                </div>
+                
+                <div class="col-md-6 col-lg-4">
+                    <div class="feature-card">
+                        <div class="d-flex align-items-center mb-3">
+                            <div class="feature-icon me-3">
+                                <i class="fas fa-award text-white"></i>
+                            </div>
+                            <h3 class="fs-3 fw-bold mb-0">Our Guarantees</h3>
+                        </div>
+                        <p class="text-muted">
+                            cinpaxtrade Trade is proud to be a Category A member of the Financial Commission, a testament to
+                            the company's commitment to reliability and high-quality service. Our trading platform undergoes
+                            regular Verify My Trade independent examinations.
+                        </p>
+                    </div>
+                </div>
+                
+                <div class="col-md-6 col-lg-4">
+                    <div class="feature-card">
+                        <div class="d-flex align-items-center mb-3">
+                            <div class="feature-icon me-3">
+                                <i class="fas fa-bullseye text-white"></i>
+                            </div>
+                            <h3 class="fs-3 fw-bold mb-0">Our Mission</h3>
+                        </div>
+                        <p class="text-muted">
+                            We believe in empowering individuals and communities to achieve financial independence. In
+                            addition to providing robust trading solutions, we are committed to giving back. Through our
+                            Charity Mission, a portion of our earnings is channeled to support local communities.
+                        </p>
+                    </div>
+                </div>
+                
+                <div class="col-md-6 col-lg-4">
+                    <div class="feature-card">
+                        <div class="d-flex align-items-center mb-3">
+                            <div class="feature-icon me-3">
+                                <i class="fas fa-history text-white"></i>
+                            </div>
+                            <h3 class="fs-3 fw-bold mb-0">Our Legacy</h3>
+                        </div>
+                        <p class="text-muted">
+                            Over the years, cinpaxtrade Trade has built a reputation for excellence in the financial trading
+                            industry. Our commitment to innovation, transparency, and client satisfaction has established us
+                            as a trusted partner for thousands of traders worldwide.
+                        </p>
+                    </div>
+                </div>
+                
+                <div class="col-md-6 col-lg-4">
+                    <div class="feature-card">
+                        <div class="d-flex align-items-center mb-3">
+                            <div class="feature-icon me-3">
+                                <i class="fas fa-chart-line text-white"></i>
+                            </div>
+                            <h3 class="fs-3 fw-bold mb-0">A Platform Built for Success</h3>
+                        </div>
+                        <p class="text-muted">
+                            Our cutting-edge trading platform is designed with the user in mind, featuring advanced tools,
+                            real-time market data, and intuitive interfaces that make trading accessible to both beginners
+                            and experienced professionals.
+                        </p>
+                    </div>
+                </div>
+                
+                <div class="col-md-6 col-lg-4">
+                    <div class="feature-card">
+                        <div class="d-flex align-items-center mb-3">
+                            <div class="feature-icon me-3">
+                                <i class="fas fa-star text-white"></i>
+                            </div>
+                            <h3 class="fs-3 fw-bold mb-0">A Commitment to Excellence</h3>
+                        </div>
+                        <p class="text-muted">
+                            Excellence is not just a goal but a standard we uphold in every aspect of our business. From our
+                            customer service to our trading tools, we strive to exceed expectations and deliver exceptional
+                            value to our clients.
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="py-5">
+        <div class="container">
+            <div class="row g-4">
+                <div class="col-lg-4">
+                    <a href="#" class="d-inline-block mb-3">
+                        <img src="assets/image/main-logo.png" alt="cinpaxtrade" width="120">
+                    </a>
+                    <p class="text-muted mb-4">
+                        The leading platform for copy trading and diversified investment opportunities across global markets.
+                    </p>
+                    <div class="d-flex gap-3">
+                        <a href="#" class="text-muted"><i class="fab fa-facebook-f"></i></a>
+                        <a href="#" class="text-muted"><i class="fab fa-twitter"></i></a>
+                        <a href="#" class="text-muted"><i class="fab fa-instagram"></i></a>
+                        <a href="#" class="text-muted"><i class="fab fa-youtube"></i></a>
+                    </div>
+                </div>
+                
+                <div class="col-md-4 col-lg-2">
+                    <h5 class="text-white mb-3">Products</h5>
+                    <ul class="list-unstyled">
+                        <li class="mb-2"><a href="#" class="footer-link">Copy Trading</a></li>
+                        <li class="mb-2"><a href="#" class="footer-link">Staking</a></li>
+                        <li class="mb-2"><a href="#" class="footer-link">ETF Trading</a></li>
+                        <li class="mb-2"><a href="#" class="footer-link">Stock Trading</a></li>
+                        <li class="mb-2"><a href="#" class="footer-link">CFD Trading</a></li>
+                    </ul>
+                </div>
+                
+                <div class="col-md-4 col-lg-2">
+                    <h5 class="text-white mb-3">Company</h5>
+                    <ul class="list-unstyled">
+                        <li class="mb-2"><a href="#" class="footer-link">About Us</a></li>
+                        <li class="mb-2"><a href="#" class="footer-link">Careers</a></li>
+                        <li class="mb-2"><a href="#" class="footer-link">Press</a></li>
+                        <li class="mb-2"><a href="#" class="footer-link">News</a></li>
+                        <li class="mb-2"><a href="#" class="footer-link">Contact</a></li>
+                    </ul>
+                </div>
+                
+                <div class="col-md-4 col-lg-4">
+                    <h5 class="text-white mb-3">Contact Us</h5>
+                    <ul class="list-unstyled text-muted">
+                        <li class="mb-3 d-flex">
+                            <i class="fas fa-map-marker-alt me-2 mt-1 text-primary"></i>
+                            <span>123 Trading Street, Financial District<br>New York, NY 10001</span>
+                        </li>
+                        <li class="mb-3 d-flex">
+                            <i class="fas fa-phone me-2 mt-1 text-primary"></i>
+                            <a href="tel:+15551234567" class="footer-link">+1 (555) 123-4567</a>
+                        </li>
+                        <li class="d-flex">
+                            <i class="fas fa-envelope me-2 mt-1 text-primary"></i>
+                            <a href="mailto:support@cinpaxtradepro.com" class="footer-link">info@cinpaxtrade.com</a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            
+            <hr class="my-4 bg-secondary">
+            
+            <div class="row align-items-center">
+                <div class="col-md-6 mb-3 mb-md-0">
+                    <p class="text-muted mb-0">© <span id="copyright-year">2025</span> cinpaxtrade. All rights reserved.</p>
+                </div>
+                <div class="col-md-6 text-md-end">
+                    <div class="d-flex flex-wrap gap-3 justify-content-center justify-content-md-end">
+                        <a href="#" class="footer-link">Terms of Service</a>
+                        <a href="#" class="footer-link">Privacy Policy</a>
+                        <a href="#" class="footer-link">Cookie Policy</a>
+                        <a href="#" class="footer-link">Risk Disclosure</a>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="mt-4 text-center">
+                <p class="small text-muted">
+                    Risk Warning: Trading financial instruments carries a high level of risk to your capital with the
+                    possibility of losing more than your initial investment. Trading is not suitable for everyone and you
+                    should ensure you understand the risks involved.
+                </p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <!-- Swiper JS -->
+    <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
+    <!-- Custom JS -->
+    <script>
+        // Count Up Animation
+        function animateCountUp(element, end, suffix = "", decimals = 0) {
+            const duration = 2000;
+            const frameDuration = 1000 / 60;
+            const totalFrames = Math.round(duration / frameDuration);
+
+            let frame = 0;
+            const countTo = typeof end === "string" ? parseFloat(end) : end;
+
+            const counter = setInterval(() => {
+                frame++;
+
+                const progress = frame / totalFrames;
+                const currentCount = countTo * progress;
+
+                let formattedCount;
+                if (decimals > 0) {
+                    formattedCount = currentCount.toFixed(decimals);
+                } else {
+                    formattedCount = Math.floor(currentCount);
+                }
+
+                element.textContent = formattedCount + suffix;
+
+                if (frame === totalFrames) {
+                    clearInterval(counter);
+                    element.textContent = countTo + suffix;
+                }
+            }, frameDuration);
+        }
+
+        function setupCountUpObserver() {
+            const options = {
+                root: null,
+                rootMargin: "0px",
+                threshold: 0.1,
+            };
+
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach((entry) => {
+                    if (entry.isIntersecting) {
+                        const element = entry.target;
+                        const targetValue = element.getAttribute("data-target");
+
+                        if (element.id === "traders-count") {
+                            animateCountUp(element, targetValue, "K");
+                        } else if (element.id === "market-cap") {
+                            animateCountUp(element, targetValue, "M", 1);
+                        }
+
+                        observer.unobserve(element);
+                    }
+                });
+            }, options);
+
+            document.querySelectorAll(".stat-number").forEach((element) => {
+                observer.observe(element);
+            });
+        }
+
+        // Investment Popup
+        const countries = [
+            "Italy", "Germany", "France", "Brazil", "Canada", 
+            "United States", "India", "South Africa", "Mexico", "Australia", "UK"
+        ];
+
+        function showInvestmentPopup() {
+            const popup = document.getElementById("investment-popup");
+            const country = countries[Math.floor(Math.random() * countries.length)];
+            const amount = Math.floor(Math.random() * (10000 - 1000 + 1)) + 1000;
+
+            popup.querySelector(".country").textContent = country;
+            popup.querySelector(".amount").textContent = `$${amount.toLocaleString()}`;
+
+            popup.classList.add("show");
+
+            setTimeout(() => {
+                popup.classList.remove("show");
+            }, 5000);
+
+            const nextDelay = Math.floor(Math.random() * 10000) + 30000;
+            setTimeout(showInvestmentPopup, nextDelay);
+        }
+
+        // Initialize everything when DOM is loaded
+        document.addEventListener("DOMContentLoaded", () => {
+            setupCountUpObserver();
+            setTimeout(showInvestmentPopup, 5000);
+            
+            // Update copyright year
+            document.getElementById("copyright-year").textContent = new Date().getFullYear();
+            
+            // Initialize Swiper
+            new Swiper(".hero-section", {
+                loop: true,
+                autoplay: {
+                    delay: 4000,
+                    disableOnInteraction: false,
+                },
+                pagination: {
+                    el: ".swiper-pagination",
+                    clickable: true,
+                },
+                navigation: {
+                    nextEl: ".swiper-button-next",
+                    prevEl: ".swiper-button-prev",
+                },
+            });
+        });
+    </script>
+</body>
+</html>

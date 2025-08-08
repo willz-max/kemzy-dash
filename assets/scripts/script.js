@@ -54,10 +54,10 @@ console.log(document.querySelector('.your_total_eth').innerHTML);
 
 
 
-window.onload = () => {
-  fetchBTCSummary();
+// window.onload = () => {
+//   fetchBTCSummary();
 
-};
+// };
 
 document.addEventListener('DOMContentLoaded', function() {
     const dropdown = document.querySelector('.dropdown');

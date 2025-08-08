@@ -1,0 +1,550 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cryptocurrency Deposit</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #6366f1 0%, #8b5cf6 100%);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+        }
+
+        .container {
+            background: #ffffff;
+            border-radius: 20px;
+            padding: 40px;
+            max-width: 600px;
+            width: 100%;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+        }
+
+        h1 {
+            text-align: center;
+            margin-bottom: 30px;
+            color: #374151;
+            font-size: 1.8rem;
+            font-weight: 600;
+        }
+
+        .form-group {
+            margin-bottom: 25px;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 500;
+            color: #374151;
+            font-size: 14px;
+        }
+
+        .required {
+            color: #ef4444;
+        }
+
+        select, input {
+            width: 100%;
+            padding: 15px;
+            border: 2px solid #e5e7eb;
+            border-radius: 8px;
+            background: #ffffff;
+            color: #374151;
+            font-size: 16px;
+            transition: all 0.3s ease;
+        }
+
+        select:focus, input:focus {
+            outline: none;
+            border-color: #6366f1;
+            box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.1);
+        }
+
+        select option {
+            background: #ffffff;
+            color: #374151;
+        }
+
+        .deposit-section {
+            background: #f0f9ff;
+            border: 1px solid #e0f2fe;
+            border-radius: 12px;
+            padding: 20px;
+            margin-bottom: 25px;
+            display: none;
+        }
+
+        .deposit-section.active {
+            display: block;
+        }
+
+        .deposit-section h3 {
+            color: #0369a1;
+            font-size: 16px;
+            font-weight: 600;
+            margin-bottom: 15px;
+            text-align: center;
+        }
+
+        .address-container {
+            display: flex;
+            gap: 10px;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+
+        .address-input {
+            flex: 1;
+            background: #ffffff;
+            border: 2px solid #e5e7eb;
+            padding: 12px;
+            border-radius: 8px;
+            color: #374151;
+            font-size: 14px;
+            font-family: monospace;
+            word-break: break-all;
+        }
+
+        .copy-btn {
+            background: linear-gradient(135deg, #6366f1 0%, #8b5cf6 100%);
+            border: none;
+            color: white;
+            padding: 12px 20px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            min-width: 80px;
+            white-space: nowrap;
+        }
+
+        .copy-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 20px rgba(99, 102, 241, 0.3);
+        }
+
+        .copy-btn:active {
+            transform: translateY(0);
+        }
+
+        .qr-container {
+            text-align: center;
+            margin-top: 15px;
+        }
+
+        .qr-code {
+            width: 200px;
+            height: 200px;
+            border: 2px solid #e5e7eb;
+            border-radius: 12px;
+            background: #ffffff;
+            padding: 10px;
+        }
+
+        .confirm-btn {
+            width: 100%;
+            padding: 18px;
+            background: linear-gradient(135deg, #6366f1 0%, #8b5cf6 100%);
+            border: none;
+            border-radius: 8px;
+            color: white;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            margin-top: 20px;
+            display: none;
+        }
+
+        .confirm-btn.active {
+            display: block;
+        }
+
+        .confirm-btn:hover:not(:disabled) {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 20px rgba(99, 102, 241, 0.3);
+        }
+
+        .confirm-btn:disabled {
+            background: #9ca3af;
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        .popup-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.8);
+            display: none;
+            justify-content: center;
+            align-items: center;
+            z-index: 1000;
+        }
+
+        .popup {
+            background: #ffffff;
+            border-radius: 20px;
+            padding: 40px;
+            max-width: 400px;
+            width: 90%;
+            text-align: center;
+            box-shadow: 0 25px 50px rgba(0, 0, 0, 0.5);
+        }
+
+        .popup h2 {
+            margin-bottom: 20px;
+            color: #374151;
+            font-size: 1.5rem;
+        }
+
+        .popup p {
+            color: #6b7280;
+            margin-bottom: 20px;
+            line-height: 1.6;
+        }
+
+        .file-input-container {
+            margin: 20px 0;
+            position: relative;
+        }
+
+        .file-input {
+            display: none;
+        }
+
+        .file-input-label {
+            display: inline-block;
+            padding: 20px 30px;
+            background: #f9fafb;
+            border: 2px dashed #d1d5db;
+            border-radius: 12px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            width: 100%;
+            color: #6b7280;
+        }
+
+        .file-input-label:hover {
+            background: #f0f9ff;
+            border-color: #6366f1;
+            color: #6366f1;
+        }
+
+        .file-name {
+            margin-top: 10px;
+            font-size: 14px;
+            color: #6366f1;
+            font-weight: 500;
+        }
+
+        .popup-buttons {
+            display: flex;
+            gap: 15px;
+            margin-top: 25px;
+        }
+
+        .popup-btn {
+            flex: 1;
+            padding: 12px;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            font-size: 14px;
+        }
+
+        .submit-btn {
+            background: linear-gradient(135deg, #6366f1 0%, #8b5cf6 100%);
+            color: white;
+        }
+
+        .submit-btn:hover:not(:disabled) {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 20px rgba(99, 102, 241, 0.3);
+        }
+
+        .submit-btn:disabled {
+            background: #9ca3af;
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        .cancel-btn {
+            background: #f3f4f6;
+            color: #374151;
+        }
+
+        .cancel-btn:hover {
+            background: #e5e7eb;
+        }
+
+        .success-message {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            background: linear-gradient(45deg, #10b981, #059669);
+            color: white;
+            padding: 15px 20px;
+            border-radius: 8px;
+            display: none;
+            z-index: 1001;
+            animation: slideIn 0.3s ease;
+        }
+
+        @keyframes slideIn {
+            from {
+                transform: translateX(100%);
+                opacity: 0;
+            }
+            to {
+                transform: translateX(0);
+                opacity: 1;
+            }
+        }
+
+        input::placeholder {
+            color: #9ca3af;
+        }
+
+        .crypto-icon {
+            width: 20px;
+            height: 20px;
+            margin-right: 8px;
+            vertical-align: middle;
+        }
+
+        @media (max-width: 600px) {
+            .container {
+                padding: 20px;
+            }
+            
+            .address-container {
+                flex-direction: column;
+                gap: 10px;
+            }
+            
+            .address-input {
+                margin-bottom: 10px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Deposit Cryptocurrency</h1>
+        
+        <form id="depositForm">
+            <div class="form-group">
+                <label for="crypto">Select Cryptocurrency <span class="required">*</span></label>
+                <select id="crypto" name="crypto" required>
+                    <option value="">Choose cryptocurrency</option>
+                    <option value="usdt">USDT (Tether)</option>
+                    <option value="btc">BTC (Bitcoin)</option>
+                </select>
+            </div>
+
+            <div class="form-group">
+                <label for="amount">Amount to Deposit <span class="required">*</span></label>
+                <input type="number" id="amount" name="amount" placeholder="Enter amount" min="0" step="0.01" required>
+            </div>
+
+            <div class="deposit-section" id="depositSection">
+                <h3>Deposit Address</h3>
+                <div class="address-container">
+                    <input type="text" class="address-input" id="depositAddress" readonly>
+                    <button type="button" class="copy-btn" id="copyBtn">Copy</button>
+                </div>
+                
+                <div class="qr-container">
+                    <img id="qrCode" class="qr-code" alt="QR Code">
+                </div>
+            </div>
+
+            <button type="button" class="confirm-btn" id="confirmBtn">Confirm Deposit</button>
+        </form>
+    </div>
+
+    <div class="popup-overlay" id="popupOverlay">
+        <form class="popup">
+            <h2>Submit Payment Proof</h2>
+            <p>Please upload an image showing proof of your payment transaction.</p>
+            
+            <div class="file-input-container">
+                <input type="file" id="proofFile" class="file-input" accept="image/*">
+                <label for="proofFile" class="file-input-label">
+                    📁 Click to select image or drag and drop
+                </label>
+                <div class="file-name" id="fileName"></div>
+            </div>
+
+            <div class="popup-buttons">
+                <button type="button" class="popup-btn cancel-btn" id="cancelBtn">Cancel</button>
+                <button type="button" class="popup-btn submit-btn" id="submitBtn" disabled>Submit Proof</button>
+            </div>
+        </form>
+    </div>
+
+    <div class="success-message" id="successMessage">
+        Payment proof submitted successfully!
+    </div>
+
+    <script>
+        // Cryptocurrency addresses
+        const addresses = {
+            usdt: 'TQn9Y2khEsLJW1ChVWFMSMeRDow5KcbLSE',
+            btc: 'bc1qxy2kgdygjrsqtzq2n0yrf2493p83kkfjhx0wlh'
+        };
+
+        // QR code URLs
+        const qrCodes = {
+            usdt: 'https://api.qrserver.com/v1/create-qr-code/?size=200x200&data=TQn9Y2khEsLJW1ChVWFMSMeRDow5KcbLSE',
+            btc: 'https://api.qrserver.com/v1/create-qr-code/?size=200x200&data=bc1qxy2kgdygjrsqtzq2n0yrf2493p83kkfjhx0wlh'
+        };
+
+        const cryptoSelect = document.getElementById('crypto');
+        const amountInput = document.getElementById('amount');
+        const depositSection = document.getElementById('depositSection');
+        const addressInput = document.getElementById('depositAddress');
+        const qrCode = document.getElementById('qrCode');
+        const copyBtn = document.getElementById('copyBtn');
+        const confirmBtn = document.getElementById('confirmBtn');
+        const popupOverlay = document.getElementById('popupOverlay');
+        const proofFile = document.getElementById('proofFile');
+        const fileName = document.getElementById('fileName');
+        const submitBtn = document.getElementById('submitBtn');
+        const cancelBtn = document.getElementById('cancelBtn');
+        const successMessage = document.getElementById('successMessage');
+
+        // Update address and QR code when crypto is selected
+        cryptoSelect.addEventListener('change', function() {
+            updateDepositInfo();
+        });
+
+        // Update when amount changes
+        amountInput.addEventListener('input', function() {
+            updateDepositInfo();
+        });
+
+        function updateDepositInfo() {
+            const selectedCrypto = cryptoSelect.value;
+            const amount = parseFloat(amountInput.value);
+            
+            if (selectedCrypto && amount > 0) {
+                addressInput.value = addresses[selectedCrypto];
+                qrCode.src = qrCodes[selectedCrypto];
+                depositSection.classList.add('active');
+                confirmBtn.classList.add('active');
+            } else {
+                depositSection.classList.remove('active');
+                confirmBtn.classList.remove('active');
+            }
+        }
+
+        // Copy address functionality
+        copyBtn.addEventListener('click', function() {
+            if (addressInput.value) {
+                navigator.clipboard.writeText(addressInput.value).then(function() {
+                    const originalText = copyBtn.textContent;
+                    copyBtn.textContent = 'Copied!';
+                    copyBtn.style.background = 'linear-gradient(135deg, #10b981, #059669)';
+                    setTimeout(() => {
+                        copyBtn.textContent = originalText;
+                        copyBtn.style.background = 'linear-gradient(135deg, #6366f1 0%, #8b5cf6 100%)';
+                    }, 2000);
+                });
+            }
+        });
+
+        // Show popup when confirm is clicked
+        confirmBtn.addEventListener('click', function() {
+            popupOverlay.style.display = 'flex';
+        });
+
+        // Handle file selection
+        proofFile.addEventListener('change', function() {
+            const file = this.files[0];
+            if (file) {
+                fileName.textContent = file.name;
+                submitBtn.disabled = false;
+            } else {
+                fileName.textContent = '';
+                submitBtn.disabled = true;
+            }
+        });
+
+        // Handle drag and drop
+        const fileLabel = document.querySelector('.file-input-label');
+        fileLabel.addEventListener('dragover', function(e) {
+            e.preventDefault();
+            this.style.borderColor = '#6366f1';
+            this.style.background = '#f0f9ff';
+        });
+
+        fileLabel.addEventListener('dragleave', function(e) {
+            e.preventDefault();
+            this.style.borderColor = '#d1d5db';
+            this.style.background = '#f9fafb';
+        });
+
+        fileLabel.addEventListener('drop', function(e) {
+            e.preventDefault();
+            this.style.borderColor = '#d1d5db';
+            this.style.background = '#f9fafb';
+            const files = e.dataTransfer.files;
+            if (files.length > 0) {
+                proofFile.files = files;
+                fileName.textContent = files[0].name;
+                submitBtn.disabled = false;
+            }
+        });
+
+        // Submit proof
+        submitBtn.addEventListener('click', function() {
+            popupOverlay.style.display = 'none';
+            successMessage.style.display = 'block';
+            
+            // Reset form
+            document.getElementById('depositForm').reset();
+            depositSection.classList.remove('active');
+            confirmBtn.classList.remove('active');
+            fileName.textContent = '';
+            submitBtn.disabled = true;
+            
+            // Hide success message after 3 seconds
+            setTimeout(() => {
+                successMessage.style.display = 'none';
+            }, 3000);
+        });
+
+        // Cancel popup
+        cancelBtn.addEventListener('click', function() {
+            popupOverlay.style.display = 'none';
+            proofFile.value = '';
+            fileName.textContent = '';
+            submitBtn.disabled = true;
+        });
+
+        // Close popup when clicking outside
+        popupOverlay.addEventListener('click', function(e) {
+            if (e.target === popupOverlay) {
+                cancelBtn.click();
+            }
+        });
+    </script>
+</body>
+</html>

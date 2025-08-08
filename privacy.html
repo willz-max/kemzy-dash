@@ -1,0 +1,547 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Privacy Policy - Trading Platform</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: "Poppins", sans-serif;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            background-color: #212529;
+            color: #e0e6ed;
+            line-height: 1.6;
+        }
+
+        /* Navigation - matching your existing nav styles */
+        nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background-color: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            padding: 16px 20px;
+            position: fixed;
+            width: 100%;
+            z-index: 99999999;
+            color: black;
+            box-shadow: 0 2px 20px rgba(0, 0, 0, 0.1);
+            top: 0;
+        }
+
+        .logo {
+            font-weight: bold;
+            font-size: 1.5rem;
+            color: #007bff;
+        }
+
+        .nav-links {
+            display: flex;
+            list-style: none;
+            gap: 2rem;
+        }
+
+        .nav-links a {
+            color: #8498ae;
+            text-decoration: none;
+            font-size: 1rem;
+            transition: color 0.3s ease;
+        }
+
+        .nav-links a:hover {
+            color: #007bff;
+        }
+
+        /* Main content */
+        .privacy-container {
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 120px 20px 80px;
+        }
+
+        .privacy-header {
+            text-align: center;
+            margin-bottom: 60px;
+            padding: 40px 0;
+            background: linear-gradient(135deg, rgba(0, 170, 227, 0.1), rgba(0, 212, 192, 0.1));
+            border-radius: 16px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .privacy-title {
+            font-size: 3rem;
+            font-weight: 700;
+            margin-bottom: 20px;
+            background: linear-gradient(90deg, #00aae3 0%, #00d4c0 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .privacy-subtitle {
+            font-size: 1.2rem;
+            color: #a8b2d1;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        .last-updated {
+            background: rgba(0, 170, 227, 0.1);
+            padding: 15px 25px;
+            border-radius: 8px;
+            text-align: center;
+            margin-bottom: 40px;
+            border-left: 4px solid #00aae3;
+        }
+
+        .section {
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 16px;
+            padding: 40px;
+            margin-bottom: 30px;
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            transition: all 0.3s ease;
+        }
+
+        .section:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 30px rgba(0, 170, 227, 0.1);
+        }
+
+        .section-title {
+            font-size: 1.8rem;
+            font-weight: 600;
+            color: #00d9ff;
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .section-icon {
+            width: 30px;
+            height: 30px;
+            background: linear-gradient(135deg, #00aae3, #00d4c0);
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 16px;
+            color: white;
+        }
+
+        .section-content {
+            color: #b0b9c9;
+            font-size: 1rem;
+            line-height: 1.8;
+        }
+
+        .section-content p {
+            margin-bottom: 15px;
+        }
+
+        .section-content ul {
+            margin: 15px 0;
+            padding-left: 20px;
+        }
+
+        .section-content li {
+            margin-bottom: 8px;
+            position: relative;
+        }
+
+        .section-content li::marker {
+            color: #00aae3;
+        }
+
+        .highlight {
+            color: #00d9ff;
+            font-weight: 500;
+        }
+
+        .contact-section {
+            background: linear-gradient(135deg, rgba(0, 170, 227, 0.1), rgba(0, 212, 192, 0.1));
+            border: 2px solid rgba(0, 170, 227, 0.2);
+            text-align: center;
+        }
+
+        .contact-button {
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            background: linear-gradient(135deg, #00aae3, #00d4c0);
+            color: white;
+            padding: 15px 30px;
+            border: none;
+            border-radius: 8px;
+            font-size: 1rem;
+            font-weight: 600;
+            text-decoration: none;
+            transition: all 0.3s ease;
+            margin-top: 20px;
+        }
+
+        .contact-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(0, 170, 227, 0.3);
+        }
+
+        /* Table of contents */
+        .toc {
+            background: rgba(255, 255, 255, 0.03);
+            border-radius: 12px;
+            padding: 30px;
+            margin-bottom: 40px;
+            border: 1px solid rgba(255, 255, 255, 0.08);
+        }
+
+        .toc-title {
+            font-size: 1.4rem;
+            font-weight: 600;
+            color: #00d9ff;
+            margin-bottom: 20px;
+        }
+
+        .toc-list {
+            list-style: none;
+            padding: 0;
+        }
+
+        .toc-list li {
+            margin-bottom: 12px;
+        }
+
+        .toc-list a {
+            color: #a8b2d1;
+            text-decoration: none;
+            padding: 8px 15px;
+            display: block;
+            border-radius: 6px;
+            transition: all 0.3s ease;
+        }
+
+        .toc-list a:hover {
+            background: rgba(0, 170, 227, 0.1);
+            color: #00d9ff;
+            padding-left: 25px;
+        }
+
+        /* Footer */
+        .privacy-footer {
+            text-align: center;
+            padding: 40px 0;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            margin-top: 60px;
+        }
+
+        .back-to-top {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            color: #00d9ff;
+            text-decoration: none;
+            font-weight: 500;
+            transition: all 0.3s ease;
+        }
+
+        .back-to-top:hover {
+            transform: translateY(-2px);
+        }
+
+        /* Mobile responsiveness */
+        @media (max-width: 768px) {
+            .privacy-container {
+                padding: 100px 15px 60px;
+            }
+
+            .privacy-title {
+                font-size: 2.2rem;
+            }
+
+            .section {
+                padding: 25px;
+            }
+
+            .section-title {
+                font-size: 1.5rem;
+            }
+
+            .nav-links {
+                display: none;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .privacy-title {
+                font-size: 1.8rem;
+            }
+            
+            .section {
+                padding: 20px;
+            }
+        }
+        .logo img{
+            width: 100px;
+            height: auto;
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation -->
+    <nav>
+        <div class="logo"><img src="assets/image/main-logo.png" alt=""></div>
+        <ul class="nav-links">
+            <li><a href="Front-page.html">Back</a></li>
+            <!-- <li><a href="Front-page.html">About</a></li> -->
+            <!-- <li><a href="Front-page.html">Services</a></li> -->
+            <!-- <li><a href="#contact">Contact</a></li> -->
+        </ul>
+    </nav>
+
+    <div class="privacy-container">
+        <!-- Header -->
+        <div class="privacy-header">
+            <h1 class="privacy-title">Privacy Policy</h1>
+            <p class="privacy-subtitle">Your privacy is important to us. This policy explains how we collect, use, and protect your personal information on our trading platform.</p>
+        </div>
+
+        <!-- Last Updated -->
+        <div class="last-updated">
+            <strong>Last Updated:</strong> January 21, 2025
+        </div>
+
+        <!-- Table of Contents -->
+        <div class="toc">
+            <h3 class="toc-title">📋 Table of Contents</h3>
+            <ul class="toc-list">
+                <li><a href="#information-collection">Information We Collect</a></li>
+                <li><a href="#information-use">How We Use Your Information</a></li>
+                <li><a href="#information-sharing">Information Sharing</a></li>
+                <li><a href="#data-security">Data Security</a></li>
+                <li><a href="#cookies">Cookies and Tracking</a></li>
+                <li><a href="#user-rights">Your Rights</a></li>
+                <li><a href="#data-retention">Data Retention</a></li>
+                <li><a href="#policy-changes">Policy Changes</a></li>
+                <li><a href="#contact-us">Contact Us</a></li>
+            </ul>
+        </div>
+
+        <!-- Sections -->
+        <div id="information-collection" class="section">
+            <h2 class="section-title">
+                <div class="section-icon">📊</div>
+                Information We Collect
+            </h2>
+            <div class="section-content">
+                <p>We collect information to provide better services to our users and ensure compliance with financial regulations.</p>
+                
+                <h4 class="highlight">Personal Information:</h4>
+                <ul>
+                    <li>Name, email address, and phone number</li>
+                    <li>Government-issued ID and verification documents</li>
+                    <li>Address and residency information</li>
+                    <li>Date of birth and citizenship status</li>
+                    <li>Financial information and trading experience</li>
+                </ul>
+
+                <h4 class="highlight">Trading Data:</h4>
+                <ul>
+                    <li>Transaction history and trading patterns</li>
+                    <li>Account balances and portfolio information</li>
+                    <li>Risk management preferences</li>
+                    <li>Platform usage analytics</li>
+                </ul>
+
+                <h4 class="highlight">Technical Information:</h4>
+                <ul>
+                    <li>IP address and device information</li>
+                    <li>Browser type and operating system</li>
+                    <li>Login timestamps and session data</li>
+                    <li>Cookies and tracking technologies</li>
+                </ul>
+            </div>
+        </div>
+
+        <div id="information-use" class="section">
+            <h2 class="section-title">
+                <div class="section-icon">⚙️</div>
+                How We Use Your Information
+            </h2>
+            <div class="section-content">
+                <p>Your information is used to provide, maintain, and improve our trading services while ensuring regulatory compliance.</p>
+                
+                <ul>
+                    <li><strong class="highlight">Account Management:</strong> Creating and managing your trading account</li>
+                    <li><strong class="highlight">Identity Verification:</strong> Complying with KYC (Know Your Customer) requirements</li>
+                    <li><strong class="highlight">Transaction Processing:</strong> Executing trades and managing funds</li>
+                    <li><strong class="highlight">Risk Management:</strong> Monitoring for fraud and suspicious activities</li>
+                    <li><strong class="highlight">Customer Support:</strong> Providing assistance and resolving issues</li>
+                    <li><strong class="highlight">Platform Improvement:</strong> Analyzing usage to enhance our services</li>
+                    <li><strong class="highlight">Communication:</strong> Sending important updates and marketing materials (with consent)</li>
+                    <li><strong class="highlight">Legal Compliance:</strong> Meeting regulatory and legal obligations</li>
+                </ul>
+            </div>
+        </div>
+
+        <div id="information-sharing" class="section">
+            <h2 class="section-title">
+                <div class="section-icon">🔗</div>
+                Information Sharing
+            </h2>
+            <div class="section-content">
+                <p>We do not sell your personal information. We may share your data in the following circumstances:</p>
+                
+                <ul>
+                    <li><strong class="highlight">Regulatory Bodies:</strong> When required by financial regulators and authorities</li>
+                    <li><strong class="highlight">Service Providers:</strong> With trusted third parties who assist in providing our services</li>
+                    <li><strong class="highlight">Legal Requirements:</strong> To comply with court orders, subpoenas, or legal processes</li>
+                    <li><strong class="highlight">Business Transfers:</strong> In case of merger, acquisition, or sale of assets</li>
+                    <li><strong class="highlight">Consent:</strong> When you explicitly authorize us to share your information</li>
+                    <li><strong class="highlight">Safety:</strong> To protect rights, property, or safety of users and the public</li>
+                </ul>
+
+                <p>All third parties are contractually obligated to protect your data and use it only for specified purposes.</p>
+            </div>
+        </div>
+
+        <div id="data-security" class="section">
+            <h2 class="section-title">
+                <div class="section-icon">🔒</div>
+                Data Security
+            </h2>
+            <div class="section-content">
+                <p>We implement industry-standard security measures to protect your personal and financial information:</p>
+                
+                <ul>
+                    <li><strong class="highlight">Encryption:</strong> All data is encrypted in transit and at rest using AES-256 encryption</li>
+                    <li><strong class="highlight">Secure Servers:</strong> Our servers are hosted in secure, monitored data centers</li>
+                    <li><strong class="highlight">Multi-Factor Authentication:</strong> Enhanced login security for account protection</li>
+                    <li><strong class="highlight">Regular Audits:</strong> Periodic security assessments and penetration testing</li>
+                    <li><strong class="highlight">Access Controls:</strong> Strict employee access controls and background checks</li>
+                    <li><strong class="highlight">Monitoring:</strong> 24/7 security monitoring and incident response</li>
+                </ul>
+
+                <p>While we strive to protect your information, no method of transmission over the internet is 100% secure. We encourage you to use strong passwords and enable two-factor authentication.</p>
+            </div>
+        </div>
+
+        <div id="cookies" class="section">
+            <h2 class="section-title">
+                <div class="section-icon">🍪</div>
+                Cookies and Tracking
+            </h2>
+            <div class="section-content">
+                <p>We use cookies and similar technologies to enhance your experience and analyze platform usage:</p>
+                
+                <h4 class="highlight">Types of Cookies:</h4>
+                <ul>
+                    <li><strong>Essential Cookies:</strong> Required for basic platform functionality</li>
+                    <li><strong>Performance Cookies:</strong> Help us understand how users interact with our platform</li>
+                    <li><strong>Functional Cookies:</strong> Remember your preferences and settings</li>
+                    <li><strong>Marketing Cookies:</strong> Used to deliver relevant advertisements (with consent)</li>
+                </ul>
+
+                <p>You can manage cookie preferences through your browser settings, though disabling certain cookies may affect platform functionality.</p>
+            </div>
+        </div>
+
+        <div id="user-rights" class="section">
+            <h2 class="section-title">
+                <div class="section-icon">⚖️</div>
+                Your Rights
+            </h2>
+            <div class="section-content">
+                <p>You have several rights regarding your personal information, subject to applicable laws:</p>
+                
+                <ul>
+                    <li><strong class="highlight">Access:</strong> Request a copy of your personal data we hold</li>
+                    <li><strong class="highlight">Correction:</strong> Update or correct inaccurate information</li>
+                    <li><strong class="highlight">Deletion:</strong> Request deletion of your data (subject to legal obligations)</li>
+                    <li><strong class="highlight">Portability:</strong> Receive your data in a structured, machine-readable format</li>
+                    <li><strong class="highlight">Restriction:</strong> Limit how we process your information</li>
+                    <li><strong class="highlight">Objection:</strong> Object to certain types of data processing</li>
+                    <li><strong class="highlight">Withdraw Consent:</strong> Revoke consent for marketing communications</li>
+                </ul>
+
+                <p>To exercise these rights, please contact our privacy team using the information provided below.</p>
+            </div>
+        </div>
+
+        <div id="data-retention" class="section">
+            <h2 class="section-title">
+                <div class="section-icon">📅</div>
+                Data Retention
+            </h2>
+            <div class="section-content">
+                <p>We retain your information for different periods based on the type of data and legal requirements:</p>
+                
+                <ul>
+                    <li><strong class="highlight">Active Accounts:</strong> Information is retained while your account is active</li>
+                    <li><strong class="highlight">Closed Accounts:</strong> Data may be retained for up to 7 years for regulatory compliance</li>
+                    <li><strong class="highlight">Transaction Records:</strong> Kept for 5-7 years as required by financial regulations</li>
+                    <li><strong class="highlight">Marketing Data:</strong> Retained until you withdraw consent or 3 years of inactivity</li>
+                    <li><strong class="highlight">Support Records:</strong> Maintained for 2 years after case closure</li>
+                </ul>
+
+                <p>Data is securely deleted when retention periods expire, unless extended retention is required by law.</p>
+            </div>
+        </div>
+
+        <div id="policy-changes" class="section">
+            <h2 class="section-title">
+                <div class="section-icon">🔄</div>
+                Policy Changes
+            </h2>
+            <div class="section-content">
+                <p>We may update this Privacy Policy periodically to reflect changes in our practices, technology, or legal requirements.</p>
+                
+                <ul>
+                    <li>Material changes will be communicated via email or platform notification</li>
+                    <li>Minor updates may be posted on our website with an updated date</li>
+                    <li>We encourage you to review this policy regularly</li>
+                    <li>Continued use of our platform constitutes acceptance of updated terms</li>
+                </ul>
+
+                <p>Historical versions of this policy are available upon request.</p>
+            </div>
+        </div>
+
+        <div id="contact-us" class="section contact-section">
+            <h2 class="section-title">
+                <div class="section-icon">📞</div>
+                Contact Us
+            </h2>
+            <div class="section-content">
+                <p>If you have questions about this Privacy Policy or your personal data, please contact us:</p>
+                
+                <p><strong class="highlight">Privacy Officer</strong><br>
+                Email: privacy@tradeplatform.com<br>
+                Phone: +1 (555) 123-4567<br>
+                Address: 123 Financial District, Trading City, TC 12345</p>
+
+                <p>We will respond to your inquiry within 30 days.</p>
+                
+                <a href="mailto:privacy@tradeplatform.com" class="contact-button">
+                    📧 Contact Privacy Team
+                </a>
+            </div>
+        </div>
+
+        <!-- Footer -->
+        <div class="privacy-footer">
+            <a href="#top" class="back-to-top">↑ Back to Top</a>
+        </div>
+    </div>
+</body>
+</html>

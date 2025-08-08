@@ -1,0 +1,450 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>KYC Verification</title>
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.2/css/bootstrap.min.css" rel="stylesheet"/>
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-icons/1.11.0/font/bootstrap-icons.min.css" rel="stylesheet"/>
+  <style>
+    :root {
+      --bs-primary: #4a7bc8;
+      --bs-primary-hover: #3a6ba8;
+      --bs-secondary: #6c757d;
+    }
+
+    [data-bs-theme="dark"] {
+      --bs-body-bg: #1a1a1a;
+      --bs-body-color: #ffffff;
+      --bs-border-color: #444444;
+    }
+
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+    }
+
+    .upload-zone {
+      min-height: 150px;
+      border: 2px dashed var(--bs-border-color);
+      border-radius: 0.5rem;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      position: relative;
+    }
+
+    .upload-zone:hover {
+      border-color: var(--bs-primary);
+    }
+
+    .upload-zone.dragover {
+      border-color: var(--bs-primary);
+      background-color: rgba(74, 123, 200, 0.1);
+    }
+
+    .upload-zone input[type="file"] {
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      opacity: 0;
+      cursor: pointer;
+    }
+
+    .file-preview-image {
+      width: 80px;
+      height: 80px;
+      object-fit: cover;
+      border-radius: 0.5rem;
+    }
+
+    .btn-custom-primary {
+      background-color: var(--bs-primary);
+      border-color: var(--bs-primary);
+      color: white;
+    }
+
+    .btn-custom-primary:hover {
+      background-color: var(--bs-primary-hover);
+      border-color: var(--bs-primary-hover);
+      color: white;
+    }
+
+    .btn-custom-primary:disabled {
+      background-color: var(--bs-secondary);
+      border-color: var(--bs-secondary);
+      color: white;
+      opacity: 0.65;
+    }
+
+    .dropdown-toggle::after {
+      display: none;
+    }
+  </style>
+</head>
+<body data-bs-theme="dark">
+  <div class="container-fluid p-4">
+    <div class="row justify-content-center">
+      <div class="col-12 col-sm-10 col-md-8 col-lg-6 col-xl-5">
+        
+        <!-- Header -->
+        <div class="d-flex align-items-center mb-5">
+          <button class="btn btn-link text-decoration-none p-0 me-3" onclick="goBack()">
+            <i class="bi bi-arrow-left fs-4"></i>
+          </button>
+          <span class="fw-medium">Back</span>
+        </div>
+
+        <!-- Main Content -->
+        <div class="text-center">
+          <h1 class="display-6 fw-bold mb-2">KYC Verification</h1>
+          <p class="text-muted mb-5">Upload your ID and selfie to verify your account.</p>
+
+          <!-- Alert placeholder -->
+          <div id="alertContainer"></div>
+
+          <form method="post" enctype="multipart/form-data" id="kycForm">
+            <!-- Hidden input for selected ID type -->
+            <input type="hidden" name="document_type" id="documentTypeInput">
+
+            <!-- ID Type Selection -->
+            <div class="mb-4 text-start">
+              <label class="form-label fw-medium mb-2">Select ID Type</label>
+              <div class="dropdown">
+                <button class="btn btn-outline-secondary dropdown-toggle w-100 text-start d-flex justify-content-between align-items-center" 
+                        type="button" 
+                        id="idTypeDropdown" 
+                        data-bs-toggle="dropdown" 
+                        aria-expanded="false">
+                  <span id="selectedOption">-- Choose ID Type --</span>
+                  <i class="bi bi-chevron-down"></i>
+                </button>
+                <ul class="dropdown-menu w-100" aria-labelledby="idTypeDropdown">
+                  <li><a class="dropdown-item" href="#" onclick="selectOption('-- Choose ID Type --')">-- Choose ID Type --</a></li>
+                  <li><a class="dropdown-item" href="#" onclick="selectOption('Passport')">Passport</a></li>
+                  <li><a class="dropdown-item" href="#" onclick="selectOption('ID Card')">ID Card</a></li>
+                  <li><a class="dropdown-item" href="#" onclick="selectOption('Driver\'s License')">Driver's License</a></li>
+                </ul>
+              </div>
+            </div>
+
+            <!-- Front ID Upload -->
+            <div class="mb-4 text-start">
+              <label class="form-label fw-medium mb-2">Upload Front of ID</label>
+              <div class="upload-zone bg-body-secondary d-flex align-items-center justify-content-center"
+                   onclick="triggerFileInput('frontIdFile')"
+                   ondragover="handleDragOver(event)"
+                   ondrop="handleDrop(event, 'front')"
+                   ondragenter="handleDragEnter(event)"
+                   ondragleave="handleDragLeave(event)"
+                   id="frontUploadZone">
+                <div class="text-center text-muted">
+                  <i class="bi bi-cloud-upload fs-1 mb-2"></i>
+                  <div>Drop front image or click to upload</div>
+                </div>
+                <input type="file" name="document_file_front" id="frontIdFile" accept="image/*" style="display: none;">
+              </div>
+            </div>
+
+            <!-- Back ID Upload -->
+            <div class="mb-4 text-start">
+              <label class="form-label fw-medium mb-2">Upload Back of ID</label>
+              <div class="upload-zone bg-body-secondary d-flex align-items-center justify-content-center"
+                   onclick="triggerFileInput('backIdFile')"
+                   ondragover="handleDragOver(event)"
+                   ondrop="handleDrop(event, 'back')"
+                   ondragenter="handleDragEnter(event)"
+                   ondragleave="handleDragLeave(event)"
+                   id="backUploadZone">
+                <div class="text-center text-muted">
+                  <i class="bi bi-cloud-upload fs-1 mb-2"></i>
+                  <div>Drop back image or click to upload</div>
+                </div>
+                <input type="file" name="document_file_back" id="backIdFile" accept="image/*" style="display: none;">
+              </div>
+            </div>
+
+            <!-- Submit Button -->
+            <div class="text-center mt-4">
+              <button type="button" id="submitBtn" class="btn btn-custom-primary btn-lg w-100" onclick="submitVerification()">
+                <span id="submitText">Submit for Verification</span>
+                <div class="spinner-border spinner-border-sm ms-2 d-none" id="loadingSpinner" role="status">
+                  <span class="visually-hidden">Loading...</span>
+                </div>
+              </button>
+            </div>
+          </form>
+
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+
+  <!-- Bootstrap JS -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.2/js/bootstrap.bundle.min.js"></script>
+
+  <script>
+    // Theme management - sync with global theme
+    (function () {
+      const savedTheme = localStorage.getItem('theme') || 'dark';
+      document.documentElement.setAttribute('data-bs-theme', savedTheme);
+    })();
+
+    let selectedIdType = '';
+    let frontIdUploaded = false;
+    let backIdUploaded = false;
+
+    document.addEventListener('DOMContentLoaded', function () {
+      initializeFileInput('frontIdFile', 'front');
+      initializeFileInput('backIdFile', 'back');
+      updateSubmitButton();
+    });
+
+    function initializeFileInput(inputId, type) {
+      const input = document.getElementById(inputId);
+      const zone = document.getElementById(`${type}UploadZone`);
+
+      input.addEventListener('change', function (event) {
+        handleFileSelect(event, type);
+      });
+
+      // Prevent default drag behaviors
+      ['dragenter', 'dragover', 'dragleave', 'drop'].forEach(eventName => {
+        zone.addEventListener(eventName, preventDefaults, false);
+      });
+
+      function preventDefaults(e) {
+        e.preventDefault();
+        e.stopPropagation();
+      }
+    }
+
+    function triggerFileInput(inputId) {
+      document.getElementById(inputId).click();
+    }
+
+    function goBack() {
+      if (window.history.length > 1) {
+        window.history.back();
+      } else {
+        console.log('Navigate to previous screen');
+        showAlert('No previous page to navigate to', 'info');
+      }
+    }
+
+    function selectOption(option) {
+      selectedIdType = option;
+      document.getElementById('selectedOption').textContent = option;
+      
+      // Close dropdown
+      const dropdown = bootstrap.Dropdown.getInstance(document.getElementById('idTypeDropdown'));
+      if (dropdown) dropdown.hide();
+
+      // Set backend value
+      const backendValue = option.toLowerCase().replace(/\s/g, '_').replace(/'/g, '');
+      document.getElementById('documentTypeInput').value = backendValue;
+
+      updateSubmitButton();
+    }
+
+    function handleDragOver(event) {
+      event.preventDefault();
+      event.currentTarget.classList.add('dragover');
+    }
+
+    function handleDragEnter(event) {
+      event.preventDefault();
+      event.currentTarget.classList.add('dragover');
+    }
+
+    function handleDragLeave(event) {
+      event.preventDefault();
+      if (!event.currentTarget.contains(event.relatedTarget)) {
+        event.currentTarget.classList.remove('dragover');
+      }
+    }
+
+    function handleDrop(event, type) {
+      event.preventDefault();
+      event.currentTarget.classList.remove('dragover');
+      const file = event.dataTransfer.files[0];
+      if (file && file.type.startsWith('image/')) {
+        displayImage(file, type);
+        // Update the corresponding file input
+        const inputId = type === 'front' ? 'frontIdFile' : 'backIdFile';
+        const dataTransfer = new DataTransfer();
+        dataTransfer.items.add(file);
+        document.getElementById(inputId).files = dataTransfer.files;
+      } else {
+        showAlert('Please upload a valid image file', 'warning');
+      }
+    }
+
+    function handleFileSelect(event, type) {
+      const file = event.target.files[0];
+      if (file) {
+        displayImage(file, type);
+      }
+    }
+
+    function displayImage(file, type) {
+      // Validate file size (5MB limit)
+      if (file.size > 5 * 1024 * 1024) {
+        showAlert('File size must be less than 5MB', 'warning');
+        return;
+      }
+
+      const reader = new FileReader();
+      reader.onload = function (e) {
+        const zone = document.getElementById(`${type}UploadZone`);
+        zone.innerHTML = `
+          <div class="file-preview d-flex flex-column align-items-center justify-content-center h-100 position-relative">
+            <img src="${e.target.result}" alt="Uploaded ${type}" class="file-preview-image mb-2">
+            <button type="button" class="btn btn-link text-primary btn-sm p-0" data-file-type="${type}">
+              <i class="bi bi-trash"></i> Remove file
+            </button>
+            <button type="button" class="btn-close position-absolute top-0 end-0 m-2" data-file-type="${type}"></button>
+          </div>
+        `;
+
+        // Add event listeners to remove buttons
+        const removeButtons = zone.querySelectorAll(`[data-file-type="${type}"]`);
+        removeButtons.forEach(button => {
+          button.addEventListener('click', function(e) {
+            e.stopPropagation();
+            removeFile(type);
+          });
+        });
+
+        if (type === 'front') frontIdUploaded = true;
+        else backIdUploaded = true;
+
+        updateSubmitButton();
+        showAlert(`${type === 'front' ? 'Front' : 'Back'} ID uploaded successfully`, 'success');
+      };
+
+      reader.onerror = function() {
+        showAlert('Error reading file. Please try again.', 'danger');
+      };
+
+      reader.readAsDataURL(file);
+    }
+
+    function removeFile(type) {
+      const zone = document.getElementById(`${type}UploadZone`);
+      const inputId = type === 'front' ? 'frontIdFile' : 'backIdFile';
+      const fileInput = document.getElementById(inputId);
+      
+      // Clear the file input
+      fileInput.value = '';
+
+      const uploadText = type === 'front' ? 'front' : 'back';
+
+      // Reset the upload zone to original state
+      zone.innerHTML = `
+        <div class="text-center text-muted">
+          <i class="bi bi-cloud-upload fs-1 mb-2"></i>
+          <div>Drop ${uploadText} image or click to upload</div>
+        </div>
+      `;
+
+      // Re-add the hidden file input
+      const newInput = document.createElement('input');
+      newInput.type = 'file';
+      newInput.name = type === 'front' ? 'document_file_front' : 'document_file_back';
+      newInput.id = inputId;
+      newInput.accept = 'image/*';
+      newInput.style.display = 'none';
+      zone.appendChild(newInput);
+
+      // Re-initialize the file input functionality
+      initializeFileInput(inputId, type);
+
+      // Update upload status
+      if (type === 'front') {
+        frontIdUploaded = false;
+      } else {
+        backIdUploaded = false;
+      }
+
+      updateSubmitButton();
+      showAlert(`${type === 'front' ? 'Front' : 'Back'} ID removed`, 'info');
+    }
+
+    function updateSubmitButton() {
+      const submitButton = document.getElementById('submitBtn');
+      const isValid = selectedIdType && 
+                      selectedIdType !== '-- Choose ID Type --' &&
+                      frontIdUploaded && 
+                      backIdUploaded;
+      
+      submitButton.disabled = !isValid;
+      
+      if (isValid) {
+        submitButton.classList.remove('btn-secondary');
+        submitButton.classList.add('btn-custom-primary');
+      } else {
+        submitButton.classList.remove('btn-custom-primary');
+        submitButton.classList.add('btn-secondary');
+      }
+    }
+
+    function submitVerification() {
+      const submitBtn = document.getElementById('submitBtn');
+      const submitText = document.getElementById('submitText');
+      const loadingSpinner = document.getElementById('loadingSpinner');
+      
+      // Show loading state
+      submitBtn.disabled = true;
+      submitText.textContent = 'Submitting...';
+      loadingSpinner.classList.remove('d-none');
+      
+      // Simulate form submission delay
+      setTimeout(() => {
+        document.getElementById('kycForm').submit();
+      }, 1000);
+    }
+
+    function showAlert(message, type = 'info') {
+      const alertContainer = document.getElementById('alertContainer');
+      const alertId = 'alert-' + Date.now();
+      
+      const alertHTML = `
+        <div class="alert alert-${type} alert-dismissible fade show" role="alert" id="${alertId}">
+          ${message}
+          <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+      `;
+      
+      alertContainer.innerHTML = alertHTML;
+      
+      // Auto-dismiss after 5 seconds
+      setTimeout(() => {
+        const alert = document.getElementById(alertId);
+        if (alert) {
+          const bsAlert = bootstrap.Alert.getInstance(alert);
+          if (bsAlert) bsAlert.close();
+        }
+      }, 5000);
+    }
+
+    // Close dropdown when clicking outside
+    document.addEventListener('click', function (event) {
+      if (!event.target.closest('.dropdown')) {
+        const dropdowns = document.querySelectorAll('.dropdown-menu.show');
+        dropdowns.forEach(dropdown => {
+          const bsDropdown = bootstrap.Dropdown.getInstance(dropdown.previousElementSibling);
+          if (bsDropdown) bsDropdown.hide();
+        });
+      }
+    });
+
+    // Prevent form submission on Enter key in dropdown
+    document.addEventListener('keydown', function(event) {
+      if (event.key === 'Enter' && event.target.closest('.dropdown')) {
+        event.preventDefault();
+      }
+    });
+  </script>
+</body>
+</html>

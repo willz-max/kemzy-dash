@@ -1,0 +1,471 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>STAKING</title>
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Bootstrap Icons -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css" rel="stylesheet">
+    <style>
+        /* Theme Variables */
+        :root {
+            --primary-color: #00d4aa;
+            --primary-hover: #00b896;
+            --bg-primary: #1a1a1a;
+            --bg-secondary: #2a2a2a;
+            --bg-card: #333333;
+            --text-primary: #ffffff;
+            --text-secondary: #b0b0b0;
+            --border-color: #444444;
+            --shadow: rgba(0, 0, 0, 0.3);
+        }
+
+        [data-theme="light"] {
+            --bg-primary: #f5f5f5;
+            --bg-secondary: #ffffff;
+            --bg-card: #ffffff;
+            --text-primary: #333333;
+            --text-secondary: #666666;
+            --border-color: #e0e0e0;
+            --shadow: rgba(0, 0, 0, 0.1);
+        }
+
+        /* Base Styles */
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif !important;
+            background-color: var(--bg-primary) !important;
+            color: var(--text-primary) !important;
+            transition: background-color 0.3s ease, color 0.3s ease;
+            min-height: 100vh;
+        }
+
+        /* Fix Bootstrap text classes for dark mode */
+        .text-muted {
+            color: var(--text-secondary) !important;
+        }
+
+        /* Header Styles */
+        .header {
+            background: var(--bg-primary) !important;
+            backdrop-filter: blur(10px);
+            border-bottom: 1px solid var(--border-color);
+            padding: 20px 0;
+            position: relative;
+            z-index: 1000;
+        }
+
+        .url-bar {
+            background: var(--bg-secondary);
+            border: 1px solid var(--border-color);
+            color: var(--text-secondary);
+            cursor: pointer;
+            transition: background 0.3s;
+            border-radius: 8px;
+            padding: 12px 16px;
+            font-size: 14px;
+            width: 350px;
+        }
+
+        .url-bar:hover {
+            background: var(--bg-card);
+        }
+
+        .profile-trigger {
+            background: none !important;
+            border: none !important;
+            color: var(--text-primary) !important;
+            padding: 8px 12px !important;
+            border-radius: 6px !important;
+            font-size: 16px;
+            transition: background 0.3s;
+        }
+
+        .profile-trigger:hover {
+            background: var(--bg-secondary) !important;
+        }
+
+        .profile-trigger:focus {
+            box-shadow: none !important;
+        }
+
+        .profile-trigger::after {
+            display: none !important;
+        }
+
+        .dropdown-arrow {
+            font-size: 12px;
+            transition: transform 0.3s ease;
+        }
+
+        .dropdown-menu {
+            background: var(--bg-secondary) !important;
+            backdrop-filter: blur(10px);
+            border: 1px solid var(--border-color) !important;
+            box-shadow: 0 8px 32px var(--shadow) !important;
+            border-radius: 8px !important;
+            z-index: 1050 !important;
+        }
+
+        .dropdown-item {
+            color: var(--text-primary) !important;
+            transition: background 0.3s;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .dropdown-item:last-child {
+            border-bottom: none !important;
+        }
+
+        .dropdown-item:hover {
+            background: var(--bg-card) !important;
+            color: var(--text-primary) !important;
+        }
+
+        .dropdown-item:focus {
+            background: var(--bg-card) !important;
+            color: var(--text-primary) !important;
+        }
+
+        /* Staking Card Styles */
+        .staking-card {
+            background: var(--bg-secondary) !important;
+            border: 1px solid var(--border-color) !important;
+            box-shadow: 0 8px 32px var(--shadow) !important;
+            max-width: 400px;
+            margin: 0 auto;
+            position: relative;
+            z-index: 1;
+        }
+
+        .crypto-title {
+            font-size: 2rem;
+            font-weight: bold;
+            letter-spacing: 1px;
+        }
+
+        .apy-value {
+            color: #2196F3;
+            font-weight: bold;
+        }
+
+        .min-amount {
+            background: #4CAF50 !important;
+            border: none !important;
+        }
+
+        .max-amount {
+            background: #f44336 !important;
+            border: none !important;
+        }
+
+        .bitcoin-icon {
+            width: 50px;
+            height: 50px;
+            background: #f7931a;
+            border-radius: 10px;
+            font-size: 20px;
+            font-weight: bold;
+            color: white;
+        }
+
+        .balance-amount {
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: #4CAF50;
+        }
+
+        .status-badge {
+            background: #ff9800 !important;
+            border: none !important;
+        }
+
+        .form-control {
+            background: var(--bg-card) !important;
+            border: 1px solid var(--border-color) !important;
+            color: var(--text-primary) !important;
+        }
+
+        .form-control::placeholder {
+            color: var(--text-secondary) !important;
+        }
+
+        .form-control:focus {
+            background: var(--bg-card) !important;
+            border-color: #2196F3 !important;
+            box-shadow: 0 0 0 0.2rem rgba(33, 150, 243, 0.25) !important;
+            color: var(--text-primary) !important;
+        }
+
+        /* Fix form labels */
+        .form-label {
+            color: var(--text-secondary) !important;
+            font-weight: 500;
+        }
+
+        /* Fix all text elements */
+        .card-body {
+            color: var(--text-primary) !important;
+        }
+
+        .card-body span:not(.badge) {
+            color: var(--text-primary) !important;
+        }
+
+        .btn-invest {
+            background: #2196F3 !important;
+            border-color: #2196F3 !important;
+        }
+
+        .btn-invest:hover {
+            background: #1976D2 !important;
+            border-color: #1976D2 !important;
+        }
+
+        .btn-days {
+            background: #2196F3 !important;
+            border-color: #2196F3 !important;
+        }
+
+        .btn-days:hover {
+            background: #1976D2 !important;
+            border-color: #1976D2 !important;
+        }
+
+        /* Custom Input Group */
+        .input-group .btn {
+            border-top-left-radius: 0;
+            border-bottom-left-radius: 0;
+        }
+
+        .input-group .form-control {
+            border-top-right-radius: 0;
+            border-bottom-right-radius: 0;
+            border-right: none;
+        }
+
+        .input-group .form-control:focus {
+            z-index: 2;
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header class="header">
+        <div class="container-fluid px-4">
+            <div class="d-flex justify-content-between align-items-center flex-wrap">
+                <!-- Left side - URL Bar -->
+                <div class="url-bar">
+                    https://BukaWallets.com/register/?ref=
+                </div>
+                
+                <!-- Right side - Profile Dropdown -->
+                <div class="dropdown">
+                    <button class="btn profile-trigger dropdown-toggle d-flex align-items-center gap-2" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                        Vic
+                        <span class="dropdown-arrow">▼</span>
+                    </button>
+                    <ul class="dropdown-menu dropdown-menu-end">
+                        <li>
+                            <a class="dropdown-item d-flex align-items-center gap-3" href="profile.html">
+                                <i class="bi bi-person"></i>
+                                <span data-translate="myProfile">My Profile</span>
+                            </a>
+                        </li>
+                        <li>
+                            <a class="dropdown-item d-flex align-items-center gap-3" href="setting.html">
+                                <i class="bi bi-gear"></i>
+                                <span data-translate="Settings">Settings</span>
+                            </a>
+                        </li>
+                        <li>
+                            <a class="dropdown-item d-flex align-items-center gap-3" href="#">
+                                <i class="bi bi-box-arrow-right"></i>
+                                <span data-translate="logout">Logout</span>
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="container-fluid d-flex align-items-center justify-content-center py-4" style="min-height: calc(100vh - 120px);">
+        <div class="row w-100 justify-content-center">
+            <div class="col-12 col-sm-10 col-md-8 col-lg-6 col-xl-4">
+                <div class="card staking-card">
+                    <div class="card-body p-4">
+                        <!-- Crypto Header -->
+                        <div class="text-center mb-4">
+                            <h1 class="crypto-title mb-3">BTC</h1>
+                            <div class="text-muted mb-3">
+                                APY Rate: <span class="apy-value">20.00%</span>
+                            </div>
+                            <!-- Min/Max Amounts -->
+                            <div class="row g-2 mb-3">
+                                <div class="col-6">
+                                    <div class="badge min-amount w-100 py-2">Min: $60,000</div>
+                                </div>
+                                <div class="col-6">
+                                    <div class="badge max-amount w-100 py-2">Max: $1,000,000</div>
+                                </div>
+                            </div>
+                            <div class="text-muted">Lock Period: 30 days</div>
+                        </div>
+
+                        <!-- Bitcoin Icon -->
+                        <div class="d-flex justify-content-center mb-3">
+                            <div class="bitcoin-icon d-flex align-items-center justify-content-center">₿</div>
+                        </div>
+
+                        <!-- Balance Section -->
+                        <div class="text-center mb-4">
+                            <div class="text-muted mb-2">My Balance:</div>
+                            <div class="balance-amount mb-3">$103,300.00</div>
+                            <button class="btn btn-primary btn-days btn-sm">30 Days</button>
+                        </div>
+
+                        <!-- Status Section -->
+                        <div class="mb-4">
+                            <div class="d-flex justify-content-between align-items-center mb-2">
+                                <span class="text-muted">Lock Period:</span>
+                                <span style="color: var(--text-primary) !important;">30 Days</span>
+                            </div>
+                            <div class="d-flex justify-content-between align-items-center">
+                                <span class="text-muted">Status:</span>
+                                <span class="badge status-badge">Pending</span>
+                            </div>
+                        </div>
+
+                        <!-- Investment Form -->
+                        <div class="mb-3">
+                            <label class="form-label">Investment Amount:</label>
+                            <div class="input-group">
+                                <input type="number" class="form-control amount-input" placeholder="Enter amount" min="60000" max="1000000">
+                                <button class="btn btn-invest" type="button">Invest</button>
+                            </div>
+                        </div>
+
+                        <!-- Lock Period Input -->
+                        <div class="mb-0">
+                            <label class="form-label">Lock Period (Days):</label>
+                            <input type="text" class="form-control" value="30 Days" readonly>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+    
+    <script>
+        // Theme detection
+        (function() {
+            const savedTheme = localStorage.getItem('theme') || 'dark';
+            document.documentElement.setAttribute('data-theme', savedTheme);
+        })();
+
+        // URL bar copy functionality
+        document.addEventListener('DOMContentLoaded', function() {
+            const urlBar = document.querySelector('.url-bar');
+            
+            if (urlBar) {
+                urlBar.addEventListener('click', function() {
+                    const textToCopy = urlBar.textContent.trim();
+                    if (navigator.clipboard && navigator.clipboard.writeText) {
+                        navigator.clipboard.writeText(textToCopy)
+                            .then(() => {
+                                const originalText = urlBar.textContent;
+                                urlBar.textContent = 'Copied to clipboard!';
+                                setTimeout(() => {
+                                    urlBar.textContent = originalText;
+                                }, 1500);
+                                console.log('Text copied to clipboard successfully!');
+                            })
+                            .catch(err => {
+                                console.error('Failed to copy text using navigator.clipboard: ', err);
+                                fallbackCopyToClipboard(textToCopy);
+                            });
+                    } else {
+                        fallbackCopyToClipboard(textToCopy);
+                    }
+                });
+            }
+
+            function fallbackCopyToClipboard(text) {
+                const textArea = document.createElement("textarea");
+                textArea.value = text;
+                textArea.style.position = "fixed";
+                textArea.style.left = "-9999px";
+                textArea.style.top = "0";
+                document.body.appendChild(textArea);
+                textArea.focus();
+                textArea.select();
+                try {
+                    const successful = document.execCommand('copy');
+                    const msg = successful ? 'successful' : 'unsuccessful';
+                    console.log('Fallback copy command was ' + msg);
+                    const originalText = urlBar.textContent;
+                    urlBar.textContent = 'Copied!';
+                    setTimeout(() => {
+                        urlBar.textContent = originalText;
+                    }, 1500);
+                } catch (err) {
+                    console.error('Oops, unable to copy using fallback', err);
+                } finally {
+                    document.body.removeChild(textArea);
+                }
+            }
+
+            // Staking functionality
+            const investButton = document.querySelector('.btn-invest');
+            const amountInput = document.querySelector('.amount-input');
+            
+            if (investButton && amountInput) {
+                investButton.addEventListener('click', function() {
+                    const amount = parseFloat(amountInput.value);
+                    const minAmount = 60000;
+                    const maxAmount = 1000000;
+                    
+                    if (!amount) {
+                        // alert('Please enter an investment amount');
+                        return;
+                    }
+                    
+                    if (amount < minAmount) {
+                        // alert(`Minimum investment amount is $${minAmount.toLocaleString()}`);
+                        return;
+                    }
+                    
+                    if (amount > maxAmount) {
+                        // alert(`Maximum investment amount is $${maxAmount.toLocaleString()}`);
+                        return;
+                    }
+                    
+                    // Simulate investment process
+                    investButton.textContent = 'Processing...';
+                    investButton.disabled = true;
+                    
+                    setTimeout(() => {
+                        // alert(`Successfully initiated staking of $${amount.toLocaleString()} for 30 days at 20% APY`);
+                        investButton.textContent = 'Invest';
+                        investButton.disabled = false;
+                        amountInput.value = '';
+                    }, 2000);
+                });
+                
+                // Enter key support for investment
+                amountInput.addEventListener('keypress', function(e) {
+                    if (e.key === 'Enter') {
+                        investButton.click();
+                    }
+                });
+            }
+        });
+    </script>
+</body>
+</html>

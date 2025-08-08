@@ -1,0 +1,681 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bank Transfer Form</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+        }
+
+        .container {
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+            padding: 40px;
+            max-width: 600px;
+            width: 100%;
+        }
+
+        h1 {
+            color: #333;
+            text-align: center;
+            margin-bottom: 30px;
+            font-weight: 600;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 8px;
+            color: #555;
+            font-weight: 500;
+        }
+
+        input,
+        select {
+            width: 100%;
+            padding: 12px 16px;
+            border: 2px solid #e1e5e9;
+            border-radius: 10px;
+            font-size: 16px;
+            transition: all 0.3s ease;
+            background: #f8f9fa;
+        }
+
+        input:focus,
+        select:focus {
+            outline: none;
+            border-color: #667eea;
+            background: white;
+            box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+        }
+
+        .required {
+            color: #e74c3c;
+        }
+
+        .info-box {
+            background: #e8f4fd;
+            border: 1px solid #bee5eb;
+            border-radius: 8px;
+            padding: 15px;
+            margin-bottom: 20px;
+            display: none;
+        }
+
+        .info-box.show {
+            display: block;
+        }
+
+        .info-box h3 {
+            color: #0c5460;
+            margin-bottom: 10px;
+            font-size: 18px;
+        }
+
+        .info-box ul {
+            color: #0c5460;
+            margin-left: 20px;
+        }
+
+        .info-box li {
+            margin-bottom: 5px;
+        }
+
+        .dynamic-fields {
+            display: none;
+        }
+
+        .dynamic-fields.show {
+            display: block;
+        }
+
+        .submit-btn {
+            width: 100%;
+            padding: 15px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border: none;
+            border-radius: 10px;
+            font-size: 18px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            margin-top: 20px;
+        }
+
+        .submit-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 20px rgba(102, 126, 234, 0.3);
+        }
+
+        .submit-btn:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        .field-hint {
+            font-size: 12px;
+            color: #666;
+            margin-top: 5px;
+        }
+
+        .loading {
+            text-align: center;
+            color: #666;
+            font-style: italic;
+        }
+
+        .error {
+            background: #f8d7da;
+            border: 1px solid #f5c6cb;
+            color: #721c24;
+            padding: 10px;
+            border-radius: 5px;
+            margin-bottom: 15px;
+        }
+
+        @media (max-width: 600px) {
+            .container {
+                padding: 20px;
+            }
+
+            h1 {
+                font-size: 24px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <h1>Bank Transfer Information</h1>
+
+        <form id="bankTransferForm">
+            <div class="form-group">
+    <label for="country">Country <span class="required">*</span></label>
+    <select id="country" name="country" required>
+        <option value="">Select your country</option>
+        <option value="AF">Afghanistan</option>
+        <option value="AL">Albania</option>
+        <option value="DZ">Algeria</option>
+        <option value="AD">Andorra</option>
+        <option value="AO">Angola</option>
+        <option value="AG">Antigua and Barbuda</option>
+        <option value="AR">Argentina</option>
+        <option value="AM">Armenia</option>
+        <option value="AU">Australia</option>
+        <option value="AT">Austria</option>
+        <option value="AZ">Azerbaijan</option>
+        <option value="BS">Bahamas</option>
+        <option value="BH">Bahrain</option>
+        <option value="BD">Bangladesh</option>
+        <option value="BB">Barbados</option>
+        <option value="BY">Belarus</option>
+        <option value="BE">Belgium</option>
+        <option value="BZ">Belize</option>
+        <option value="BJ">Benin</option>
+        <option value="BT">Bhutan</option>
+        <option value="BO">Bolivia</option>
+        <option value="BA">Bosnia and Herzegovina</option>
+        <option value="BW">Botswana</option>
+        <option value="BR">Brazil</option>
+        <option value="BN">Brunei</option>
+        <option value="BG">Bulgaria</option>
+        <option value="BF">Burkina Faso</option>
+        <option value="BI">Burundi</option>
+        <option value="CV">Cabo Verde</option>
+        <option value="KH">Cambodia</option>
+        <option value="CM">Cameroon</option>
+        <option value="CA">Canada</option>
+        <option value="CF">Central African Republic</option>
+        <option value="TD">Chad</option>
+        <option value="CL">Chile</option>
+        <option value="CN">China</option>
+        <option value="CO">Colombia</option>
+        <option value="KM">Comoros</option>
+        <option value="CG">Congo (Congo-Brazzaville)</option>
+        <option value="CR">Costa Rica</option>
+        <option value="HR">Croatia</option>
+        <option value="CU">Cuba</option>
+        <option value="CY">Cyprus</option>
+        <option value="CZ">Czech Republic</option>
+        <option value="DK">Denmark</option>
+        <option value="DJ">Djibouti</option>
+        <option value="DM">Dominica</option>
+        <option value="DO">Dominican Republic</option>
+        <option value="EC">Ecuador</option>
+        <option value="EG">Egypt</option>
+        <option value="SV">El Salvador</option>
+        <option value="GQ">Equatorial Guinea</option>
+        <option value="ER">Eritrea</option>
+        <option value="EE">Estonia</option>
+        <option value="SZ">Eswatini</option>
+        <option value="ET">Ethiopia</option>
+        <option value="FJ">Fiji</option>
+        <option value="FI">Finland</option>
+        <option value="FR">France</option>
+        <option value="GA">Gabon</option>
+        <option value="GM">Gambia</option>
+        <option value="GE">Georgia</option>
+        <option value="DE">Germany</option>
+        <option value="GH">Ghana</option>
+        <option value="GR">Greece</option>
+        <option value="GD">Grenada</option>
+        <option value="GT">Guatemala</option>
+        <option value="GN">Guinea</option>
+        <option value="GW">Guinea-Bissau</option>
+        <option value="GY">Guyana</option>
+        <option value="HT">Haiti</option>
+        <option value="HN">Honduras</option>
+        <option value="HU">Hungary</option>
+        <option value="IS">Iceland</option>
+        <option value="IN">India</option>
+        <option value="ID">Indonesia</option>
+        <option value="IR">Iran</option>
+        <option value="IQ">Iraq</option>
+        <option value="IE">Ireland</option>
+        <option value="IL">Israel</option>
+        <option value="IT">Italy</option>
+        <option value="JM">Jamaica</option>
+        <option value="JP">Japan</option>
+        <option value="JO">Jordan</option>
+        <option value="KZ">Kazakhstan</option>
+        <option value="KE">Kenya</option>
+        <option value="KI">Kiribati</option>
+        <option value="KW">Kuwait</option>
+        <option value="KG">Kyrgyzstan</option>
+        <option value="LA">Laos</option>
+        <option value="LV">Latvia</option>
+        <option value="LB">Lebanon</option>
+        <option value="LS">Lesotho</option>
+        <option value="LR">Liberia</option>
+        <option value="LY">Libya</option>
+        <option value="LI">Liechtenstein</option>
+        <option value="LT">Lithuania</option>
+        <option value="LU">Luxembourg</option>
+        <option value="MG">Madagascar</option>
+        <option value="MW">Malawi</option>
+        <option value="MY">Malaysia</option>
+        <option value="MV">Maldives</option>
+        <option value="ML">Mali</option>
+        <option value="MT">Malta</option>
+        <option value="MH">Marshall Islands</option>
+        <option value="MR">Mauritania</option>
+        <option value="MU">Mauritius</option>
+        <option value="MX">Mexico</option>
+        <option value="FM">Micronesia</option>
+        <option value="MD">Moldova</option>
+        <option value="MC">Monaco</option>
+        <option value="MN">Mongolia</option>
+        <option value="ME">Montenegro</option>
+        <option value="MA">Morocco</option>
+        <option value="MZ">Mozambique</option>
+        <option value="MM">Myanmar</option>
+        <option value="NA">Namibia</option>
+        <option value="NR">Nauru</option>
+        <option value="NP">Nepal</option>
+        <option value="NL">Netherlands</option>
+        <option value="NZ">New Zealand</option>
+        <option value="NI">Nicaragua</option>
+        <option value="NE">Niger</option>
+        <option value="NG">Nigeria</option>
+        <option value="KP">North Korea</option>
+        <option value="MK">North Macedonia</option>
+        <option value="NO">Norway</option>
+        <option value="OM">Oman</option>
+        <option value="PK">Pakistan</option>
+        <option value="PW">Palau</option>
+        <option value="PS">Palestine</option>
+        <option value="PA">Panama</option>
+        <option value="PG">Papua New Guinea</option>
+        <option value="PY">Paraguay</option>
+        <option value="PE">Peru</option>
+        <option value="PH">Philippines</option>
+        <option value="PL">Poland</option>
+        <option value="PT">Portugal</option>
+        <option value="QA">Qatar</option>
+        <option value="RO">Romania</option>
+        <option value="RU">Russia</option>
+        <option value="RW">Rwanda</option>
+        <option value="KN">Saint Kitts and Nevis</option>
+        <option value="LC">Saint Lucia</option>
+        <option value="VC">Saint Vincent and the Grenadines</option>
+        <option value="WS">Samoa</option>
+        <option value="SM">San Marino</option>
+        <option value="ST">Sao Tome and Principe</option>
+        <option value="SA">Saudi Arabia</option>
+        <option value="SN">Senegal</option>
+        <option value="RS">Serbia</option>
+        <option value="SC">Seychelles</option>
+        <option value="SL">Sierra Leone</option>
+        <option value="SG">Singapore</option>
+        <option value="SK">Slovakia</option>
+        <option value="SI">Slovenia</option>
+        <option value="SB">Solomon Islands</option>
+        <option value="SO">Somalia</option>
+        <option value="ZA">South Africa</option>
+        <option value="KR">South Korea</option>
+        <option value="SS">South Sudan</option>
+        <option value="ES">Spain</option>
+        <option value="LK">Sri Lanka</option>
+        <option value="SD">Sudan</option>
+        <option value="SR">Suriname</option>
+        <option value="SE">Sweden</option>
+        <option value="CH">Switzerland</option>
+        <option value="SY">Syria</option>
+        <option value="TW">Taiwan</option>
+        <option value="TJ">Tajikistan</option>
+        <option value="TZ">Tanzania</option>
+        <option value="TH">Thailand</option>
+        <option value="TL">Timor-Leste</option>
+        <option value="TG">Togo</option>
+        <option value="TO">Tonga</option>
+        <option value="TT">Trinidad and Tobago</option>
+        <option value="TN">Tunisia</option>
+        <option value="TR">Turkey</option>
+        <option value="TM">Turkmenistan</option>
+        <option value="TV">Tuvalu</option>
+        <option value="UG">Uganda</option>
+        <option value="UA">Ukraine</option>
+        <option value="AE">United Arab Emirates</option>
+        <option value="GB">United Kingdom</option>
+        <option value="US">United States</option>
+        <option value="UY">Uruguay</option>
+        <option value="UZ">Uzbekistan</option>
+        <option value="VU">Vanuatu</option>
+        <option value="VA">Vatican City</option>
+        <option value="VE">Venezuela</option>
+        <option value="VN">Vietnam</option>
+        <option value="YE">Yemen</option>
+        <option value="ZM">Zambia</option>
+        <option value="ZW">Zimbabwe</option>
+    </select>
+</div>
+
+
+            <div id="countryInfo" class="info-box">
+                <h3>Required Information</h3>
+                <ul id="requiredFields"></ul>
+            </div>
+
+            <div class="form-group">
+                <label for="fullName">Recipient's Full Name <span class="required">*</span></label>
+                <input type="text" id="fullName" name="fullName" required>
+                <div class="field-hint">Must match the name on your bank account exactly</div>
+            </div>
+
+            <div class="form-group">
+                <label for="bankName">Bank Name <span class="required">*</span></label>
+                <input type="text" id="bankName" name="bankName" required>
+            </div>
+
+            <div id="dynamicFields" class="dynamic-fields">
+                <!-- Dynamic fields will be inserted here -->
+            </div>
+
+            <button type="submit" class="submit-btn">Submit Bank Information</button>
+        </form>
+    </div>
+
+    <script type="text/javascript">
+        const bankRequirements = {
+            US: {
+                name: 'United States',
+                fields: [
+                    { name: 'accountNumber', label: 'Account Number', type: 'text', required: true, hint: 'Your unique bank account number' },
+                    { name: 'routingNumber', label: 'ABA/ACH Routing Number', type: 'text', required: true, hint: '9-digit number for domestic transfers' }
+                ],
+                info: [
+                    'Account Number - Your unique bank account number',
+                    'ABA/ACH Routing Number - 9-digit number for domestic transfers',
+                    'Can be found on your checks or bank website'
+                ]
+            },
+            GB: {
+                name: 'United Kingdom',
+                fields: [
+                    { name: 'sortCode', label: 'Sort Code', type: 'text', required: true, hint: '6-digit bank code (XX-XX-XX)' },
+                    { name: 'accountNumber', label: 'Account Number', type: 'text', required: true, hint: 'Usually 8 digits' },
+                    { name: 'swiftCode', label: 'SWIFT Code', type: 'text', required: false, hint: 'For international transfers' }
+                ],
+                info: [
+                    'Sort Code - 6-digit bank code',
+                    'Account Number - Usually 8 digits',
+                    'SWIFT Code - For international transfers'
+                ]
+            },
+            CA: {
+                name: 'Canada',
+                fields: [
+                    { name: 'transitNumber', label: 'Transit Number', type: 'text', required: true, hint: '5-digit branch code' },
+                    { name: 'institutionNumber', label: 'Institution Number', type: 'text', required: true, hint: '3-digit bank code' },
+                    { name: 'accountNumber', label: 'Account Number', type: 'text', required: true, hint: 'Your account number' }
+                ],
+                info: [
+                    'Transit Number - 5-digit branch code',
+                    'Institution Number - 3-digit bank code',
+                    'Account Number - Your account number'
+                ]
+            },
+            AU: {
+                name: 'Australia',
+                fields: [
+                    { name: 'bsbCode', label: 'BSB Code', type: 'text', required: true, hint: 'Bank State Branch - 6 digits' },
+                    { name: 'accountNumber', label: 'Account Number', type: 'text', required: true, hint: 'Your account number' },
+                    { name: 'swiftCode', label: 'SWIFT Code', type: 'text', required: false, hint: 'For international transfers' }
+                ],
+                info: [
+                    'BSB Code - Bank State Branch (6 digits)',
+                    'Account Number - Your account number',
+                    'SWIFT Code - For international transfers'
+                ]
+            },
+            // European Union countries (SEPA)
+            DE: {
+                name: 'Germany (SEPA)',
+                fields: [
+                    { name: 'iban', label: 'IBAN', type: 'text', required: true, hint: 'International Bank Account Number' },
+                    { name: 'swiftCode', label: 'BIC/SWIFT Code', type: 'text', required: true, hint: 'Bank identifier code' }
+                ],
+                info: [
+                    'IBAN - International Bank Account Number',
+                    'BIC/SWIFT Code - Bank identifier',
+                    'SEPA transfers within EU'
+                ]
+            },
+            FR: {
+                name: 'France (SEPA)',
+                fields: [
+                    { name: 'iban', label: 'IBAN', type: 'text', required: true, hint: 'International Bank Account Number' },
+                    { name: 'swiftCode', label: 'BIC/SWIFT Code', type: 'text', required: true, hint: 'Bank identifier code' }
+                ],
+                info: [
+                    'IBAN - International Bank Account Number',
+                    'BIC/SWIFT Code - Bank identifier',
+                    'SEPA transfers within EU'
+                ]
+            },
+            IT: {
+                name: 'Italy (SEPA)',
+                fields: [
+                    { name: 'iban', label: 'IBAN', type: 'text', required: true, hint: 'International Bank Account Number' },
+                    { name: 'swiftCode', label: 'BIC/SWIFT Code', type: 'text', required: true, hint: 'Bank identifier code' }
+                ],
+                info: [
+                    'IBAN - International Bank Account Number',
+                    'BIC/SWIFT Code - Bank identifier',
+                    'SEPA transfers within EU'
+                ]
+            },
+            ES: {
+                name: 'Spain (SEPA)',
+                fields: [
+                    { name: 'iban', label: 'IBAN', type: 'text', required: true, hint: 'International Bank Account Number' },
+                    { name: 'swiftCode', label: 'BIC/SWIFT Code', type: 'text', required: true, hint: 'Bank identifier code' }
+                ],
+                info: [
+                    'IBAN - International Bank Account Number',
+                    'BIC/SWIFT Code - Bank identifier',
+                    'SEPA transfers within EU'
+                ]
+            },
+            NL: {
+                name: 'Netherlands (SEPA)',
+                fields: [
+                    { name: 'iban', label: 'IBAN', type: 'text', required: true, hint: 'International Bank Account Number' },
+                    { name: 'swiftCode', label: 'BIC/SWIFT Code', type: 'text', required: true, hint: 'Bank identifier code' }
+                ],
+                info: [
+                    'IBAN - International Bank Account Number',
+                    'BIC/SWIFT Code - Bank identifier',
+                    'SEPA transfers within EU'
+                ]
+            },
+            NG: {
+                name: 'Nigeria',
+                fields: [
+                    { name: 'accountNumber', label: 'Account Number', type: 'text', required: true, hint: '10-digit account number' },
+                    { name: 'swiftCode', label: 'SWIFT Code', type: 'text', required: false, hint: 'For international transfers' }
+                ],
+                info: [
+                    'Account Number - 10-digit account number',
+                    'Bank Name - Nigerian bank name',
+                    'SWIFT Code - For international transfers'
+                ]
+            },
+            IN: {
+                name: 'India',
+                fields: [
+                    { name: 'accountNumber', label: 'Account Number', type: 'text', required: true, hint: 'Your account number' },
+                    { name: 'ifscCode', label: 'IFSC Code', type: 'text', required: true, hint: 'Indian Financial System Code' },
+                    { name: 'swiftCode', label: 'SWIFT Code', type: 'text', required: false, hint: 'For international transfers' }
+                ],
+                info: [
+                    'Account Number - Your account number',
+                    'IFSC Code - Indian Financial System Code',
+                    'SWIFT Code - For international transfers'
+                ]
+            },
+            CN: {
+                name: 'China',
+                fields: [
+                    { name: 'accountNumber', label: 'Account Number', type: 'text', required: true, hint: 'Your account number' },
+                    { name: 'bankAddress', label: 'Bank Address', type: 'text', required: true, hint: 'Full bank branch address' },
+                    { name: 'swiftCode', label: 'SWIFT Code', type: 'text', required: false, hint: 'For international transfers' }
+                ],
+                info: [
+                    'Account Number - Your account number',
+                    'Bank Address - Full bank branch address',
+                    'SWIFT Code - For international transfers'
+                ]
+            },
+            JP: {
+                name: 'Japan',
+                fields: [
+                    { name: 'accountNumber', label: 'Account Number', type: 'text', required: true, hint: 'Your account number' },
+                    { name: 'branchName', label: 'Branch Name', type: 'text', required: true, hint: 'Bank branch name' },
+                    { name: 'swiftCode', label: 'SWIFT Code', type: 'text', required: false, hint: 'For international transfers' }
+                ],
+                info: [
+                    'Account Number - Your account number',
+                    'Branch Name - Bank branch name',
+                    'SWIFT Code - For international transfers'
+                ]
+            },
+            BR: {
+                name: 'Brazil',
+                fields: [
+                    { name: 'accountNumber', label: 'Account Number', type: 'text', required: true, hint: 'Your account number' },
+                    { name: 'bankCode', label: 'Bank Code', type: 'text', required: true, hint: '3-digit bank code' },
+                    { name: 'swiftCode', label: 'SWIFT Code', type: 'text', required: false, hint: 'For international transfers' }
+                ],
+                info: [
+                    'Account Number - Your account number',
+                    'Bank Code - 3-digit bank code',
+                    'SWIFT Code - For international transfers'
+                ]
+            },
+            MX: {
+                name: 'Mexico',
+                fields: [
+                    { name: 'accountNumber', label: 'Account Number', type: 'text', required: true, hint: 'Your account number' },
+                    { name: 'clabeNumber', label: 'CLABE Number', type: 'text', required: true, hint: '18-digit interbank code' },
+                    { name: 'swiftCode', label: 'SWIFT Code', type: 'text', required: false, hint: 'For international transfers' }
+                ],
+                info: [
+                    'Account Number - Your account number',
+                    'CLABE Number - 18-digit interbank code',
+                    'SWIFT Code - For international transfers'
+                ]
+            }
+        };
+
+       const defaultRequirements = {
+        fields: [
+            { name: 'accountNumber', label: 'Account Number or IBAN', type: 'text', required: true, hint: 'Your account number or IBAN' },
+            { name: 'swiftCode', label: 'SWIFT/BIC Code', type: 'text', required: true, hint: '8-11 character bank code' },
+            { name: 'bankAddress', label: 'Bank Address', type: 'text', required: true, hint: 'Full bank address' }
+        ],
+        info: [
+            'Account Number or IBAN - Your account identifier',
+            'SWIFT/BIC Code - 8-11 character bank code',
+            'Bank Address - Full bank address',
+            'Additional correspondent bank info may be required'
+        ]
+    };
+
+    const countrySelect = document.getElementById('country');
+    const countryInfo = document.getElementById('countryInfo');
+    const requiredFields = document.getElementById('requiredFields');
+    const dynamicFields = document.getElementById('dynamicFields');
+    const form = document.getElementById('bankTransferForm');
+
+    countrySelect.addEventListener('change', function () {
+        const selectedCountry = this.value;
+
+        if (selectedCountry) {
+            const requirements = bankRequirements[selectedCountry] || {
+                name: countrySelect.options[countrySelect.selectedIndex].text,
+                ...defaultRequirements
+            };
+
+            countryInfo.classList.add('show');
+            requiredFields.innerHTML = requirements.info.map(info => `<li>${info}</li>`).join('');
+
+            dynamicFields.innerHTML = requirements.fields.map(field => `
+                <div class="form-group">
+                    <label for="${field.name}">
+                        ${field.label} ${field.required ? '<span class="required">*</span>' : ''}
+                    </label>
+                    <input 
+                        type="${field.type}" 
+                        id="${field.name}" 
+                        name="${field.name}" 
+                        ${field.required ? 'required' : ''}
+                        placeholder="${field.hint || ''}"
+                    >
+                    ${field.hint ? `<div class="field-hint">${field.hint}</div>` : ''}
+                </div>
+            `).join('');
+
+            dynamicFields.classList.add('show');
+        } else {
+            countryInfo.classList.remove('show');
+            dynamicFields.classList.remove('show');
+            dynamicFields.innerHTML = '';
+        }
+    });
+
+    form.addEventListener('submit', function (e) {
+       
+
+        const formData = new FormData(form);
+        const data = Object.fromEntries(formData.entries());
+
+    });
+
+    // Optional formatting
+    document.addEventListener('input', function (e) {
+        const { name, value } = e.target;
+
+        if (name === 'routingNumber') {
+            e.target.value = value.replace(/\D/g, '').slice(0, 9);
+        }
+
+        if (name === 'sortCode') {
+            let digits = value.replace(/\D/g, '');
+            if (digits.length > 2) digits = digits.slice(0, 2) + '-' + digits.slice(2);
+            if (digits.length > 5) digits = digits.slice(0, 5) + '-' + digits.slice(5, 7);
+            e.target.value = digits;
+        }
+
+        if (name === 'bsbCode') {
+            let digits = value.replace(/\D/g, '');
+            if (digits.length > 3) digits = digits.slice(0, 3) + '-' + digits.slice(3, 6);
+            e.target.value = digits;
+        }
+    });
+    </script>
+</body>
+
+</html>

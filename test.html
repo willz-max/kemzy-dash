@@ -1,370 +1,552 @@
-
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Live Forex Carousel</title>
+    <title>CinpaxTrade Dashboard</title>
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Chart.js -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <!-- Ionicons -->
+    <script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
+    <script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>
+    
     <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
+        :root {
+            --primary-color: #00d4aa;
+            --primary-hover: #00b896;
+            --bg-primary: #1a1a1a;
+            --bg-secondary: #2a2a2a;
+            --bg-card: #333333;
+            --text-primary: #ffffff;
+            --text-secondary: #b0b0b0;
+            --border-color: #444444;
+            --shadow: rgba(0, 0, 0, 0.3);
         }
-
+        
+        [data-theme="light"] {
+            --bg-primary: #f5f5f5;
+            --bg-secondary: #ffffff;
+            --bg-card: #ffffff;
+            --text-primary: #333333;
+            --text-secondary: #666666;
+            --border-color: #e0e0e0;
+            --shadow: rgba(0, 0, 0, 0.1);
+        }
+        
         body {
-            font-family: 'Arial', sans-serif;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            min-height: 100vh;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            padding: 20px;
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+            background: var(--bg-primary);
+            color: var(--text-primary);
+            transition: background-color 0.3s ease, color 0.3s ease;
+            padding-bottom: 100px;
         }
-
-        .carousel-container {
-            width: 100%;
-            max-width: 1200px;
-            overflow: hidden;
-            position: relative;
-            border-radius: 15px;
-            box-shadow: 0 20px 40px rgba(0,0,0,0.1);
-        }
-
-        .carousel-track {
-            display: flex;
-            animation: scroll 30s linear infinite;
-            gap: 0;
-        }
-
-        .carousel-track:hover {
-            animation-play-state: paused;
-        }
-
-        .forex-card {
-            min-width: 200px;
-            padding: 20px;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            color: white;
+        
+        .brand-title {
+            color: #05c0a5;
+            font-size: 1.5rem;
             font-weight: bold;
-            text-align: center;
-            transition: all 0.3s ease;
-            cursor: pointer;
-            border-right: 1px solid rgba(255,255,255,0.1);
+            margin: 0;
         }
-
-        .forex-card:hover {
-            transform: scale(1.05);
-            z-index: 10;
+        
+        .header-logo {
+            max-width: 120px;
+            height: auto;
+        }
+        
+        .header-icons a {
+            width: 40px;
+            height: 40px;
             border-radius: 10px;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+            background: var(--bg-primary);
+            color: var(--text-primary);
+            border: 1px solid var(--border-color);
+            text-decoration: none;
+            font-size: 20px;
         }
-
-        .forex-card.positive {
-            background: linear-gradient(135deg, #4CAF50, #45a049);
+        
+        .balance-card {
+            background: var(--bg-secondary);
+            border-radius: 20px;
+            padding: 24px;
+            backdrop-filter: blur(10px);
+            border: 1px solid var(--border-color);
         }
-
-        .forex-card.negative {
-            background: linear-gradient(135deg, #f44336, #da190b);
-        }
-
-        .forex-card.neutral {
-            background: linear-gradient(135deg, #9E9E9E, #757575);
-        }
-
-        .forex-card.loading {
-            background: linear-gradient(135deg, #2196F3, #1976D2);
-        }
-
-        .currency-pair {
+        
+        .balance-label {
             font-size: 14px;
-            font-weight: bold;
-            margin-bottom: 8px;
-            opacity: 0.9;
+            color: var(--text-secondary);
         }
-
-        .price {
-            font-size: 18px;
+        
+        .balance-amount {
+            font-size: 36px;
+            font-weight: 700;
+            letter-spacing: -0.5px;
+        }
+        
+        .balance-change {
+            font-size: 14px;
+            color: #00d4aa;
+            font-weight: 500;
+        }
+        
+        .action-btn {
+            background: var(--bg-secondary);
+            border: 1px solid lightgray;
+            border-radius: 16px;
+            padding: 20px 12px;
+            color: var(--text-primary);
+            text-decoration: none;
+            transition: all 0.3s ease;
+        }
+        
+        .action-btn:hover {
+            background: var(--bg-primary);
+            transform: translateY(-2px);
+            color: var(--text-primary);
+        }
+        
+        .action-icon {
+            width: 34px;
+            height: 34px;
+        }
+        
+        .stat-card {
+            background-color: var(--bg-secondary);
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.05);
+            transition: transform 0.2s;
+            border: 1px solid var(--border-color);
+        }
+        
+        .stat-card:hover {
+            transform: translateY(-5px);
+        }
+        
+        .profit-amount { color: #2ecc71; }
+        .withdrawal-amount { color: #e74c3c; }
+        .trade-amount { color: purple; }
+        .deposit-amount { color: rgb(0, 21, 255); }
+        
+        .assets-title {
+            font-size: 20px;
+            font-weight: 600;
+        }
+        
+        .view-all {
+            color: #4a9eff;
+            font-size: 14px;
+            text-decoration: none;
+            font-weight: 500;
+        }
+        
+        .asset-item {
+            background: var(--bg-secondary);
+            opacity: 0.95;
+            border-radius: 16px;
+            transition: all .25s ease-in-out;
+            border: 1px solid var(--border-color);
+        }
+        
+        .asset-item:hover {
+            opacity: 1;
+            transform: translatey(-5px);
+        }
+        
+        .asset-icon {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
             font-weight: bold;
+            font-size: 18px;
+        }
+        
+        .bitcoin-icon { background: #f7931a; color: var(--text-primary); }
+        .ethereum-icon { background: #627eea; color: var(--text-primary); }
+        .binance-icon { background: #f3ba2f; color: var(--text-primary); }
+        
+        .asset-name {
+            font-size: 16px;
+            font-weight: 600;
+            margin-bottom: 2px;
+        }
+        
+        .asset-symbol {
+            font-size: 12px;
+            color: var(--text-secondary);
+        }
+        
+        .asset-amount {
+            font-size: 14px;
+            color: var(--text-secondary);
+        }
+        
+        .asset-price {
+            font-size: 16px;
+            font-weight: 600;
+            margin-bottom: 2px;
+        }
+        
+        .asset-change {
+            font-size: 12px;
+            font-weight: 500;
+        }
+        
+        .positive { color: #00d4aa; }
+        .negative { color: #ff6b6b; }
+        .no-change { color: rgb(211, 210, 210); }
+        
+        .bottom-nav {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: rgba(16, 16, 24, 0.95);
+            backdrop-filter: blur(10px);
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            z-index: 1000;
+        }
+        
+        .nav-item {
+            color: rgba(255, 255, 255, 0.6);
+            text-decoration: none;
+            font-size: 12px;
+            transition: all 0.3s ease;
+        }
+        
+        .nav-item.active {
+            color: #4a9eff;
+        }
+        
+        .nav-item:hover {
+            color: #4a9eff;
+        }
+        
+        .nav-icon {
+            width: 24px;
+            height: 24px;
+        }
+        
+        i.nav-icon {
+            font-size: 24px;
+        }
+        
+        .dropdown-content {
+            display: none;
+            position: absolute;
+            background-color: #141416;
+            min-width: 160px;
+            box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
+            z-index: 1;
+            bottom: 100%;
+            left: 50%;
+            transform: translateX(-50%);
+            border-radius: 5px 5px 0 0;
             margin-bottom: 5px;
         }
-
-        .change {
-            font-size: 12px;
-            display: flex;
-            align-items: center;
-            gap: 5px;
+        
+        .dropdown.active .dropdown-content {
+            display: block;
         }
-
-        .change-arrow {
-            font-size: 10px;
+        
+        .dropdown-content a {
+            color: #e0e0e0;
+            padding: 12px 16px;
+            text-decoration: none;
+            display: block;
+            text-align: left;
         }
-
-        .loading {
-            color: rgba(255,255,255,0.7);
-            font-size: 12px;
-        }
-
-        .error {
-            color: #ffcccb;
-            font-size: 11px;
-        }
-
-        .last-updated {
-            position: absolute;
-            bottom: 10px;
-            right: 15px;
-            color: rgba(255,255,255,0.6);
-            font-size: 11px;
-        }
-
-        @keyframes scroll {
-            0% {
-                transform: translateX(0);
-            }
-            100% {
-                transform: translateX(-100%);
-            }
-        }
-
-        @keyframes pulse {
-            0%, 100% { opacity: 1; }
-            50% { opacity: 0.7; }
-        }
-
-        .pulse {
-            animation: pulse 1s ease-in-out infinite;
-        }
-
-        @media (max-width: 768px) {
-            .forex-card {
-                min-width: 150px;
-                padding: 15px;
-            }
-            
-            .price {
-                font-size: 16px;
-            }
-            
-            .currency-pair {
-                font-size: 13px;
-            }
+        
+        .dropdown-content a:hover {
+            background-color: #5a5a7a;
         }
     </style>
 </head>
+
 <body>
-    <div class="carousel-container">
-        <div class="carousel-track" id="carouselTrack">
-            <!-- Forex cards will be inserted here -->
+    <div class="container-fluid">
+        <!-- Header -->
+        <div class="row align-items-center justify-content-between py-3 px-3">
+            <div class="col-auto">
+                <img class="header-logo" src="assets/image/main-logo.png" alt="CinpaxTrade Logo">
+            </div>
+            <div class="col-auto">
+                <div class="d-flex gap-3 header-icons">
+                    <a href="QR_scan.html" class="invisible d-flex align-items-center justify-content-center">
+                        <ion-icon name="scan-sharp"></ion-icon>
+                    </a>
+                    <a href="setting.html" class="d-flex align-items-center justify-content-center">
+                        <ion-icon name="settings"></ion-icon>
+                    </a>
+                </div>
+            </div>
         </div>
-        <div class="last-updated" id="lastUpdated">Loading...</div>
+
+        <!-- Balance Card -->
+        <div class="row mb-4 px-3">
+            <div class="col-12">
+                <div class="balance-card">
+                    <div class="d-flex align-items-center gap-2 mb-2">
+                        <span class="balance-label">Total Balance</span>
+                        <ion-icon id="toggle-eye" name="eye" style="cursor: pointer;"></ion-icon>
+                    </div>
+                    <div class="balance-amount mb-2">
+                        $<span class="grandTotal" id="grandTotal">0.0000000</span>
+                    </div>
+                    <div class="balance-change">▲$428.56 (3.45%) today</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Action Buttons -->
+        <div class="row g-3 mb-4 px-3">
+            <div class="col-6">
+                <a href="#" class="action-btn d-flex flex-column align-items-center gap-2 w-100 h-100">
+                    <svg class="action-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <line x1="12" y1="5" x2="12" y2="19" />
+                        <polyline points="19,12 12,5 5,12" />
+                    </svg>
+                    <span class="action-label">Withdraw</span>
+                </a>
+            </div>
+            <div class="col-6">
+                <a href="deposit.html" class="action-btn d-flex flex-column align-items-center gap-2 w-100 h-100">
+                    <svg class="action-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <line x1="12" y1="5" x2="12" y2="19" />
+                        <polyline points="5,12 12,19 19,12" />
+                    </svg>
+                    <span class="action-label">Deposit</span>
+                </a>
+            </div>
+        </div>
+
+        <!-- Dashboard Stats -->
+        <div class="row g-3 mb-4 px-3">
+            <div class="col-6 col-lg-3">
+                <div class="stat-card p-3 h-100">
+                    <h3 class="h6 mb-2">Profit</h3>
+                    <p class="profit-amount h4 mb-0 fw-bold">$12,750.80</p>
+                </div>
+            </div>
+            <div class="col-6 col-lg-3">
+                <div class="stat-card p-3 h-100">
+                    <h3 class="h6 mb-2">Total Withdrawal</h3>
+                    <p class="withdrawal-amount h4 mb-0 fw-bold">$5,200.00</p>
+                </div>
+            </div>
+            <div class="col-6 col-lg-3">
+                <div class="stat-card p-3 h-100">
+                    <h3 class="h6 mb-2">Total Trades</h3>
+                    <p class="trade-amount h4 mb-0 fw-bold">342</p>
+                </div>
+            </div>
+            <div class="col-6 col-lg-3">
+                <div class="stat-card p-3 h-100">
+                    <h3 class="h6 mb-2">Total Deposit</h3>
+                    <p class="deposit-amount h4 mb-0 fw-bold">$20,000.00</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Assets Section -->
+        <div class="row px-3">
+            <div class="col-12">
+                <div class="d-flex justify-content-between align-items-center mb-3">
+                    <h2 class="assets-title">Your Assets</h2>
+                    <a href="#" class="view-all">View All</a>
+                </div>
+
+                <!-- Asset Items -->
+                <div class="asset-item p-3 mb-3 d-flex align-items-center gap-3">
+                    <div class="asset-icon bitcoin-icon d-flex align-items-center justify-content-center">₿</div>
+                    <div class="flex-grow-1">
+                        <div class="asset-name">Bitcoin <span class="asset-symbol">BTC</span></div>
+                        <div class="asset-amount"><span class="btc">0.2546</span> BTC</div>
+                    </div>
+                    <div class="text-end">
+                        <div class="asset-price btc-price">$<span class="your_total_btc">0.0000</span></div>
+                        <div class="asset-change positive">▲5.2%</div>
+                    </div>
+                </div>
+
+                <div class="asset-item p-3 mb-3 d-flex align-items-center gap-3">
+                    <div class="asset-icon ethereum-icon d-flex align-items-center justify-content-center">Ξ</div>
+                    <div class="flex-grow-1">
+                        <div class="asset-name">Ethereum <span class="asset-symbol">ETH</span></div>
+                        <div class="asset-amount"><span class="eth">3.42</span> ETH</div>
+                    </div>
+                    <div class="text-end">
+                        <div class="asset-price">$<span class="your_total_eth">0.0000</span></div>
+                        <div class="asset-change positive">▲2.8%</div>
+                    </div>
+                </div>
+
+                <div class="asset-item p-3 mb-3 d-flex align-items-center gap-3">
+                    <div class="asset-icon binance-icon d-flex align-items-center justify-content-center">⦣</div>
+                    <div class="flex-grow-1">
+                        <div class="asset-name">Binance Coin <span class="asset-symbol">BNB</span></div>
+                        <div class="asset-amount"><span class="bnb">12.5</span> BNB</div>
+                    </div>
+                    <div class="text-end">
+                        <div class="asset-price">$<span class="your_total_bnb">0.0000</span></div>
+                        <div class="asset-change negative">▼1.2%</div>
+                    </div>
+                </div>
+
+                <div class="asset-item p-3 mb-3 d-flex align-items-center gap-3">
+                    <div class="asset-icon binance-icon d-flex align-items-center justify-content-center">⦣</div>
+                    <div class="flex-grow-1">
+                        <div class="asset-name">Tether <span class="asset-symbol">USDT</span></div>
+                        <div class="asset-amount"><span class="usdt">1250</span> USDT</div>
+                    </div>
+                    <div class="text-end">
+                        <div class="asset-price">$<span class="your_total_usdt">0.0000</span></div>
+                        <div class="asset-change no-change">▼0.0%</div>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
 
-    <script>
-        class ForexCarousel {
-            constructor() {
-                this.pairs = [
-                    'GBPJPY', 'XAUUSD', 'GBPUSD', 'EURUSD', 'USDJPY', 'GBPEUR',
-                    'AUDUSD', 'USDCAD', 'NZDUSD', 'EURGBP', 'EURJPY', 'AUDJPY',
-                    'CADJPY', 'CHFJPY', 'EURCHF', 'GBPCHF', 'USDCHF', 'XAGUSD'
-                ];
-                this.track = document.getElementById('carouselTrack');
-                this.lastUpdated = document.getElementById('lastUpdated');
-                this.data = {};
-                this.init();
-            }
+    <!-- Bottom Navigation -->
+    <!-- Bottom Navigation using Bootstrap -->
+<nav class="navbar navbar-dark bg-dark navbar-expand fixed-bottom border-top border-secondary shadow-sm" style="backdrop-filter: blur(10px);">
+  <div class="container-fluid justify-content-around text-center">
+    
+    <a class="nav-link text-white small d-flex flex-column align-items-center" href="#">
+      <svg class="nav-icon mb-1" viewBox="0 0 24 24" fill="currentColor" width="24" height="24">
+        <rect x="2" y="3" width="20" height="14" rx="2" ry="2" />
+        <line x1="8" y1="21" x2="16" y2="21" />
+        <line x1="12" y1="17" x2="12" y2="21" />
+      </svg>
+      <span>Wallet</span>
+    </a>
 
-            init() {
-                this.createCards();
-                this.fetchData();
-                // Update every 30 seconds
-                setInterval(() => this.fetchData(), 30000);
-            }
+    <a class="nav-link text-white small d-flex flex-column align-items-center" href="market.html">
+      <svg class="nav-icon mb-1" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="24" height="24">
+        <polyline points="22,12 18,12 15,21 9,3 6,12 2,12" />
+      </svg>
+      <span>Markets</span>
+    </a>
 
-            createCards() {
-                // Create cards twice for seamless loop
-                const cardHTML = this.pairs.map(pair => this.createCard(pair)).join('');
-                this.track.innerHTML = cardHTML + cardHTML;
-            }
+   <div class="dropup position-relative">
+  <a class="nav-link dropdown-toggle text-white small d-flex flex-column align-items-center" href="#" role="button" id="tradeDropdown" data-bs-toggle="dropdown" aria-expanded="false">
+    <i class="nav-icon mb-1"><ion-icon name="bar-chart"></ion-icon></i>
+    <span>Trades</span>
+  </a>
+  <ul class="dropdown-menu dropdown-menu-dark text-center border-0 rounded-3 px-2 py-1"
+      aria-labelledby="tradeDropdown"
+      style="min-width: 160px; left: 50%; transform: translateX(-50%) translateY(-8px); background-color: #1e1e2f;">
+    <li><a class="dropdown-item text-light px-3 py-2" href="copy_trade.html" style="transition: background 0.3s;">Copy Trade</a></li>
+    <li><a class="dropdown-item text-light px-3 py-2" href="stake.html" style="transition: background 0.3s;">Stacking</a></li>
+    <li><a class="dropdown-item text-light px-3 py-2" href="signal.html" style="transition: background 0.3s;">Signal</a></li>
+  </ul>
+</div>
 
-            createCard(pair) {
-                return `
-                    <div class="forex-card loading" id="card-${pair}">
-                        <div class="currency-pair">${this.formatPair(pair)}</div>
-                        <div class="price">Loading...</div>
-                        <div class="change">
-                            <span class="loading">Fetching data...</span>
-                        </div>
+    <a class="nav-link text-white small d-flex flex-column align-items-center" href="transaction-history.html">
+      <svg class="nav-icon mb-1" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="24" height="24">
+        <path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9" />
+        <path d="M13.73 21a2 2 0 0 1-3.46 0" />
+      </svg>
+      <span>Activity</span>
+    </a>
+
+    <a class="nav-link text-white small d-flex flex-column align-items-center" href="profile.html">
+      <svg class="nav-icon mb-1" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="24" height="24">
+        <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2" />
+        <circle cx="12" cy="7" r="4" />
+      </svg>
+      <span>Profile</span>
+    </a>
+
+  </div>
+</nav>
+
+
+    <!-- Modal -->
+    <div class="modal fade" id="withdrawModal" tabindex="-1" aria-labelledby="withdrawModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content bg-dark text-light">
+                <div class="modal-header border-secondary">
+                    <h5 class="modal-title" id="withdrawModalLabel">Select Withdrawal Type</h5>
+                    <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body text-center">
+                    <div class="d-grid gap-2">
+                        <button onclick="window.location.href='crypto-withdrawal.html'" class="btn btn-primary">
+                            Crypto Withdrawal
+                        </button>
+                        <button onclick="window.location.href='bank-transfer.html'" class="btn btn-primary">
+                            Bank Transfer
+                        </button>
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
+                            Cancel
+                        </button>
                     </div>
-                `;
-            }
+                </div>
+            </div>
+        </div>
+    </div>
 
-            formatPair(pair) {
-                // Format currency pairs for display
-                const formatted = {
-                    'GBPJPY': 'GBP/JPY',
-                    'XAUUSD': 'XAU/USD',
-                    'GBPUSD': 'GBP/USD',
-                    'EURUSD': 'EUR/USD',
-                    'USDJPY': 'USD/JPY',
-                    'GBPEUR': 'GBP/EUR',
-                    'AUDUSD': 'AUD/USD',
-                    'USDCAD': 'USD/CAD',
-                    'NZDUSD': 'NZD/USD',
-                    'EURGBP': 'EUR/GBP',
-                    'EURJPY': 'EUR/JPY',
-                    'AUDJPY': 'AUD/JPY',
-                    'CADJPY': 'CAD/JPY',
-                    'CHFJPY': 'CHF/JPY',
-                    'EURCHF': 'EUR/CHF',
-                    'GBPCHF': 'GBP/CHF',
-                    'USDCHF': 'USD/CHF',
-                    'XAGUSD': 'XAG/USD'
-                };
-                return formatted[pair] || pair;
-            }
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 
-            async fetchData() {
-                try {
-                    // Using exchangerate-api.com (free tier)
-                    const promises = this.pairs.map(async (pair) => {
-                        try {
-                            if (pair === 'XAUUSD' || pair === 'XAGUSD') {
-                                // For precious metals, use a different approach
-                                return this.fetchMetalPrice(pair);
-                            }
-                            
-                            const base = pair.substring(0, 3);
-                            const target = pair.substring(3, 6);
-                            
-                            const response = await fetch(`https://api.exchangerate-api.com/v4/latest/${base}`);
-                            const data = await response.json();
-                            
-                            if (data.rates && data.rates[target]) {
-                                const rate = data.rates[target];
-                                // Generate mock change for demo (in real app, you'd track historical data)
-                                const change = (Math.random() - 0.5) * 0.02; // -1% to +1%
-                                const changePercent = change * 100;
-                                
-                                return {
-                                    pair,
-                                    price: rate,
-                                    change: changePercent,
-                                    success: true
-                                };
-                            }
-                            throw new Error('Rate not found');
-                        } catch (error) {
-                            return {
-                                pair,
-                                success: false,
-                                error: error.message
-                            };
-                        }
-                    });
+    <script>
+        // Eye toggle functionality
+        const toggleEye = document.getElementById('toggle-eye');
+        const grandTotal = document.getElementById('grandTotal');
+        let isVisible = true;
+        const actualBalance = '0.0000000';
 
-                    const results = await Promise.all(promises);
-                    results.forEach(result => {
-                        if (result.success) {
-                            this.updateCard(result.pair, result.price, result.change);
-                        } else {
-                            this.updateCardError(result.pair, result.error);
-                        }
-                    });
-
-                    this.lastUpdated.textContent = `Last updated: ${new Date().toLocaleTimeString()}`;
-                } catch (error) {
-                    console.error('Error fetching data:', error);
-                    this.lastUpdated.textContent = `Error: ${error.message}`;
-                }
-            }
-
-            async fetchMetalPrice(pair) {
-                // Mock data for precious metals (in real app, use metals-api.com or similar)
-                const prices = {
-                    'XAUUSD': 1950 + (Math.random() - 0.5) * 100,
-                    'XAGUSD': 24 + (Math.random() - 0.5) * 2
-                };
-                
-                const change = (Math.random() - 0.5) * 0.04; // -2% to +2%
-                
-                return {
-                    pair,
-                    price: prices[pair],
-                    change: change * 100,
-                    success: true
-                };
-            }
-
-            updateCard(pair, price, changePercent) {
-                const cards = document.querySelectorAll(`#card-${pair}`);
-                
-                cards.forEach(card => {
-                    const priceElement = card.querySelector('.price');
-                    const changeElement = card.querySelector('.change');
-                    
-                    // Format price based on pair
-                    let formattedPrice;
-                    if (pair.includes('JPY')) {
-                        formattedPrice = price.toFixed(3);
-                    } else if (pair === 'XAUUSD') {
-                        formattedPrice = price.toFixed(2);
-                    } else if (pair === 'XAGUSD') {
-                        formattedPrice = price.toFixed(3);
-                    } else {
-                        formattedPrice = price.toFixed(5);
-                    }
-                    
-                    priceElement.textContent = formattedPrice;
-                    
-                    const arrow = changePercent >= 0 ? '↗' : '↘';
-                    const sign = changePercent >= 0 ? '+' : '';
-                    changeElement.innerHTML = `
-                        <span class="change-arrow">${arrow}</span>
-                        <span>${sign}${changePercent.toFixed(2)}%</span>
-                    `;
-                    
-                    // Update background color based on change
-                    card.classList.remove('positive', 'negative', 'neutral', 'loading');
-                    if (changePercent > 0.01) {
-                        card.classList.add('positive');
-                    } else if (changePercent < -0.01) {
-                        card.classList.add('negative');
-                    } else {
-                        card.classList.add('neutral');
-                    }
-                    
-                    // Add pulse effect for significant changes
-                    if (Math.abs(changePercent) > 0.5) {
-                        card.classList.add('pulse');
-                        setTimeout(() => card.classList.remove('pulse'), 3000);
-                    }
-                });
-            }
-
-            updateCardError(pair, error) {
-                const cards = document.querySelectorAll(`#card-${pair}`);
-                
-                cards.forEach(card => {
-                    const priceElement = card.querySelector('.price');
-                    const changeElement = card.querySelector('.change');
-                    
-                    priceElement.textContent = 'Error';
-                    changeElement.innerHTML = `<span class="error">Failed to load</span>`;
-                    
-                    card.classList.remove('positive', 'negative', 'neutral', 'loading');
-                    card.classList.add('neutral');
-                });
-            }
-        }
-
-        // Initialize the carousel when the page loads
-        document.addEventListener('DOMContentLoaded', () => {
-            new ForexCarousel();
+        toggleEye.addEventListener('click', () => {
+            isVisible = !isVisible;
+            grandTotal.textContent = isVisible ? actualBalance : '*******';
+            toggleEye.setAttribute('name', isVisible ? 'eye' : 'eye-off');
         });
+
+        // Dropdown functionality
+        document.addEventListener('DOMContentLoaded', function () {
+            const dropdown = document.querySelector('.dropdown');
+            const dropbtn = document.querySelector('.dropbtn');
+            const dropdownContent = document.querySelector('.dropdown-content');
+
+            dropbtn.addEventListener('click', function (event) {
+                event.preventDefault();
+                dropdown.classList.toggle('active');
+            });
+
+            document.addEventListener('click', function (event) {
+                if (!dropdown.contains(event.target)) {
+                    dropdown.classList.remove('active');
+                }
+            });
+
+            dropdownContent.querySelectorAll('a').forEach(item => {
+                item.addEventListener('click', function () {
+                    dropdown.classList.remove('active');
+                });
+            });
+        });
+
+        // Withdraw modal functionality
+        document.querySelectorAll('.action-btn').forEach(btn => {
+            if (btn.textContent.includes('Withdraw')) {
+                btn.addEventListener('click', function (e) {
+                    e.preventDefault();
+                    const modal = new bootstrap.Modal(document.getElementById('withdrawModal'));
+                    modal.show();
+                });
+            }
+        });
+
+        // Theme detection
+        (function () {
+            const savedTheme = localStorage.getItem('theme') || 'dark';
+            document.documentElement.setAttribute('data-theme', savedTheme);
+        })();
     </script>
 </body>
+
 </html>

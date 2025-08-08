@@ -1,0 +1,596 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>STAKING</title>
+    <link rel="stylesheet" href="assets/theme.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+            min-height: 100vh;
+            background-color: var(--bg-primary);
+            color: var(--text-primary);
+            transition: background-color 0.3s ease, color 0.3s ease;
+        }
+
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 20px 40px;
+            background: var(--bg-primary);
+            backdrop-filter: blur(10px);
+            border-bottom: 1px solid var(--border-color);
+            flex-wrap: wrap;
+            row-gap: 20px;
+            position: relative;
+            z-index: 1000;
+        }
+
+        .url-bar {
+            background: var(--bg-secondary);
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            padding: 12px 16px;
+            color: var(--text-secondary);
+            font-size: 14px;
+            width: 350px;
+        }
+
+        .nav-right {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+        }
+
+        .trade-btn {
+            background: #2563eb;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 6px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: background 0.3s;
+        }
+
+        .trade-btn:hover {
+            background: #1d4ed8;
+        }
+
+        .profile-dropdown {
+            position: relative;
+        }
+
+        .profile-trigger {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            background: none;
+            border: none;
+            color: var(--text-primary);
+            cursor: pointer;
+            font-size: 16px;
+            padding: 8px 12px;
+            border-radius: 6px;
+            transition: background 0.3s;
+        }
+
+        .profile-trigger:hover {
+            background: var(--bg-secondary);
+        }
+
+        .dropdown-arrow {
+            transition: transform 0.3s;
+        }
+
+        .dropdown-arrow.open {
+            transform: rotate(180deg);
+        }
+
+        .dropdown-menu {
+            position: absolute;
+            top: 100%;
+            right: 0;
+            background: var(--bg-secondary);
+            backdrop-filter: blur(10px);
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            min-width: 200px;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+            z-index: 1000;
+            opacity: 0;
+            visibility: hidden;
+            transform: translateY(-10px);
+            transition: all 0.3s ease;
+        }
+
+        .dropdown-menu.show {
+            opacity: 1;
+            visibility: visible;
+            transform: translateY(0);
+        }
+
+        .dropdown-item {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 12px 16px;
+            color: var(--text-primary);
+            text-decoration: none;
+            transition: background 0.3s;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .dropdown-item:last-child {
+            border-bottom: none;
+        }
+
+        .dropdown-item:hover {
+            background: rgba(255, 255, 255, 0.1);
+        }
+
+        .dropdown-icon {
+            font-size: 16px;
+            opacity: 0.7;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .headerI {
+            margin-bottom: 30px;
+            position: relative;
+            /* z-index: 100000000000000000000; */
+        }
+
+        .headerI h1 {
+            font-size: 28px;
+            font-weight: 600;
+            color: #8b9bb5;
+            margin-bottom: 20px;
+        }
+
+        .controls {
+            display: flex;
+            gap: 15px;
+            flex-wrap: wrap;
+            margin-bottom: 30px;
+        }
+
+        .select-wrapper {
+            position: relative;
+            flex: 1;
+            min-width: 200px;
+        }
+
+        .select-wrapper select {
+            width: 100%;
+            padding: 12px 16px;
+            background: #ffffff;
+            border: none;
+            border-radius: 8px;
+            font-size: 16px;
+            color: #333;
+            appearance: none;
+            cursor: pointer;
+            padding-right: 40px;
+        }
+
+        .select-wrapper::after {
+            content: '▼';
+            position: absolute;
+            right: 12px;
+            top: 50%;
+            transform: translateY(-50%);
+            pointer-events: none;
+            color: #666;
+            font-size: 12px;
+        }
+
+        .btn {
+            padding: 12px 24px;
+            border: none;
+            border-radius: 8px;
+            font-size: 16px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            white-space: nowrap;
+        }
+
+        .btn-primary {
+            background: #2563eb;
+            color: white;
+        }
+
+        .btn-primary:hover {
+            background: #1d4ed8;
+        }
+
+        .btn-secondary {
+            background: #4b5563;
+            color: white;
+        }
+
+        .btn-secondary:hover {
+            background: #374151;
+        }
+
+        .table-container {
+            background: #253447;
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+
+        .table-header {
+            display: grid;
+            grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
+            gap: 20px;
+            padding: 20px;
+            background: #2d3e54;
+            border-bottom: 1px solid #3a4b61;
+            font-weight: 600;
+            color: #8b9bb5;
+            font-size: 14px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .table-content {
+            padding: 40px 20px;
+            text-align: center;
+            color: #8b9bb5;
+            font-size: 16px;
+        }
+
+        .empty-state {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 16px;
+        }
+
+        .empty-icon {
+            width: 64px;
+            height: 64px;
+            background: #374151;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 24px;
+            color: #6b7280;
+        }
+
+
+
+
+
+        /* Mobile Responsive */
+        @media (max-width: 768px) {
+            body {
+                padding: 16px;
+            }
+
+            .header h1 {
+                font-size: 24px;
+            }
+
+            .controls {
+                flex-direction: column;
+                gap: 12px;
+            }
+
+            .select-wrapper {
+                min-width: unset;
+            }
+
+            .btn {
+                padding: 14px 20px;
+                font-size: 16px;
+            }
+
+            .table-header {
+                display: none;
+            }
+
+            .table-content {
+                padding: 30px 16px;
+            }
+
+            .empty-icon {
+                width: 48px;
+                height: 48px;
+                font-size: 20px;
+            }
+
+            .chat-widget {
+                bottom: 16px;
+                right: 16px;
+                padding: 14px 18px;
+                font-size: 15px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .controls {
+                gap: 10px;
+            }
+
+            .btn {
+                padding: 12px 16px;
+                font-size: 15px;
+            }
+
+            .table-content {
+                padding: 24px 12px;
+                font-size: 15px;
+            }
+        }
+
+
+        @media (max-width: 768px) {
+            .mobile-table-item {
+                background: #2d3e54;
+                margin-bottom: 12px;
+                padding: 16px;
+                border-radius: 8px;
+                border-left: 4px solid #2563eb;
+            }
+
+            .mobile-table-row {
+                display: flex;
+                justify-content: space-between;
+                align-items: center;
+                margin-bottom: 8px;
+            }
+
+            .mobile-table-row:last-child {
+                margin-bottom: 0;
+            }
+
+            .mobile-table-label {
+                font-size: 12px;
+                color: #8b9bb5;
+                text-transform: uppercase;
+                letter-spacing: 0.5px;
+            }
+
+            .mobile-table-value {
+                font-size: 14px;
+                color: #ffffff;
+                font-weight: 500;
+            }
+        }
+    </style>
+
+</head>
+
+<body>
+    <header class="header">
+        <div class="url-bar">
+            https://BukaWallets.com/register/?ref=
+        </div>
+        <div class="nav-right">
+            <!-- <button class="trade-btn">Staking history</button> -->
+            <div class="profile-dropdown">
+                <button class="profile-trigger">
+                    Vic
+                    <span class="dropdown-arrow">▼</span>
+                </button>
+                <div class="dropdown-menu" id="dropdownMenu">
+                    <a href="profile.html" class="dropdown-item">
+                        <span class="dropdown-icon">👤</span>
+                        <span data-translate="myProfile">My Profile</span>
+                    </a>
+                    <a href="setting.html" class="dropdown-item">
+                        <span class="dropdown-icon"><i><ion-icon name="settings-outline"></ion-icon></i></span>
+                        <span data-translate="Settings">Settings</span>
+                    </a>
+                    <a href="#" class="dropdown-item">
+                        <span class="dropdown-icon"><i><ion-icon name="log-out-outline"></ion-icon></i></span>
+                        <span data-translate="logout">Logout</span>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </header>
+    <main>
+        <div class="container">
+            <div class="headerI">
+                <h1>Withdraw Log</h1>
+
+                <div class="controls">
+                    <div class="select-wrapper">
+                        <select id="gateway-select">
+                            <option value="">Select Gateway</option>
+                            <option value="none">No Gateway found</option>
+                            <!-- <option value="crypto">Cryptocurrency</option>
+                        <option value="paypal">PayPal</option>
+                        <option value="stripe">Stripe</option> -->
+                        </select>
+                    </div>
+
+                    <button class="btn btn-primary" onclick="filterWithdrawals('bank')">
+                        Bank Withdrawal
+                    </button>
+
+                    <button class="btn btn-secondary" onclick="filterWithdrawals('crypto')">
+                        Crypto Withdrawal
+                    </button>
+                </div>
+            </div>
+
+            <div class="table-container">
+                <div class="table-header">
+                    <div>Transaction ID</div>
+                    <div>Type</div>
+                    <div>Amount</div>
+                    <div>Status</div>
+                    <div>Created At</div>
+                </div>
+
+                <div class="table-content">
+                    <div class="empty-state">
+                        <div class="empty-icon">📋</div>
+                        <div>No withdrawals found.</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+    </main>
+    <script>
+        let currentFilter = '';
+        let withdrawals = [];
+
+        function filterWithdrawals(type) {
+            currentFilter = type;
+            const select = document.getElementById('gateway-select');
+            select.value = type;
+
+            // Update button states
+            document.querySelectorAll('.btn').forEach(btn => {
+                btn.classList.remove('btn-primary');
+                btn.classList.add('btn-secondary');
+            });
+
+            if (type === 'bank') {
+                document.querySelector('.btn:nth-child(2)').classList.remove('btn-secondary');
+                document.querySelector('.btn:nth-child(2)').classList.add('btn-primary');
+            } else if (type === 'crypto') {
+                document.querySelector('.btn:nth-child(3)').classList.remove('btn-secondary');
+                document.querySelector('.btn:nth-child(3)').classList.add('btn-primary');
+            }
+
+            renderWithdrawals();
+        }
+
+        function renderWithdrawals() {
+            const tableContent = document.querySelector('.table-content');
+
+            if (withdrawals.length === 0) {
+                tableContent.innerHTML = `
+                    <div class="empty-state">
+                        <div class="empty-icon">📋</div>
+                        <div>No withdrawals found.</div>
+                    </div>
+                `;
+                return;
+            }
+
+            // For mobile, we could render a different layout
+            if (window.innerWidth <= 768) {
+                renderMobileTable();
+            } else {
+                renderDesktopTable();
+            }
+        }
+
+        function renderMobileTable() {
+            const tableContent = document.querySelector('.table-content');
+            const filteredWithdrawals = withdrawals.filter(w =>
+                !currentFilter || w.type === currentFilter
+            );
+
+            if (filteredWithdrawals.length === 0) {
+                tableContent.innerHTML = `
+                    <div class="empty-state">
+                        <div class="empty-icon">📋</div>
+                        <div>No withdrawals found.</div>
+                    </div>
+                `;
+                return;
+            }
+
+            tableContent.innerHTML = filteredWithdrawals.map(withdrawal => `
+                <div class="mobile-table-item">
+                    <div class="mobile-table-row">
+                        <span class="mobile-table-label">Transaction ID</span>
+                        <span class="mobile-table-value">${withdrawal.id}</span>
+                    </div>
+                    <div class="mobile-table-row">
+                        <span class="mobile-table-label">Type</span>
+                        <span class="mobile-table-value">${withdrawal.type}</span>
+                    </div>
+                    <div class="mobile-table-row">
+                        <span class="mobile-table-label">Amount</span>
+                        <span class="mobile-table-value">${withdrawal.amount}</span>
+                    </div>
+                    <div class="mobile-table-row">
+                        <span class="mobile-table-label">Status</span>
+                        <span class="mobile-table-value">${withdrawal.status}</span>
+                    </div>
+                    <div class="mobile-table-row">
+                        <span class="mobile-table-label">Created At</span>
+                        <span class="mobile-table-value">${withdrawal.createdAt}</span>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        function renderDesktopTable() {
+            // Desktop table rendering would go here
+            // For now, showing empty state
+            const tableContent = document.querySelector('.table-content');
+            tableContent.innerHTML = `
+                <div class="empty-state">
+                    <div class="empty-icon">📋</div>
+                    <div>No withdrawals found.</div>
+                </div>
+            `;
+        }
+
+        function toggleChat() {
+            alert('Chat functionality would open here');
+        }
+
+        // Handle select change
+        document.getElementById('gateway-select').addEventListener('change', function () {
+            const value = this.value;
+            if (value) {
+                filterWithdrawals(value);
+            } else {
+                currentFilter = '';
+                // Reset button states
+                document.querySelectorAll('.btn').forEach(btn => {
+                    btn.classList.remove('btn-primary');
+                    btn.classList.add('btn-secondary');
+                });
+                renderWithdrawals();
+            }
+        });
+
+        // Handle window resize
+        window.addEventListener('resize', renderWithdrawals);
+
+        // Initialize
+        renderWithdrawals();
+    </script>
+    <script>
+        // Theme detection - add this to every page
+        (function () {
+            const savedTheme = localStorage.getItem('theme') || 'dark';
+            document.documentElement.setAttribute('data-theme', savedTheme);
+        })();
+    </script>
+    <script src="assets/scripts/staking.js"></script>
+    <script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
+    <script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>
+    <script src="assets/scripts/language.js"></script>
+</body>
+
+</html>

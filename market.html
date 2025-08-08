@@ -9,47 +9,29 @@
 </head>
 <body>
        <div class="container">
-      <div class="header">
-        <h1>Bitcoin (BTC)</h1>
-        <div class="price">$109,336</div>
-      </div>
+         <div class="tradingview-widget-container">
+    <div id="tradingview_chart"></div>
+    <script type="text/javascript" src="https://s3.tradingview.com/tv.js"></script>
+    <script type="text/javascript">
+      new TradingView.widget({
+        "width": "100%",
+        "height": 600,
+        "symbol": "BINANCE:BTCUSDT", // Change this symbol!
+        "interval": "1", // Options: 1, 5, 15, 30, 60, 240, D, W, M
+        "timezone": "Etc/UTC",
+        "theme": "dark",
+        "style": "1", // 1 = Candles, 3 = Bars, etc.
+        "locale": "en",
+        "toolbar_bg": "#f1f3f6",
+        "enable_publishing": false,
+        "allow_symbol_change": true,
+        "container_id": "tradingview_chart"
+      });
+    </script>
+  </div>
 
       <div class="chart-container">
-        <div class="chart-header">
-          <button class="chart-selector">Bitcoin (BTC)</button>
-          <div class="time-frame">1D</div>
-        </div>
-
-        <div class="chart-area">
-          <div class="chart-grid"></div>
-          <div class="price-labels">
-            <div>109,600</div>
-            <div>109,400</div>
-            <div>109,200</div>
-            <div>109,000</div>
-            <div>108,800</div>
-            <div>108,600</div>
-            <div>108,400</div>
-            <div>108,200</div>
-            <div>108,000</div>
-            <div>107,800</div>
-          </div>
-          <div class="chart-path"></div>
-          <div class="time-labels">
-            <div>4AM</div>
-            <div>6AM</div>
-            <div>8AM</div>
-            <div>10AM</div>
-            <div>12PM</div>
-            <div>2PM</div>
-            <div>4PM</div>
-            <div>6PM</div>
-            <div>8PM</div>
-            <div>10PM</div>
-            <div>12AM</div>
-            <div>2AM</div>
-          </div>
-        </div>
+        
       </div>
 
       <div class="trading-buttons">
@@ -61,35 +43,36 @@
         </button>
       </div>
 
-      <div class="stats-section">
-        <h2 class="stats-title">Stats</h2>
-        <div class="stats-grid">
-          <div class="stat-item">
-            <span class="stat-label">24h High</span>
-            <span class="stat-value">$109,471</span>
-          </div>
-          <div class="stat-item">
-            <span class="stat-label">24h Low</span>
-            <span class="stat-value">$107,876</span>
-          </div>
-          <div class="stat-item">
-            <span class="stat-label">Volume (24h)</span>
-            <span class="stat-value">$16,944,333,594</span>
-          </div>
-          <div class="stat-item">
-            <span class="stat-label">Market Cap</span>
-            <span class="stat-value">$2,174,200,157,498</span>
-          </div>
-          <div class="stat-item">
-            <span class="stat-label">Circulating Supply</span>
-            <span class="stat-value">19,888,671 BTC</span>
-          </div>
-          <div class="stat-item">
-            <span class="stat-label">Total Supply</span>
-            <span class="stat-value">19,888,671 BTC</span>
-          </div>
-        </div>
-      </div>
+    <div class="stats-section">
+  <h2 class="stats-title">Stats</h2>
+  <div class="stats-grid">
+    <div class="stat-item">
+      <span class="stat-label">24h High</span>
+      <span class="stat-value" data-key="24h-high">Loading...</span>
+    </div>
+    <div class="stat-item">
+      <span class="stat-label">24h Low</span>
+      <span class="stat-value" data-key="24h-low">Loading...</span>
+    </div>
+    <div class="stat-item">
+      <span class="stat-label">Volume (24h)</span>
+      <span class="stat-value" data-key="volume">Loading...</span>
+    </div>
+    <div class="stat-item">
+      <span class="stat-label">Market Cap</span>
+      <span class="stat-value" data-key="market-cap">Loading...</span>
+    </div>
+    <div class="stat-item">
+      <span class="stat-label">Circulating Supply</span>
+      <span class="stat-value" data-key="circulating-supply">Loading...</span>
+    </div>
+    <div class="stat-item">
+      <span class="stat-label">Total Supply</span>
+      <span class="stat-value" data-key="total-supply">Loading...</span>
+    </div>
+  </div>
+</div>
+
 
       <div class="about-section">
         <h2 class="about-title">About BTC</h2>
@@ -112,6 +95,36 @@
         </div>
       </div>
     </div>
+    <script>
+  async function fetchBitcoinStats() {
+    try {
+      const res = await fetch('https://api.coingecko.com/api/v3/coins/bitcoin?localization=false&tickers=false&market_data=true&community_data=false&developer_data=false&sparkline=false');
+      const data = await res.json();
+      const market = data.market_data;
+
+      // Format large numbers nicely
+      const formatNumber = (num, digits = 0) => {
+        return num?.toLocaleString('en-US', {
+          minimumFractionDigits: digits,
+          maximumFractionDigits: digits
+        });
+      };
+
+      document.querySelector('.stat-value[data-key="24h-high"]').textContent = `$${formatNumber(market.high_24h.usd, 0)}`;
+      document.querySelector('.stat-value[data-key="24h-low"]').textContent = `$${formatNumber(market.low_24h.usd, 0)}`;
+      document.querySelector('.stat-value[data-key="volume"]').textContent = `$${formatNumber(market.total_volume.usd, 0)}`;
+      document.querySelector('.stat-value[data-key="market-cap"]').textContent = `$${formatNumber(market.market_cap.usd, 0)}`;
+      document.querySelector('.stat-value[data-key="circulating-supply"]').textContent = `${formatNumber(market.circulating_supply, 0)} BTC`;
+      document.querySelector('.stat-value[data-key="total-supply"]').textContent = `${formatNumber(market.total_supply, 0)} BTC`;
+
+    } catch (err) {
+      console.error('Error fetching stats:', err);
+    }
+  }
+
+  // Call the function
+  fetchBitcoinStats();
+</script>
     <script>
 // Theme detection - add this to every page
 (function() {

@@ -1,0 +1,204 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>KYC Verification</title>
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.2/css/bootstrap.min.css" rel="stylesheet"/>
+  <style>
+    :root {
+      --bg-primary: #1a1a1a;
+      --bg-card: #2a2a2a;
+      --text-primary: #fff;
+      --text-secondary: #ccc;
+      --border-color: #444;
+      --accent: #4a7bc8;
+    }
+
+    [data-theme="light"] {
+      --bg-primary: #f8f9fa;
+      --bg-card: #fff;
+      --text-primary: #212529;
+      --text-secondary: #6c757d;
+      --border-color: #dee2e6;
+      --accent: #0d6efd;
+    }
+
+    body {
+      background-color: var(--bg-primary);
+      color: var(--text-primary);
+    }
+
+    .form-container {
+      background-color: var(--bg-card);
+      padding: 30px;
+      border-radius: 15px;
+      box-shadow: 0 0 10px rgba(0,0,0,0.2);
+    }
+
+    .upload-zone {
+      border: 2px dashed var(--border-color);
+      border-radius: 10px;
+      padding: 20px;
+      text-align: center;
+      cursor: pointer;
+      color: var(--text-secondary);
+      background-color: transparent;
+    }
+
+    .upload-zone:hover {
+      background-color: rgba(255, 255, 255, 0.05);
+    }
+
+    .file-preview img {
+      width: 100px;
+      height: 100px;
+      border-radius: 10px;
+      object-fit: cover;
+      display: block;
+      margin: 10px auto;
+    }
+
+    .remove-btn {
+      background: none;
+      border: none;
+      color: var(--accent);
+      text-decoration: underline;
+      cursor: pointer;
+      font-size: 14px;
+    }
+
+    .submit-btn:disabled {
+      background-color: #888 !important;
+      cursor: not-allowed;
+    }
+  </style>
+</head>
+<body>
+  <script>
+    (function () {
+      const savedTheme = localStorage.getItem('theme') || 'dark';
+      document.documentElement.setAttribute('data-theme', savedTheme);
+    })();
+  </script>
+
+  <div class="container d-flex justify-content-center align-items-center min-vh-100">
+    <div class="col-12 col-sm-10 col-md-8 col-lg-6 col-xl-5">
+      <div class="form-container">
+        <h3 class="text-center mb-3">KYC Verification</h3>
+        <p class="text-center text-secondary mb-4">Upload your ID and a selfie for account verification.</p>
+
+        <form id="kycForm" enctype="multipart/form-data">
+          <!-- ID Type -->
+          <div class="mb-3">
+            <label class="form-label">Select ID Type</label>
+            <select class="form-select" id="idType" onchange="updateDocumentType()">
+              <option value="">-- Choose ID Type --</option>
+              <option value="Passport">Passport</option>
+              <option value="ID Card">ID Card</option>
+              <option value="Driver's License">Driver's License</option>
+            </select>
+            <input type="hidden" id="documentTypeInput" name="document_type" />
+          </div>
+
+          <!-- Front of ID -->
+          <div class="mb-3">
+            <label class="form-label">Upload Front of ID</label>
+            <div id="frontPreview" class="file-preview"></div>
+            <div class="upload-zone" onclick="triggerFile('frontIdFile')">
+              <input type="file" id="frontIdFile" name="document_file_front" accept="image/*" hidden>
+              Click to upload front image
+            </div>
+          </div>
+
+          <!-- Back of ID -->
+          <div class="mb-3">
+            <label class="form-label">Upload Back of ID</label>
+            <div id="backPreview" class="file-preview"></div>
+            <div class="upload-zone" onclick="triggerFile('backIdFile')">
+              <input type="file" id="backIdFile" name="document_file_back" accept="image/*" hidden>
+              Click to upload back image
+            </div>
+          </div>
+
+          <button type="button" id="submitBtn" class="btn btn-primary w-100 mt-3 submit-btn" onclick="submitVerification()" disabled>
+            Submit for Verification
+          </button>
+        </form>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    const frontInput = document.getElementById("frontIdFile");
+    const backInput = document.getElementById("backIdFile");
+    const frontPreview = document.getElementById("frontPreview");
+    const backPreview = document.getElementById("backPreview");
+    const submitBtn = document.getElementById("submitBtn");
+
+    let frontFilled = false;
+    let backFilled = false;
+
+    function triggerFile(id) {
+      document.getElementById(id).click();
+    }
+
+    function updateDocumentType() {
+      const val = document.getElementById("idType").value;
+      document.getElementById("documentTypeInput").value = val;
+      validateForm();
+    }
+
+    function showPreview(input, previewBox, type) {
+      const file = input.files[0];
+      previewBox.innerHTML = "";
+      if (file && file.type.startsWith("image/")) {
+        const reader = new FileReader();
+        reader.onload = function (e) {
+          const img = document.createElement("img");
+          img.src = e.target.result;
+
+          const removeBtn = document.createElement("button");
+          removeBtn.textContent = "Remove";
+          removeBtn.className = "remove-btn";
+          removeBtn.onclick = function (ev) {
+            ev.preventDefault();
+            previewBox.innerHTML = "";
+            input.value = "";
+            if (type === "front") frontFilled = false;
+            if (type === "back") backFilled = false;
+            validateForm();
+          };
+
+          previewBox.appendChild(img);
+          previewBox.appendChild(removeBtn);
+
+          if (type === "front") frontFilled = true;
+          if (type === "back") backFilled = true;
+          validateForm();
+        };
+        reader.readAsDataURL(file);
+      }
+    }
+
+    frontInput.addEventListener("change", () => showPreview(frontInput, frontPreview, "front"));
+    backInput.addEventListener("change", () => showPreview(backInput, backPreview, "back"));
+
+    function validateForm() {
+      const idSelected = document.getElementById("idType").value !== "";
+      const valid = idSelected && frontFilled && backFilled;
+      submitBtn.disabled = !valid;
+    }
+
+    // function submitVerification() {
+    //   alert("Form submitted successfully!");
+    //   document.getElementById("kycForm").reset();
+    //   frontPreview.innerHTML = "";
+    //   backPreview.innerHTML = "";
+    //   frontFilled = false;
+    //   backFilled = false;
+    //   validateForm();
+    // }
+  </script>
+</body>
+</html>

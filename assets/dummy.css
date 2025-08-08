@@ -92,7 +92,7 @@ body {
 
 .actions-grid {
   display: grid;
-  grid-template-columns: repeat(2, 1fr);
+  grid-template-columns: repeat(4, 1fr);
   gap: 16px;
   margin-bottom: 24px;
 }
@@ -119,13 +119,17 @@ body {
 .action-icon {
   width: 34px;
   height: 34px;
+  font-size: 34px;
+}
+.fa-lock{
+    font-size: 44px;
 }
 .action-btn i {
   font-size: 24px;
 }
 
 .action-label {
-  font-size: 16px;
+  font-size: 13px;
   font-weight: 500;
 }
 
@@ -150,6 +154,49 @@ body {
 }
 
 /* for dashboard stats */
+.dashboard-stats {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 20px;
+}
+
+.stat-card {
+    background-color: var(--bg-secondary);
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.05);
+    transition: transform 0.2s;
+}
+
+.stat-card:hover {
+    transform: translateY(-5px);
+}
+
+.stat-card h3 {
+    margin: 0 0 10px;
+    font-size: 16px;
+    color: var(--text-primary);
+}
+
+.stat-card p {
+    margin: 0;
+    font-size: 28px;
+    font-weight: 700;
+}
+
+.profit-amount {
+    color: #2ecc71; /* Green for profit */
+}
+
+.withdrawal-amount {
+    color: #e74c3c; /* Red for withdrawal */
+}
+.trade-amount{
+  color: purple;
+}
+.deposit-amount{
+  color: rgb(0, 21, 255);
+}
 
 .assets-section {
   flex: 1;

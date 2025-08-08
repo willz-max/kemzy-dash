@@ -20,59 +20,206 @@
     <link rel="stylesheet" href="assets/font-awesome-4.7.0/font-awesome-4.7.0/css/font-awesome.min.css">
     <!-- animate.css -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css" />
+    <link rel="shortcut icon" href="assets/image/cLogo.PNG" type="image/x-icon">
+    <style>
+        .features-con{
+            position: relative;
+            height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+          .central-content {
+            text-align: center;
+            z-index: 10;
+            max-width: 600px;
+            padding: 0 20px;
+        }
+
+        .main-title {
+            font-size: 3.5rem;
+            font-weight: 700;
+            color: white;
+            margin-bottom: 1rem;
+            line-height: 1.2;
+        }
+
+        .subtitle {
+            font-size: 1.2rem;
+            color: rgba(255, 255, 255, 0.8);
+            margin-bottom: 2rem;
+            line-height: 1.5;
+        }
+
+        .cta-link {
+            color: #4a9eff;
+            text-decoration: none;
+            font-size: 1.1rem;
+            font-weight: 500;
+            transition: color 0.3s ease;
+        }
+
+        .cta-link:hover {
+            color: #6bb3ff;
+        }
+
+        .floating-icon {
+            position: absolute;
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s ease;
+            animation: float 6s ease-in-out infinite;
+        }
+
+        .floating-icon:hover {
+            transform: scale(1.1);
+            background: rgba(255, 255, 255, 0.2);
+        }
+
+        .floating-icon img {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+        }
+
+        /* Positioning for floating icons */
+        .icon-1 { top: 10%; left: 8%; animation-delay: 0s; }
+        .icon-2 { top: 5%; left: 25%; animation-delay: 1s; }
+        .icon-3 { top: 15%; left: 45%; animation-delay: 2s; }
+        .icon-4 { top: 8%; right: 30%; animation-delay: 0.5s; }
+        .icon-5 { top: 12%; right: 15%; animation-delay: 1.5s; }
+        .icon-6 { top: 12%; right: 5%; animation-delay: 2.5s; }
+
+        .icon-7 { top: 35%; left: 5%; animation-delay: 3s; }
+        .icon-8 { top: 30%; left: 18%; animation-delay: 0.8s; }
+        .icon-9 { top: 40%; right: 12%; animation-delay: 1.8s; }
+        .icon-10 { top: 45%; right: 3%; animation-delay: 2.8s; }
+
+        .icon-11 { bottom: 35%; left: 3%; animation-delay: 1.2s; }
+        .icon-12 { bottom: 40%; left: 15%; animation-delay: 2.2s; }
+        .icon-13 { bottom: 30%; left: 30%; animation-delay: 3.2s; }
+        .icon-14 { bottom: 45%; right: 25%; animation-delay: 0.3s; }
+        .icon-15 { bottom: 35%; right: 8%; animation-delay: 1.3s; }
+
+        .icon-16 { bottom: 15%; left: 12%; animation-delay: 2.3s; }
+        .icon-17 { bottom: 8%; left: 28%; animation-delay: 0.7s; }
+        .icon-18 { bottom: 12%; right: 35%; animation-delay: 1.7s; }
+        .icon-19 { bottom: 5%; right: 18%; animation-delay: 2.7s; }
+        .icon-20 { bottom: 10%; right: 8%; animation-delay: 3.5s; }
+
+        /* Additional icons for fuller coverage */
+        .icon-21 { top: 25%; left: 2%; animation-delay: 4s; }
+        .icon-22 { top: 55%; left: 8%; animation-delay: 4.5s; }
+        .icon-23 { top: 60%; right: 5%; animation-delay: 5s; }
+        .icon-24 { top: 20%; right: 2%; animation-delay: 5.5s; }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0px) rotate(0deg); }
+            25% { transform: translateY(-10px) rotate(1deg); }
+            50% { transform: translateY(-5px) rotate(-1deg); }
+            75% { transform: translateY(-15px) rotate(0.5deg); }
+        }
+
+        /* Responsive adjustments */
+        @media (max-width: 768px) {
+            .main-title {
+                font-size: 2.5rem;
+            }
+            
+            .subtitle {
+                font-size: 1rem;
+            }
+            
+            .floating-icon {
+                width: 50px;
+                height: 50px;
+            }
+            
+            .floating-icon img {
+                width: 32px;
+                height: 32px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .main-title {
+                font-size: 2rem;
+            }
+            
+            .floating-icon {
+                width: 45px;
+                height: 45px;
+            }
+            
+            .floating-icon img {
+                width: 28px;
+                height: 28px;
+            }
+        }
+    </style>
     <!-- <link rel="stylesheet" href="assets/theme.css"> -->
 </head>
 
 <body>
-    <nav>
-        <div class="logo">
-            <img src="assets/image/cLogo.PNG" alt="">
-        </div>
-
-        <div class="fulling">
-            <ul class="nav-links">
-                <li><a href="#features">Features</a></li>
-                <li><a href="#Products">What we offer</a></li>
-                <li><a href="#Testimonials">Testimonials</a></li>
-                <li><a href="#aboutUs">About Us</a></li>
-            </ul>
-
-            <div class="cta-buttons">
-                <a href="#" class="sign-in">Sign In</a>
-                <a href="#" class="get-started">Get Started today</a>
-            </div>
-        </div>
-
-
-        <div class="menu-toggle going">
-            <i class="fa fa-bars" aria-hidden="true"></i>
-        </div>
-        <div style="display: none;" class="menu-toggle gone">
-            <i class="fa fa-times" aria-hidden="true"></i>
-        </div>
-
-        <div class="mobile-menu">
-            <ul>
-                <li><a href="#features">Features</a></li>
-                <li><a href="#Products">What we offer</a></li>
-                <li><a href="#Testimonials">Testimonials</a></li>
-                <li><a href="#aboutUs">About Us</a></li>
-            </ul>
-
-            <div class="mobile-cta">
-                <button class="sign-in">Sign In</button>
-                <button class="get-started">Get Started</button>
-            </div>
-        </div>
-
-    </nav>
+    <video muted autoplay loop class="hero-img">
+        <source src="assets/image/hero.mp4" type="video/mp4">
+    </video>
     <div class="hero swiper">
+        <nav>
+            <div class="logo">
+                <img src="assets/image/main-logo.png" alt="">
+            </div>
+
+            <div class="fulling">
+                <ul class="nav-links">
+                    <li><a href="#features">Features</a></li>
+                    <li><a href="#Products">What we offer</a></li>
+                    <li><a href="#Testimonials">Testimonials</a></li>
+                    <li><a href="#aboutUs">About Us</a></li>
+                </ul>
+
+                <div class="cta-buttons">
+                    <a href="login.html" class="sign-in">Sign In</a>
+                    <a href="sign-up.html" class="get-started">Get Started today</a>
+                </div>
+            </div>
+
+
+            <div class="menu-toggle going">
+                <i class="fa fa-bars" aria-hidden="true"></i>
+            </div>
+            <div style="display: none;" class="menu-toggle gone">
+                <i class="fa fa-times" aria-hidden="true"></i>
+            </div>
+
+            <div class="mobile-menu">
+                <ul>
+                    <li><a href="#features">Features</a></li>
+                    <li><a href="#Products">What we offer</a></li>
+                    <li><a href="#Testimonials">Testimonials</a></li>
+                    <li><a href="#aboutUs">About Us</a></li>
+                </ul>
+
+                <div class="mobile-cta">
+                    <button class="sign-in">Sign In</button>
+                    <button class="get-started">Get Started</button>
+                </div>
+            </div>
+
+        </nav>
         <div class="wrapper">
             <ul class="list swiper-wrapper">
                 <li class="list-items swiper-slide">
                     <div class="overlay">
                         <div>
-                            <h1 class="animate__animated animate__fadeInDown">Empowering Your Financial Future</h1>
+                            <h1 class="animate__animated animate__fadeInDown">Empowering Your <span class="highlight-s">Financial Future</span></h1>
                             <p class="animate__animated animate__zoomIn animate__delay-4">
                                 Take control of your investments and achieve your goals
                             </p>
@@ -82,15 +229,15 @@
                         </div>
                     </div>
                     <!-- <img class="hero-img" src="assets/image/hero-1.jpg" alt=""> -->
-                    <video muted autoplay loop class="hero-img">
+                    <!-- <video muted autoplay loop class="hero-img">
                         <source src="assets/image/video-1.mp4" type="video/mp4">
-                    </video>
+                    </video> -->
 
                 </li>
                 <li class="list-items swiper-slide">
                     <div class="overlay">
                         <div>
-                            <h1 class="animate__animated animate__fadeInDown">Trade with Confidence, Grow with Ease</h1>
+                            <h1 class="animate__animated animate__fadeInDown">Trade with Confidence, <span class="highlight-s">Grow with Ease</span></h1>
                             <p class="animate__animated animate__zoomIn animate__delay-4">
                                 Simplify your trading journey and maximize your gains
                             </p>
@@ -100,14 +247,14 @@
                         </div>
                     </div>
                     <!-- <img class="hero-img" src="assets/image/hero-2.jpg" alt=""> -->
-                    <video muted autoplay loop class="hero-img">
+                    <!-- <video muted autoplay loop class="hero-img">
                         <source src="assets/image/video-2.mp4" type="video/mp4">
-                    </video>
+                    </video> -->
                 </li>
                 <li class="list-items swiper-slide">
                     <div class="overlay">
                         <div>
-                            <h1 class="animate__animated animate__fadeInDown ">Where Trading Meets Innovation</h1>
+                            <h1 class="animate__animated animate__fadeInDown ">Where Trading Meets <span class="highlight-s">Innovation</span></h1>
                             <p class="animate__animated animate__zoomIn animate__delay-4">
                                 Cutting-edge technology for smarter trading
                             </p>
@@ -117,22 +264,23 @@
                         </div>
                     </div>
                     <!-- <img class="hero-img" src="assets/image/hero-3.jpg" alt=""> -->
-                    <video muted autoplay loop class="hero-img">
-                        <source src="assets/image/video-3.mp4" type="video/mp4">
-                    </video>
+
                 </li>
             </ul>
-            <div class="swiper-pagination"></div>
+            <!-- <div class="swiper-pagination"></div> -->
             <div id="slide-btn" class="swiper-button-prev"></div>
             <div id="slide-btn" class="swiper-button-next"></div>
         </div>
     </div>
-     <div class="carousel-container">
+    <!-- <div class="carousel-container">
         <div class="carousel-track" id="carouselTrack">
-            <!-- Forex cards will be inserted here -->
+            
         </div>
         <div class="last-updated" id="lastUpdated">Loading...</div>
-    </div>
+    </div> -->
+    <iframe src="https://widget.coinlib.io/widget?type=horizontal_v2&theme=dark&pref_coin_id=1505&invert_hover=no"
+        width="100%" height="36px" scrolling="auto" marginwidth="0" marginheight="0" frameborder="0" border="0"
+        style="border:0;margin:-15px;padding:0;"></iframe>
 
 
     <div id="investment-popup">
@@ -141,149 +289,93 @@
     </div>
 
 
-    <!-- <section class="why-choose-us-section">
-        <h2 class="animate__backInLeft">Why Choose Us?</h2>
-        <div class="why-choose-grid">
-            <div class="why-choose-card">
-                <div class="why-choose-icon">
-                    <svg xmlns="http://www.w3.org/2000/svg" stroke="white" width="24" height="24" viewBox="0 0 24 24">
-                        <path d="M16 6l2.29 2.29-4.88 4.88-4-4L2 16.59 3.41 18l6-6 4 4 6.3-6.29L22 12V6z" />
-                    </svg>
-
-                </div>
-                <h3> Elevate Your Trading</h3>
-                <p>Real-time market data, advanced charts, and AI analytics at your fingertips.</p>
-            </div>
-            <div class="why-choose-card">
-                <div class="why-choose-icon">
-                    <i class="fa fa-bolt" aria-hidden="true"></i>
-                </div>
-                <h3>Fast Execution, Maximum Profit</h3>
-                <p>Minimize slippage and maximize gains with our ultra-fast trade execution technology.</p>
-            </div>
-            <div class="why-choose-card">
-                <div class="why-choose-icon">
-                    <svg stroke="white" fill="white" xmlns="http://www.w3.org/2000/svg" width="24" height="24"
-                        viewBox="0 0 24 24">
-                        <path
-                            d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8z" />
-                        <path
-                            d="M12 6c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2zm6 8c0-1.1-.9-2-2-2s-2 .9-2 2 .9 2 2 2 2-.9 2-2zm-6 6c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2z" />
-                    </svg>
-                </div>
-                <h3>Unified Trading Experience</h3>
-                <p>Diversify your portfolio with a wide range of markets, all in one place</p>
-            </div>
-            <div class="why-choose-card">
-                <div class="why-choose-icon">
-                    <svg viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" stroke-linecap="round"
-                        stroke-linejoin="round">
-                        <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" />
-                    </svg>
-                </div>
-                <h3> Trade with Confidence</h3>
-                <p>Your assets are safeguarded with top-tier security and global compliance standards</p>
-            </div>
-            <div class="why-choose-card">
-                <div class="why-choose-icon">
-                    <svg stroke="white" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
-                        <path
-                            d="M6.62 10.79c1.44 2.83 3.76 5.14 6.59 6.59l2.2-2.2c.27-.27.67-.36 1.02-.24 1.12.37 2.33.57 3.57.57.55 0 1 .45 1 1V20c0 .55-.45 1-1 1-9.39 0-17-7.61-17-17 0-.55.45-1 1-1h3.5c.55 0 1 .45 1 1 0 1.25.2 2.45.57 3.57.11.35.03.74-.21 1.01l-2.2 2.2z" />
-                    </svg>
-                </div>
-                <h3>Learn & Grow with Us</h3>
-                <p>Access 24/7 support, beginner tutorials, and expert insights to elevate your trading</p>
-            </div>
-        </div>
-    </section> -->
-    <!-- keyhigh -->
-
-    <!-- <section class="key-highlights-section">
-  <div class="highlights-grid">
-      <div class="highlight-card">
-          <div class="highlight-icon">
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M13 16s-2 1-2 3v4h4v-4c0-2-2-3-2-3zM15 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm-3 6H9v-2a2 2 0 0 1 2-2 2 2 0 0 1 2 2v2zm6-6h1v-1a2 2 0 0 0-2-2 2 2 0 0 0-2 2v1h1v-1a1 1 0 0 1 1-1 1 1 0 0 1 1 1v1z"/><circle cx="9" cy="8" r="2"/><circle cx="15" cy="8" r="2"/></svg>
-          </div>
-          <h3>Proven Performance</h3>
-          <p>Track record of 87% of copy traders seeing positive returns</p>
-      </div>
-      <div class="highlight-card">
-          <div class="highlight-icon">
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
-          </div>
-          <h3>Risk Management</h3>
-          <p>Advanced tools to set stop-loss and take-profit levels</p>
-      </div>
-      <div class="highlight-card">
-          <div class="highlight-icon">
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/></svg>
-          </div>
-          <h3>Global Community</h3>
-          <p>Join 2M+ traders sharing strategies and insights</p>
-      </div>
-  </div>
-</section> -->
+ 
     <!-- features -->
     <section id="features" class="powerful-features-section">
         <h2>Powerful Features for Successful Trading</h2>
         <p class="features-tagline">Our platform combines cutting-edge technology with user-friendly tools to help you
             maximize your trading potential.</p>
-        <div class="features-grid">
-            <div class="feature-card">
-                <div class="feature-icon">
-                    <i class="fa fa-bar-chart" aria-hidden="true"></i>
-                </div>
-                <h3>Stay on Top of Your Game</h3>
-                <p>Real-time performance tracking for informed decisions</p>
-            </div>
-            <div class="feature-card">
-              <div class="feature-icon">
-                    <i class="fa fa-cloud-upload" aria-hidden="true"></i>
-                </div>
-                <h3>Automated Trading</h3>
-                <p>Set up your account once and let our system automatically copy trades from your selected experts
-                    24/7.</p>
-            </div>
-            <div class="feature-card">
-                <div class="feature-icon">
-                    <i class="fa fa-bolt" aria-hidden="true"></i>
-                </div>
-                <h3>Instant Execution</h3>
-                <p>Our platform ensures minimal latency between the expert's trade and your copy, maximizing potential
-                    returns.</p>
-            </div>
-            <div class="feature-card">
-                <div class="feature-icon">
-                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
-                        stroke-linejoin="round">
-                        <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" />
-                    </svg>
-                </div>
-                <h3>Risk Management Tools</h3>
-                <p>Customize risk levels, set maximum drawdown limits, and implement stop-loss strategies to protect
-                    your capital.</p>
-            </div>
-            <div class="feature-card">
-                <div class="feature-icon">
-                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
-                        stroke-linejoin="round">
-                        <polyline points="7 17 12 11 17 17" />
-                        <polyline points="7 12 12 6 17 12" />
-                    </svg>
-                </div>
-                <h3>Diversified Portfolio</h3>
-                <p>Follow multiple traders across different markets to create a well-balanced and diversified investment
-                    strategy.</p>
-            </div>
-            <div class="feature-card">
-                <div class="feature-icon">
-                    <i class="fa fa-mobile" aria-hidden="true"></i>
-                </div>
-                <h3>Mobile Trading</h3>
-                <p>Access your account, monitor performance, and adjust settings on the go with our powerful mobile
-                    application.</p>
-            </div>
+            <!-- my feture main -->
+             <div class="features-con">
+        <div class="central-content">
+            <h1 class="main-title">View all your coins<br>in one simple dashboard</h1>
+            <p class="subtitle">Add up to 30 API connections and unlimited<br>manual wallets and exchanges.</p>
+            <a href="#" class="cta-link">View all our connections</a>
         </div>
+
+        <!-- Floating Icons - Replace src with your token images -->
+        <div class="floating-icon icon-1">
+            <img src="assets/image/bitcoin.png" alt="Bitcoin">
+        </div>
+        <div class="floating-icon icon-2">
+            <img src="assets/image/ethereum.png" alt="Ethereum">
+        </div>
+        <div class="floating-icon icon-3">
+            <img src="assets/image/cardano.png" alt="Cardano">
+        </div>
+        <div class="floating-icon icon-4">
+            <img src="assets/image/polkadot.png" alt="Polkadot">
+        </div>
+        <!-- <div class="floating-icon icon-5">
+            <img src="https://via.placeholder.com/40/1BA0E2/FFFFFF?text=LINK" alt="Chainlink">
+        </div> -->
+        <!-- <div class="floating-icon icon-6">
+            <img src="https://via.placeholder.com/40/9C3493/FFFFFF?text=CRV" alt="Curve">
+        </div> -->
+        <div class="floating-icon icon-7">
+            <img src="assets/image/tron.png" alt="Tron">
+        </div>
+        <div class="floating-icon icon-8">
+            <img src="assets/image/dash.png" alt="Dash">
+        </div>
+        <div class="floating-icon icon-9">
+            <img src="assets/image/xrp.png" alt="XRP">
+        </div>
+        <div class="floating-icon icon-10">
+            <img src="assets/image/tether.jpg" alt="Tether">
+        </div>
+        <div class="floating-icon icon-11">
+            <img src="assets/image/litecoin.png" alt="Litecoin">
+        </div>
+        <!-- <div class="floating-icon icon-12">
+            <img src="assets/image/" alt="DeFiChain">
+        </div> -->
+        <div class="floating-icon icon-13">
+            <img src="assets/image/binance.png" alt="Binance">
+        </div>
+        <div class="floating-icon icon-14">
+            <img src="assets/image/atomicwallet.png" alt="Cosmos">
+        </div>
+        <div class="floating-icon icon-15">
+            <img src="assets/image/bitcoin.png" alt="Bitcoin Cash">
+        </div>
+        <div class="floating-icon icon-16">
+            <img src="assets/image/algorand.png" alt="Algorand">
+        </div>
+        <div class="floating-icon icon-17">
+            <img src="assets/image/terra.png" alt="Terra">
+        </div>
+        <div class="floating-icon icon-18">
+            <img src="assets/image/polygon.png" alt="Polygon">
+        </div>
+        <!-- <div class="floating-icon icon-19">
+            <img src="assets/image/av" alt="Avalanche">
+        </div> -->
+        <div class="floating-icon icon-20">
+            <img src="assets/image/stellar.png" alt="Stellar">
+        </div>
+        <div class="floating-icon icon-21">
+            <img src="assets/image/solana.png" alt="Solana">
+        </div>
+<!-- 
+        <div class="floating-icon icon-23">
+            <img src="https://via.placeholder.com/40/FFD700/FFFFFF?text=FTT" alt="FTX Token">
+        </div> -->
+        <div class="floating-icon icon-24">
+            <img src="assets/image/metamask.9d0bcbd4.png" alt="Metamask">
+        </div>
+    </div>
+      
     </section>
     <!-- product -->
     <section class="services-section" id="Products">
@@ -321,13 +413,14 @@
             </div>
 
             <div class="service-card">
-                <img src="assets/image/hero-3.jpg"
-                    alt="Healthcare" class="service-image">
+                <img src="assets/image/hero-3.jpg" alt="Healthcare" class="service-image">
                 <div class="service-content">
                     <h3 class="service-title">Stock
                     </h3>
                     <p class="service-description">
-                       Trade thousands of stocks from major exchanges worldwide. Our stock trading platform offers advanced charting tools, fundamental analysis data, and commission-free trading on select markets. Invest in companies you believe in with instant execution.
+                        Trade thousands of stocks from major exchanges worldwide. Our stock trading platform offers
+                        advanced charting tools, fundamental analysis data, and commission-free trading on select
+                        markets. Invest in companies you believe in with instant execution.
                     </p>
                     <!-- <button class="learn-more-btn">Learn More</button> -->
                 </div>
@@ -388,113 +481,55 @@
             </div>
         </div>
     </section>
-    <section id="Testimonials" class="card-testimonial">
-        <div class="testimonials-section">
-            <h1 class="section-title"><span class="title-highlight">Trusted</span> by Traders Worldwide</h1>
-            <p class="section-description">Hear what our community of traders has to say about their experience with our
-                platform based off reviews on TrustPilot.</p>
+    <!-- security and review -->
+      <main>
+        <!-- Security Section -->
+        <section class="security-section">
+            <div class="container-testimonies">
+                <div class="section-label">Security</div>
+                <h1 class="main-heading">Your Coins are Never at Risk</h1>
+                <div class="security-description">
+                    <p>We've partnered with <span class="highlight">VEZGO</span>, a SOC2, Type II certified data provider to ensure your data remains secure. Your API keys are never shared with us.</p>
+                    <br>
+                    <p>We employ military-grade encryption and multi-factor authentication to ensure your account remains secure.</p>
+                </div>
+            </div>
+        </section>
 
-            <div class="testimonials-container">
-                <div class="testimonials-track" id="testimonialsTrack">
-                    <!-- Original testimonials -->
+        <!-- Reviews Section -->
+        <section id="Testimonials" class="reviews-section">
+            <div class="container-testimonies">
+                <div class="section-label">Reviews</div>
+                <h2 class="reviews-heading">What Our Customers are Saying</h2>
+                
+                <div class="testimonials-grid">
                     <div class="testimonial-card">
-                        <h3 class="testimonial-author">Sarah Johnson</h3>
-                        <div class="testimonial-position">Retail Investor</div>
-                        <div class="testimonial-rating">★★★★★</div>
-                        <p class="testimonial-content">"Copy trading has completely transformed my investment strategy.
-                            I've been able to follow experienced traders and learn from their moves while generating
-                            consistent returns. The platform is intuitive and the risk management tools give me peace of
-                            mind."</p>
+                        <div class="testimonial-text">
+                            Wanted to thank the team who's brought this application to our fingertips! I've been able to add all of my crypto assets to one location with ease so I can see what's up and what's down... The only application that allows me to make an exit strategy that makes sense! It also includes estimating taxes and your profit and losses!
+                        </div>
+                        <div class="testimonial-author">Arthur</div>
                     </div>
-
+                    
                     <div class="testimonial-card">
-                        <h3 class="testimonial-author">Michael Davison</h3>
-                        <div class="testimonial-position">Day Trader</div>
-                        <div class="testimonial-rating">★★★★★</div>
-                        <p class="testimonial-content">"The metals trading features are exceptional. I've been trading
-                            gold and silver for years, and this platform offers the best spreads and execution I've
-                            experienced. The market analysis tools help me make informed decisions quickly."</p>
+                        <div class="testimonial-text">
+                            As a business owner getting a text that my exit target was reached is vital in the bull market I believe we are going to have. I can't look at my phone every 20 minutes to check the marker then find my notes on what exchange my asset is in to take profits. With Merlin it's all in one place. This is not just a website this is a must have tool for me!
+                        </div>
+                        <div class="testimonial-author">George</div>
                     </div>
-
+                    
                     <div class="testimonial-card">
-                        <h3 class="testimonial-author">Emma Rodriguez</h3>
-                        <div class="testimonial-position">Portfolio Manager</div>
-                        <div class="testimonial-rating">★★★★☆</div>
-                        <p class="testimonial-content">"As a professional portfolio manager, I appreciate the diverse
-                            range of ETFs available. The platform makes it easy to build diversified portfolios for my
-                            clients with excellent research tools and competitive fees."</p>
-                    </div>
-
-                    <div class="testimonial-card">
-                        <h3 class="testimonial-author">David Thompson</h3>
-                        <div class="testimonial-position">Passive Investor</div>
-                        <div class="testimonial-rating">★★★★★</div>
-                        <p class="testimonial-content">"The staking options have been a game-changer for my passive
-                            income strategy. I'm earning consistent returns on my crypto holdings with minimal effort.
-                            The platform makes the whole process simple and transparent."</p>
-                    </div>
-
-                    <div class="testimonial-card">
-                        <h3 class="testimonial-author">Olivia Wilson</h3>
-                        <div class="testimonial-position">Forex Trader</div>
-                        <div class="testimonial-rating">★★★★☆</div>
-                        <p class="testimonial-content">"I primarily trade CFD currency pairs, and this platform offers
-                            everything I need - tight spreads, fast execution, and powerful charting tools. The mobile
-                            app is also excellent for trading on the go."</p>
-                    </div>
-
-                    <!-- Duplicated testimonials for seamless looping -->
-                    <div class="testimonial-card">
-                        <h3 class="testimonial-author">Sarah Johnson</h3>
-                        <div class="testimonial-position">Retail Investor</div>
-                        <div class="testimonial-rating">★★★★★</div>
-                        <p class="testimonial-content">"Copy trading has completely transformed my investment strategy.
-                            I've been able to follow experienced traders and learn from their moves while generating
-                            consistent returns. The platform is intuitive and the risk management tools give me peace of
-                            mind."</p>
-                    </div>
-
-                    <div class="testimonial-card">
-                        <h3 class="testimonial-author">Michael Davison</h3>
-                        <div class="testimonial-position">Day Trader</div>
-                        <div class="testimonial-rating">★★★★★</div>
-                        <p class="testimonial-content">"The metals trading features are exceptional. I've been trading
-                            gold and silver for years, and this platform offers the best spreads and execution I've
-                            experienced. The market analysis tools help me make informed decisions quickly."</p>
-                    </div>
-
-                    <div class="testimonial-card">
-                        <h3 class="testimonial-author">Emma Rodriguez</h3>
-                        <div class="testimonial-position">Portfolio Manager</div>
-                        <div class="testimonial-rating">★★★★☆</div>
-                        <p class="testimonial-content">"As a professional portfolio manager, I appreciate the diverse
-                            range of ETFs available. The platform makes it easy to build diversified portfolios for my
-                            clients with excellent research tools and competitive fees."</p>
-                    </div>
-
-                    <div class="testimonial-card">
-                        <h3 class="testimonial-author">David Thompson</h3>
-                        <div class="testimonial-position">Passive Investor</div>
-                        <div class="testimonial-rating">★★★★★</div>
-                        <p class="testimonial-content">"The staking options have been a game-changer for my passive
-                            income strategy. I'm earning consistent returns on my crypto holdings with minimal effort.
-                            The platform makes the whole process simple and transparent."</p>
-                    </div>
-
-                    <div class="testimonial-card">
-                        <h3 class="testimonial-author">Olivia Wilson</h3>
-                        <div class="testimonial-position">Forex Trader</div>
-                        <div class="testimonial-rating">★★★★☆</div>
-                        <p class="testimonial-content">"I primarily trade CFD currency pairs, and this platform offers
-                            everything I need - tight spreads, fast execution, and powerful charting tools. The mobile
-                            app is also excellent for trading on the go."</p>
+                        <div class="testimonial-text">
+                            You don't have to be super tech savvy to set this app up correctly. Makes it super easy to pull in your exchanges and see automatically other exchanges/coins that can't be brought in through the automatic system. Love to see all my crypto in one, easy to view place!
+                        </div>
+                        <div class="testimonial-author">Cory</div>
                     </div>
                 </div>
             </div>
-        </div>
-    </section>
+        </section>
+    </main>
+   
 
-  
+
     <!-- new acc -->
     <section class="trading-ex-section">
         <div class="trading-ex-container">
@@ -515,106 +550,132 @@
             </div>
         </div>
     </section>
-  
+
     <main id="aboutUs">
-          <section class="about-section">
-        <div class="hero-content">
-            <h1 class="hero-title">
-                Putting our clients first <span class="underline">since 2019</span>
-            </h1>
-            <p class="hero-subtitle">
-                For more than 7 years, we've been empowering clients by helping them take control of their financial lives.
-            </p>
-        </div>
-
-        <div class="info-grid">
-            <div class="info-card">
-                <div class="card-header">
-                    <div class="card-icon">
-                        <svg viewBox="0 0 24 24">
-                            <path d="M12 2L2 7v10c0 5.55 3.84 9.74 9 11 5.16-1.26 9-5.45 9-11V7l-10-5z"/>
-                        </svg>
-                    </div>
-                    <h3 class="card-title">Who We Are</h3>
-                </div>
-                <div class="card-content">
-                    At cinpaxtrade Trade, we pride ourselves on being a trusted and innovative leader in the online trading industry. Since our inception in 2018, we have continuously strived to provide an exceptional trading experience for our clients. Our team of dedicated developers, financial experts, and support managers work tirelessly to ensure that our platform remains reliable, user-friendly, and profitable for traders of all levels.
-                </div>
+        <section class="about-section">
+            <div class="hero-content">
+                <h1 class="hero-title">
+                    Putting our clients first <span class="underline">since 2019</span>
+                </h1>
+                <p class="hero-subtitle">
+                    For more than 7 years, we've been empowering clients by helping them take control of their financial
+                    lives.
+                </p>
             </div>
 
-            <div class="info-card">
-                <div class="card-header">
-                    <div class="card-icon">
-                        <svg viewBox="0 0 24 24">
-                            <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-1 17.93c-3.95-.49-7-3.85-7-7.93 0-.62.08-1.21.21-1.79L9 15v1c0 1.1.9 2 2 2v1.93zm6.9-2.54c-.26-.81-1-1.39-1.9-1.39h-1v-3c0-.55-.45-1-1-1H8v-2h2c.55 0 1-.45 1-1V7h2c1.1 0 2-.9 2-2v-.41c2.93 1.19 5 4.06 5 7.41 0 2.08-.8 3.97-2.1 5.39z"/>
-                        </svg>
+            <div class="info-grid">
+                <div class="info-card">
+                    <div class="card-header">
+                        <div class="card-icon">
+                            <svg viewBox="0 0 24 24">
+                                <path d="M12 2L2 7v10c0 5.55 3.84 9.74 9 11 5.16-1.26 9-5.45 9-11V7l-10-5z" />
+                            </svg>
+                        </div>
+                        <h3 class="card-title">Who We Are</h3>
                     </div>
-                    <h3 class="card-title">Our Guarantees</h3>
+                    <div class="card-content">
+                        At cinpaxtrade Trade, we pride ourselves on being a trusted and innovative leader in the online
+                        trading industry. Since our inception in 2018, we have continuously strived to provide an
+                        exceptional trading experience for our clients. Our team of dedicated developers, financial
+                        experts, and support managers work tirelessly to ensure that our platform remains reliable,
+                        user-friendly, and profitable for traders of all levels.
+                    </div>
                 </div>
-                <div class="card-content">
-                    cinpaxtrade Trade is proud to be a Category A member of the Financial Commission, a testament to the company's commitment to reliability and high-quality service. Our trading platform undergoes regular Verify My Trade independent examinations to certify the precision and transparency of trade executions. This ensures our clients can trade with confidence, knowing their investments are in safe hands.
-                </div>
-            </div>
 
-            <div class="info-card">
-                <div class="card-header">
-                    <div class="card-icon">
-                        <svg viewBox="0 0 24 24">
-                            <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/>
-                        </svg>
+                <div class="info-card">
+                    <div class="card-header">
+                        <div class="card-icon">
+                            <svg viewBox="0 0 24 24">
+                                <path
+                                    d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-1 17.93c-3.95-.49-7-3.85-7-7.93 0-.62.08-1.21.21-1.79L9 15v1c0 1.1.9 2 2 2v1.93zm6.9-2.54c-.26-.81-1-1.39-1.9-1.39h-1v-3c0-.55-.45-1-1-1H8v-2h2c.55 0 1-.45 1-1V7h2c1.1 0 2-.9 2-2v-.41c2.93 1.19 5 4.06 5 7.41 0 2.08-.8 3.97-2.1 5.39z" />
+                            </svg>
+                        </div>
+                        <h3 class="card-title">Our Guarantees</h3>
                     </div>
-                    <h3 class="card-title">Our Mission</h3>
+                    <div class="card-content">
+                        cinpaxtrade Trade is proud to be a Category A member of the Financial Commission, a testament to
+                        the company's commitment to reliability and high-quality service. Our trading platform undergoes
+                        regular Verify My Trade independent examinations to certify the precision and transparency of
+                        trade executions. This ensures our clients can trade with confidence, knowing their investments
+                        are in safe hands.
+                    </div>
                 </div>
-                <div class="card-content">
-                    We believe in empowering individuals and communities to achieve financial independence. In addition to providing robust trading solutions, we are committed to giving back. Through our Charity Mission, a portion of our earnings is channeled to support local communities, fostering positive change and improving the quality of life for people around the world.
-                </div>
-            </div>
 
-            <div class="info-card">
-                <div class="card-header">
-                    <div class="card-icon">
-                        <svg viewBox="0 0 24 24">
-                            <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-1 17.93c-3.95-.49-7-3.85-7-7.93 0-.62.08-1.21.21-1.79L9 15v1c0 1.1.9 2 2 2v1.93zm6.9-2.54c-.26-.81-1-1.39-1.9-1.39h-1v-3c0-.55-.45-1-1-1H8v-2h2c.55 0 1-.45 1-1V7h2c1.1 0 2-.9 2-2v-.41c2.93 1.19 5 4.06 5 7.41 0 2.08-.8 3.97-2.1 5.39z"/>
-                        </svg>
+                <div class="info-card">
+                    <div class="card-header">
+                        <div class="card-icon">
+                            <svg viewBox="0 0 24 24">
+                                <path
+                                    d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z" />
+                            </svg>
+                        </div>
+                        <h3 class="card-title">Our Mission</h3>
                     </div>
-                    <h3 class="card-title">Our Legacy</h3>
+                    <div class="card-content">
+                        We believe in empowering individuals and communities to achieve financial independence. In
+                        addition to providing robust trading solutions, we are committed to giving back. Through our
+                        Charity Mission, a portion of our earnings is channeled to support local communities, fostering
+                        positive change and improving the quality of life for people around the world.
+                    </div>
                 </div>
-                <div class="card-content">
-                    Over the years, cinpaxtrade Trade has built a reputation for excellence in the financial trading industry. Our commitment to innovation, transparency, and client satisfaction has established us as a trusted partner for thousands of traders worldwide. We continue to evolve and adapt to market changes while maintaining our core values.
-                </div>
-            </div>
 
-            <div class="info-card">
-                <div class="card-header">
-                    <div class="card-icon">
-                        <svg viewBox="0 0 24 24">
-                            <path d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm-5 14H7v-2h7v2zm3-4H7v-2h10v2zm0-4H7V7h10v2z"/>
-                        </svg>
+                <div class="info-card">
+                    <div class="card-header">
+                        <div class="card-icon">
+                            <svg viewBox="0 0 24 24">
+                                <path
+                                    d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-1 17.93c-3.95-.49-7-3.85-7-7.93 0-.62.08-1.21.21-1.79L9 15v1c0 1.1.9 2 2 2v1.93zm6.9-2.54c-.26-.81-1-1.39-1.9-1.39h-1v-3c0-.55-.45-1-1-1H8v-2h2c.55 0 1-.45 1-1V7h2c1.1 0 2-.9 2-2v-.41c2.93 1.19 5 4.06 5 7.41 0 2.08-.8 3.97-2.1 5.39z" />
+                            </svg>
+                        </div>
+                        <h3 class="card-title">Our Legacy</h3>
                     </div>
-                    <h3 class="card-title">A Platform Built for Success</h3>
+                    <div class="card-content">
+                        Over the years, cinpaxtrade Trade has built a reputation for excellence in the financial trading
+                        industry. Our commitment to innovation, transparency, and client satisfaction has established us
+                        as a trusted partner for thousands of traders worldwide. We continue to evolve and adapt to
+                        market changes while maintaining our core values.
+                    </div>
                 </div>
-                <div class="card-content">
-                    Our cutting-edge trading platform is designed with the user in mind, featuring advanced tools, real-time market data, and intuitive interfaces that make trading accessible to both beginners and experienced professionals. We continuously invest in technology to ensure our platform remains at the forefront of the industry.
-                </div>
-            </div>
 
-            <div class="info-card">
-                <div class="card-header">
-                    <div class="card-icon">
-                        <svg viewBox="0 0 24 24">
-                            <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-1 17.93c-3.95-.49-7-3.85-7-7.93 0-.62.08-1.21.21-1.79L9 15v1c0 1.1.9 2 2 2v1.93zm6.9-2.54c-.26-.81-1-1.39-1.9-1.39h-1v-3c0-.55-.45-1-1-1H8v-2h2c.55 0 1-.45 1-1V7h2c1.1 0 2-.9 2-2v-.41c2.93 1.19 5 4.06 5 7.41 0 2.08-.8 3.97-2.1 5.39z"/>
-                        </svg>
+                <div class="info-card">
+                    <div class="card-header">
+                        <div class="card-icon">
+                            <svg viewBox="0 0 24 24">
+                                <path
+                                    d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm-5 14H7v-2h7v2zm3-4H7v-2h10v2zm0-4H7V7h10v2z" />
+                            </svg>
+                        </div>
+                        <h3 class="card-title">A Platform Built for Success</h3>
                     </div>
-                    <h3 class="card-title">A Commitment to Excellence</h3>
+                    <div class="card-content">
+                        Our cutting-edge trading platform is designed with the user in mind, featuring advanced tools,
+                        real-time market data, and intuitive interfaces that make trading accessible to both beginners
+                        and experienced professionals. We continuously invest in technology to ensure our platform
+                        remains at the forefront of the industry.
+                    </div>
                 </div>
-                <div class="card-content">
-                    Excellence is not just a goal but a standard we uphold in every aspect of our business. From our customer service to our trading tools, we strive to exceed expectations and deliver exceptional value to our clients. Our dedication to continuous improvement ensures that we remain a leader in the trading industry.
+
+                <div class="info-card">
+                    <div class="card-header">
+                        <div class="card-icon">
+                            <svg viewBox="0 0 24 24">
+                                <path
+                                    d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-1 17.93c-3.95-.49-7-3.85-7-7.93 0-.62.08-1.21.21-1.79L9 15v1c0 1.1.9 2 2 2v1.93zm6.9-2.54c-.26-.81-1-1.39-1.9-1.39h-1v-3c0-.55-.45-1-1-1H8v-2h2c.55 0 1-.45 1-1V7h2c1.1 0 2-.9 2-2v-.41c2.93 1.19 5 4.06 5 7.41 0 2.08-.8 3.97-2.1 5.39z" />
+                            </svg>
+                        </div>
+                        <h3 class="card-title">A Commitment to Excellence</h3>
+                    </div>
+                    <div class="card-content">
+                        Excellence is not just a goal but a standard we uphold in every aspect of our business. From our
+                        customer service to our trading tools, we strive to exceed expectations and deliver exceptional
+                        value to our clients. Our dedication to continuous improvement ensures that we remain a leader
+                        in the trading industry.
+                    </div>
                 </div>
             </div>
-        </div>
-    </section>
+        </section>
     </main>
-   
+
     <footer class="trade-footer">
         <div class="trade-footer-container">
             <div class="trade-footer-main">
@@ -735,7 +796,7 @@
                             </svg>
                         </div>
                         <div class="trade-footer-contact-text">
-                            <a href="mailto:support@cinpaxtradepro.com">support@cinpaxtradewalletpro.com</a>
+                            <a href="mailto:support@cinpaxtradepro.com">info@cinpaxtrade.com</a>
                         </div>
                     </div>
                 </div>
@@ -748,17 +809,9 @@
                     © <span id="copyright-year">2025</span> cinpaxtrade.. All rights reserved.
                 </div>
 
-                <!-- <div class="trade-footer-payment">
-                <img src="assets/img/visa.png" alt="Payment Methods">
-                <img src="assets/img/master-card.png" alt="Payment Methods">
-                <img src="assets/img/paypal.png" alt="Payment Methods">
-                <img src="assets/img/discover.png" alt="Payment Methods">
-                <img src="assets/img/american-ex.png" alt="Payment Methods">
-            </div> -->
-
                 <div class="trade-footer-legal">
                     <a href="#">Terms of Service</a>
-                    <a href="#">Privacy Policy</a>
+                    <a href="privacy.html">Privacy Policy</a>
                     <a href="#">Cookie Policy</a>
                     <a href="#">Risk Disclosure</a>
                 </div>
