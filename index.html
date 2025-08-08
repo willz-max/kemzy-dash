@@ -12,7 +12,11 @@
     <!-- Ionicons -->
     <script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
     <script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>
-    
+    <!-- font -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@200..800&display=swap" rel="stylesheet">
+
     <style>
         :root {
             --primary-color: #00d4aa;
@@ -25,7 +29,7 @@
             --border-color: #444444;
             --shadow: rgba(0, 0, 0, 0.3);
         }
-        
+
         [data-theme="light"] {
             --bg-primary: #f5f5f5;
             --bg-secondary: #ffffff;
@@ -35,27 +39,27 @@
             --border-color: #e0e0e0;
             --shadow: rgba(0, 0, 0, 0.1);
         }
-        
+
         body {
-            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+            font-family: "Manrope", sans-serif;
             background: var(--bg-primary);
             color: var(--text-primary);
             transition: background-color 0.3s ease, color 0.3s ease;
             padding-bottom: 100px;
         }
-        
+
         .brand-title {
             color: #05c0a5;
             font-size: 1.5rem;
             font-weight: bold;
             margin: 0;
         }
-        
+
         .header-logo {
             max-width: 120px;
             height: auto;
         }
-        
+
         .header-icons a {
             width: 40px;
             height: 40px;
@@ -66,7 +70,7 @@
             text-decoration: none;
             font-size: 20px;
         }
-        
+
         .balance-card {
             background: var(--bg-card);
             border-radius: 20px;
@@ -74,24 +78,24 @@
             backdrop-filter: blur(10px);
             border: 1px solid var(--border-color);
         }
-        
+
         .balance-label {
             font-size: 14px;
             color: var(--text-secondary);
         }
-        
+
         .balance-amount {
             font-size: 36px;
             font-weight: 700;
             letter-spacing: -0.5px;
         }
-        
+
         .balance-change {
             font-size: 14px;
             color: #00d4aa;
             font-weight: 500;
         }
-        
+
         .action-btn {
             background: var(--bg-card);
             border: 1px solid lightgray;
@@ -101,47 +105,58 @@
             text-decoration: none;
             transition: all 0.3s ease;
         }
-        
+
         .action-btn:hover {
             background: var(--bg-primary);
             transform: translateY(-2px);
             color: var(--text-primary);
         }
-        
+
         .action-icon {
             width: 34px;
             height: 34px;
         }
-        
+
         .stat-card {
-            background-color: var(--bg-secondary);
+            background-color: var(--bg-card);
             border-radius: 8px;
             box-shadow: 0 4px 8px rgba(0, 0, 0, 0.05);
             transition: transform 0.2s;
             border: 1px solid var(--border-color);
         }
-        
+
         .stat-card:hover {
             transform: translateY(-5px);
         }
-        
-        .profit-amount { color: #2ecc71; }
-        .withdrawal-amount { color: #e74c3c; }
-        .trade-amount { color: purple; }
-        .deposit-amount { color: rgb(0, 21, 255); }
-        
+
+        .profit-amount {
+            color: #2ecc71;
+        }
+
+        .withdrawal-amount {
+            color: #e74c3c;
+        }
+
+        .trade-amount {
+            color: purple;
+        }
+
+        .deposit-amount {
+            color: rgb(0, 21, 255);
+        }
+
         .assets-title {
             font-size: 20px;
             font-weight: 600;
         }
-        
+
         .view-all {
             color: #4a9eff;
             font-size: 14px;
             text-decoration: none;
             font-weight: 500;
         }
-        
+
         .asset-item {
             background: var(--bg-card);
             opacity: 0.95;
@@ -149,12 +164,12 @@
             transition: all .25s ease-in-out;
             border: 1px solid var(--border-color);
         }
-        
+
         .asset-item:hover {
             opacity: 1;
             transform: translatey(-5px);
         }
-        
+
         .asset-icon {
             width: 40px;
             height: 40px;
@@ -162,42 +177,61 @@
             font-weight: bold;
             font-size: 18px;
         }
-        
-        .bitcoin-icon { background: #f7931a; color: var(--text-primary); }
-        .ethereum-icon { background: #627eea; color: var(--text-primary); }
-        .binance-icon { background: #f3ba2f; color: var(--text-primary); }
-        
+
+        .bitcoin-icon {
+            background: #f7931a;
+            color: var(--text-primary);
+        }
+
+        .ethereum-icon {
+            background: #627eea;
+            color: var(--text-primary);
+        }
+
+        .binance-icon {
+            background: #f3ba2f;
+            color: var(--text-primary);
+        }
+
         .asset-name {
             font-size: 16px;
             font-weight: 600;
             margin-bottom: 2px;
         }
-        
+
         .asset-symbol {
             font-size: 12px;
             color: var(--text-secondary);
         }
-        
+
         .asset-amount {
             font-size: 14px;
             color: var(--text-secondary);
         }
-        
+
         .asset-price {
             font-size: 16px;
             font-weight: 600;
             margin-bottom: 2px;
         }
-        
+
         .asset-change {
             font-size: 12px;
             font-weight: 500;
         }
-        
-        .positive { color: #00d4aa; }
-        .negative { color: #ff6b6b; }
-        .no-change { color: rgb(211, 210, 210); }
-        
+
+        .positive {
+            color: #00d4aa;
+        }
+
+        .negative {
+            color: #ff6b6b;
+        }
+
+        .no-change {
+            color: rgb(211, 210, 210);
+        }
+
         .bottom-nav {
             position: fixed;
             bottom: 0;
@@ -208,31 +242,31 @@
             border-top: 1px solid rgba(255, 255, 255, 0.1);
             z-index: 1000;
         }
-        
+
         .nav-item {
             color: rgba(255, 255, 255, 0.6);
             text-decoration: none;
             font-size: 12px;
             transition: all 0.3s ease;
         }
-        
+
         .nav-item.active {
             color: #4a9eff;
         }
-        
+
         .nav-item:hover {
             color: #4a9eff;
         }
-        
+
         .nav-icon {
             width: 24px;
             height: 24px;
         }
-        
+
         i.nav-icon {
             font-size: 24px;
         }
-        
+
         .dropdown-content {
             display: none;
             position: absolute;
@@ -246,11 +280,11 @@
             border-radius: 5px 5px 0 0;
             margin-bottom: 5px;
         }
-        
+
         .dropdown.active .dropdown-content {
             display: block;
         }
-        
+
         .dropdown-content a {
             color: #e0e0e0;
             padding: 12px 16px;
@@ -258,9 +292,32 @@
             display: block;
             text-align: left;
         }
-        
+
         .dropdown-content a:hover {
             background-color: #5a5a7a;
+        }
+
+        .buyIcon {
+            font-size: 34px;
+            color: var(--text-primary);
+            height: 34px;
+        }
+
+        @media (max-width: 500px) {
+            .action-label {
+                font-size: 12px;
+            }
+
+            .action-icon {
+                width: 24px;
+                height: 24px;
+            }
+
+            .buyIcon {
+                font-size: 24px;
+                color: var(--text-primary);
+                height: 24px;
+            }
         }
     </style>
 </head>
@@ -296,12 +353,60 @@
                         $<span class="grandTotal" id="grandTotal">0.0000000</span>
                     </div>
                     <div class="balance-change">▲$428.56 (3.45%) today</div>
+                    <!-- Action Buttons -->
+                    <div class="row g-3 mb-4 px-1 mt-3">
+                        <div class="col-4">
+                            <a href="deposit.html"
+                                class="action-btn d-flex flex-column align-items-center gap-2 w-100 h-100">
+                                <i class="buyIcon"><ion-icon name="cart"></ion-icon></i>
+                                <span class="action-label">Buy</span>
+                            </a>
+                        </div>
+                        <div class="col-4">
+                            <a href="deposit.html"
+                                class="action-btn d-flex flex-column align-items-center gap-2 w-100 h-100">
+                                <svg class="action-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                    stroke-width="2">
+                                    <line x1="12" y1="5" x2="12" y2="19" />
+                                    <polyline points="5,12 12,19 19,12" />
+                                </svg>
+                                <span class="action-label">Receive</span>
+                            </a>
+                        </div>
+                        <div class="col-4">
+                            <a href="#" class="action-btn d-flex flex-column align-items-center gap-2 w-100 h-100">
+                                <svg class="action-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                    stroke-width="2">
+                                    <line x1="12" y1="5" x2="12" y2="19" />
+                                    <polyline points="19,12 12,5 5,12" />
+                                </svg>
+                                <span class="action-label">Withdraw</span>
+                            </a>
+                        </div>
+                    </div>
+
                 </div>
             </div>
+
         </div>
 
         <!-- Action Buttons -->
-        <div class="row g-3 mb-4 px-3">
+        <!-- <div class="row g-3 mb-4 px-3">
+            <div class="col-4">
+                <a href="deposit.html" class="action-btn d-flex flex-column align-items-center gap-2 w-100 h-100">
+                    <i class="buyIcon"><ion-icon name="cart"></ion-icon></i>
+                    <span class="action-label">Buy</span>
+                </a>
+            </div>
+            <div class="col-4">
+                <a href="deposit.html" class="action-btn d-flex flex-column align-items-center gap-2 w-100 h-100">
+                    <svg class="action-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <line x1="12" y1="5" x2="12" y2="19" />
+                        <polyline points="5,12 12,19 19,12" />
+                    </svg>
+                    <span class="action-label">Receive</span>
+                </a>
+            </div>
             <div class="col-4">
                 <a href="#" class="action-btn d-flex flex-column align-items-center gap-2 w-100 h-100">
                     <svg class="action-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
@@ -311,47 +416,29 @@
                     <span class="action-label">Withdraw</span>
                 </a>
             </div>
-            <div class="col-4">
-                <a href="deposit.html" class="action-btn d-flex flex-column align-items-center gap-2 w-100 h-100">
-                    <svg class="action-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                        <line x1="12" y1="5" x2="12" y2="19" />
-                        <polyline points="5,12 12,19 19,12" />
-                    </svg>
-                    <span class="action-label">Deposit</span>
-                </a>
-            </div>
-            <div class="col-4">
-                <a href="deposit.html" class="action-btn d-flex flex-column align-items-center gap-2 w-100 h-100">
-                    <svg class="action-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                        <line x1="12" y1="5" x2="12" y2="19" />
-                        <polyline points="5,12 12,19 19,12" />
-                    </svg>
-                    <span class="action-label">Deposit</span>
-                </a>
-            </div>
-        </div>
+        </div> -->
 
         <!-- Dashboard Stats -->
         <div class="row g-3 mb-4 px-3">
-            <div class="col-6 col-lg-3">
+            <div class="col-12 col-lg-3">
                 <div class="stat-card p-3 h-100">
                     <h3 class="h6 mb-2">Profit</h3>
                     <p class="profit-amount h4 mb-0 fw-bold">$12,750.80</p>
                 </div>
             </div>
-            <div class="col-6 col-lg-3">
+            <div class="col-12 col-lg-3">
                 <div class="stat-card p-3 h-100">
                     <h3 class="h6 mb-2">Total Withdrawal</h3>
                     <p class="withdrawal-amount h4 mb-0 fw-bold">$5,200.00</p>
                 </div>
             </div>
-            <div class="col-6 col-lg-3">
+            <div class="col-12 col-lg-3">
                 <div class="stat-card p-3 h-100">
                     <h3 class="h6 mb-2">Total Trades</h3>
                     <p class="trade-amount h4 mb-0 fw-bold">342</p>
                 </div>
             </div>
-            <div class="col-6 col-lg-3">
+            <div class="col-12 col-lg-3">
                 <div class="stat-card p-3 h-100">
                     <h3 class="h6 mb-2">Total Deposit</h3>
                     <p class="deposit-amount h4 mb-0 fw-bold">$20,000.00</p>
@@ -421,57 +508,65 @@
 
     <!-- Bottom Navigation -->
     <!-- Bottom Navigation using Bootstrap -->
-<nav class="navbar navbar-dark bg-dark navbar-expand fixed-bottom border-top border-secondary shadow-sm" style="backdrop-filter: blur(10px);">
-  <div class="container-fluid justify-content-around text-center">
-    
-    <a class="nav-link text-white small d-flex flex-column align-items-center" href="#">
-      <svg class="nav-icon mb-1" viewBox="0 0 24 24" fill="currentColor" width="24" height="24">
-        <rect x="2" y="3" width="20" height="14" rx="2" ry="2" />
-        <line x1="8" y1="21" x2="16" y2="21" />
-        <line x1="12" y1="17" x2="12" y2="21" />
-      </svg>
-      <span>Wallet</span>
-    </a>
+    <nav class="navbar navbar-dark bg-dark navbar-expand fixed-bottom border-top border-secondary shadow-sm"
+        style="backdrop-filter: blur(10px);">
+        <div class="container-fluid justify-content-around text-center">
 
-    <a class="nav-link text-white small d-flex flex-column align-items-center" href="market.html">
-      <svg class="nav-icon mb-1" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="24" height="24">
-        <polyline points="22,12 18,12 15,21 9,3 6,12 2,12" />
-      </svg>
-      <span>Markets</span>
-    </a>
+            <a class="nav-link text-white small d-flex flex-column align-items-center" href="#">
+                <svg class="nav-icon mb-1" viewBox="0 0 24 24" fill="currentColor" width="24" height="24">
+                    <rect x="2" y="3" width="20" height="14" rx="2" ry="2" />
+                    <line x1="8" y1="21" x2="16" y2="21" />
+                    <line x1="12" y1="17" x2="12" y2="21" />
+                </svg>
+                <span>Wallet</span>
+            </a>
 
-   <div class="dropup position-relative">
-  <a class="nav-link dropdown-toggle text-white small d-flex flex-column align-items-center" href="#" role="button" id="tradeDropdown" data-bs-toggle="dropdown" aria-expanded="false">
-    <i class="nav-icon mb-1"><ion-icon name="bar-chart"></ion-icon></i>
-    <span>Trades</span>
-  </a>
-  <ul class="dropdown-menu dropdown-menu-dark text-center border-0 rounded-3 px-2 py-1"
-      aria-labelledby="tradeDropdown"
-      style="min-width: 160px; left: 50%; transform: translateX(-50%) translateY(-8px); background-color: #1e1e2f;">
-    <li><a class="dropdown-item text-light px-3 py-2" href="copy_trade.html" style="transition: background 0.3s;">Copy Trade</a></li>
-    <li><a class="dropdown-item text-light px-3 py-2" href="stake.html" style="transition: background 0.3s;">Stacking</a></li>
-    <li><a class="dropdown-item text-light px-3 py-2" href="signal.html" style="transition: background 0.3s;">Signal</a></li>
-  </ul>
-</div>
+            <a class="nav-link text-white small d-flex flex-column align-items-center" href="market.html">
+                <svg class="nav-icon mb-1" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                    width="24" height="24">
+                    <polyline points="22,12 18,12 15,21 9,3 6,12 2,12" />
+                </svg>
+                <span>Markets</span>
+            </a>
 
-    <a class="nav-link text-white small d-flex flex-column align-items-center" href="transaction-history.html">
-      <svg class="nav-icon mb-1" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="24" height="24">
-        <path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9" />
-        <path d="M13.73 21a2 2 0 0 1-3.46 0" />
-      </svg>
-      <span>Activity</span>
-    </a>
+            <div class="dropup position-relative">
+                <a class="nav-link dropdown-toggle text-white small d-flex flex-column align-items-center" href="#"
+                    role="button" id="tradeDropdown" data-bs-toggle="dropdown" aria-expanded="false">
+                    <i class="nav-icon mb-1"><ion-icon name="bar-chart"></ion-icon></i>
+                    <span>Trades</span>
+                </a>
+                <ul class="dropdown-menu dropdown-menu-dark text-center border-0 rounded-3 px-2 py-1"
+                    aria-labelledby="tradeDropdown"
+                    style="min-width: 160px; left: 50%; transform: translateX(-50%) translateY(-8px); background-color: #1e1e2f;">
+                    <li><a class="dropdown-item text-light px-3 py-2" href="copy_trade.html"
+                            style="transition: background 0.3s;">Copy Trade</a></li>
+                    <li><a class="dropdown-item text-light px-3 py-2" href="stake.html"
+                            style="transition: background 0.3s;">Stacking</a></li>
+                    <li><a class="dropdown-item text-light px-3 py-2" href="signal.html"
+                            style="transition: background 0.3s;">Signal</a></li>
+                </ul>
+            </div>
 
-    <a class="nav-link text-white small d-flex flex-column align-items-center" href="profile.html">
-      <svg class="nav-icon mb-1" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="24" height="24">
-        <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2" />
-        <circle cx="12" cy="7" r="4" />
-      </svg>
-      <span>Profile</span>
-    </a>
+            <a class="nav-link text-white small d-flex flex-column align-items-center" href="transaction-history.html">
+                <svg class="nav-icon mb-1" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                    width="24" height="24">
+                    <path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9" />
+                    <path d="M13.73 21a2 2 0 0 1-3.46 0" />
+                </svg>
+                <span>Activity</span>
+            </a>
 
-  </div>
-</nav>
+            <a class="nav-link text-white small d-flex flex-column align-items-center" href="profile.html">
+                <svg class="nav-icon mb-1" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                    width="24" height="24">
+                    <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2" />
+                    <circle cx="12" cy="7" r="4" />
+                </svg>
+                <span>Profile</span>
+            </a>
+
+        </div>
+    </nav>
 
 
     <!-- Modal -->
@@ -480,7 +575,8 @@
             <div class="modal-content bg-dark text-light">
                 <div class="modal-header border-secondary">
                     <h5 class="modal-title" id="withdrawModalLabel">Select Withdrawal Type</h5>
-                    <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+                    <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"
+                        aria-label="Close"></button>
                 </div>
                 <div class="modal-body text-center">
                     <div class="d-grid gap-2">
